@@ -4,7 +4,7 @@ public class Location {
 
     private final String locationID;
     private String name;
-    private String typeOfLocation;
+    private String typeOfLocation; // TODO: Enums instead of strings?
     private int numberOfSeats;
 
     public Location(String id, String name) {
@@ -12,7 +12,7 @@ public class Location {
         this.name = name;
     }
 
-    // Simple getters and setters section
+    // Simple getters and setters below
     public void setName(String name) {
         this.name = name;
     }
