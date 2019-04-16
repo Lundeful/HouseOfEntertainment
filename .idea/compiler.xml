@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="hellofx" />
+        <module name="HouseOfEntertainment" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HouseOfEntertainment" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

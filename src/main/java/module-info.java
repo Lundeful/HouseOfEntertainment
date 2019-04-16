@@ -1,4 +1,4 @@
-module hellofx {
+module HouseOfEntertainment {
     requires javafx.controls;
     requires javafx.fxml;
 
