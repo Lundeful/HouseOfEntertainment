@@ -12,6 +12,8 @@ public class Show {
     private Date time;
     private int ticketPrice;
     private ArrayList<Ticket> soldTickets;
+
+
     private ArrayList<Ticket> availiableTickets;
 
     public Show(String showID, Location location, int ticketPrice){
@@ -22,6 +24,10 @@ public class Show {
 
     public int getTicketPrice() {
         return ticketPrice;
+    }
+
+    public String getShowID() {
+        return showID;
     }
 
     public void setShowType(String showType) {

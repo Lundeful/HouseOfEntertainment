@@ -11,7 +11,7 @@ public class Ticket {
     private int price;
     private String phoneNumber;
 
-    public Ticket(String ticketID, String location, int price){
+    public Ticket(String ticketID, String location, int price) {
         this.ticketID = ticketID; // TODO(1): Make method that generates ID's
         this.location = location;
         this.price = price;
@@ -23,5 +23,9 @@ public class Ticket {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
+    public String getTicketID() {
+        return ticketID;
     }
 }

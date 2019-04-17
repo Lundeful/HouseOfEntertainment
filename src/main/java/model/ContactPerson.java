@@ -37,4 +37,8 @@ public class ContactPerson {
     public void setOther(String other) {
         this.other = other;
     }
+
+    public String getContactID(){
+        return contactID;
+    }
 }
