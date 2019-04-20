@@ -1,8 +1,25 @@
+/*
+ ====================
+This is the CSS stylesheet for styling the HoE app
+====================
+*/
+
+
+/*
+====================
+Global variables
+====================
+*/
 .root {
     -primary-color: #f37d59;
     -secondary-color: #3d3542;
 }
 
+/*
+====================
+The main menu
+====================
+ */
 .mainMenuButton {
     -fx-text-fill: -primary-color;
     -fx-background-color:-secondary-color;
@@ -11,6 +28,10 @@
     -fx-font-weight: bold;
     -fx-pref-width: 200px;
     -fx-alignment: center-left;
+}
+
+.mainMenuButton:hover {
+    -fx-background-color: #211d24;
 }
 
 .mainMenuButtonHighlighted{

@@ -84,7 +84,7 @@
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;">
+                        <AnchorPane fx:id="selectMenuWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;">
                            <children>
                               <Label alignment="CENTER" text="&lt;- Select menu" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -170,7 +170,7 @@
                   <HBox prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 0; -fx-border-color: #3d3542;">
                      <children>
                         <Region prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" HBox.hgrow="ALWAYS" />
-                        <Label style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 10; -fx-border-color: #3d3542;" text="Statusbar...">
+                        <Label style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 10; -fx-border-color: #3d3542;" text="House Of Entertainment - Beta">
                            <font>
                               <Font name="SimSun" size="20.0" />
                            </font>

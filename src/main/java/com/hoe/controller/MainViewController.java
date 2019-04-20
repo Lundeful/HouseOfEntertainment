@@ -3,75 +3,33 @@ package com.hoe.controller;
 import com.hoe.model.HoE;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 
 public class MainViewController {
 
+    // Main menu buttons
     @FXML
-    private Button currentButton;
+    private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, promotionsButton,
+            saveDataButton, loadDataButton, helpButton;
+
+    // The different panes / views in this app
+    @FXML
+    private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
+            promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
     @FXML
-    private Button overviewButton;
+    private Label status;
 
-    @FXML
-    private Button showsButton;
-
-    @FXML
-    private Button locationsButton;
-
-    @FXML
-    private Button ticketsButton;
-
-    @FXML
-    private Button promotionsButton;
-
-    @FXML
-    private Button saveDataButton;
-
-    @FXML
-    private Button loadDataButton;
-
-    @FXML
-    private Button helpButton;
-
-    @FXML
-    private AnchorPane currentView;
-
-    @FXML
-    private AnchorPane selectMenuWindow;
-
-    @FXML
-    private AnchorPane overviewWindow;
-
-    @FXML
-    private AnchorPane showsWindow;
-
-    @FXML
-    private AnchorPane locationsWindow;
-
-    @FXML
-    private AnchorPane ticketsWindow;
-
-    @FXML
-    private AnchorPane promotionsWindow;
-
-    @FXML
-    private AnchorPane saveDataWindow;
-
-    @FXML
-    private AnchorPane loadDataWindow;
-
-    @FXML
-    private AnchorPane helpWindow;
-
+    // Main app (Model in MVC)
     private HoE hoe;
 
     public void initialize() {
-        currentView = overviewWindow;
+        currentView = selectMenuWindow;
         currentView.setVisible(true);
         currentButton = overviewButton;
-        overviewButton.getStyleClass().add("mainMenuButtonHighlighted");
         hoe = new HoE();
     }
 
@@ -86,7 +44,6 @@ public class MainViewController {
     public void locationsClicked() {
         menuClicked(locationsWindow, locationsButton);
     }
-
 
     public void ticketsClicked() {
         menuClicked(ticketsWindow, ticketsButton);
@@ -116,4 +73,6 @@ public class MainViewController {
         currentView = ap;
         currentButton = b;
     }
+
+
 }
