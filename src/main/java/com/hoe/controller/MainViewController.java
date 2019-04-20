@@ -1,10 +1,10 @@
 package com.hoe.controller;
 
 import com.hoe.model.HoE;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -75,4 +75,11 @@ public class MainViewController {
     }
 
 
+    public void chooseSaveFile(ActionEvent event) {
+        // TODO
+    }
+
+    public void saveData(ActionEvent event) {
+        // TODO
+    }
 }

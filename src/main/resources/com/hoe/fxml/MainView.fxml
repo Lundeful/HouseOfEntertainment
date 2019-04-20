@@ -140,20 +140,58 @@
                         </AnchorPane>
                         <AnchorPane fx:id="saveDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
                            <children>
-                              <Label alignment="CENTER" text="Save data" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label alignment="CENTER" text="Save Data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font name="Segoe UI Bold" size="81.0" />
                                  </font>
                               </Label>
+                              <Label prefHeight="161.0" prefWidth="580.0" styleClass="fileChooserInfo" text="Here you can save your current data. For more information on how to use this feature please visit the help section." wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="50.0" />
+                              <VBox alignment="CENTER" layoutY="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" spacing="10.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button fx:id="chooseFileSaveButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
+                                          <Button fx:id="saveData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Save data" />
+                                       </children>
+                                    </HBox>
+                                    <Label styleClass="fileChooserText, fileChosen" text="No file selected">
+                                       <font>
+                                          <Font name="Calibri Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="loadDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
                            <children>
-                              <Label alignment="CENTER" text="Load data" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <Label alignment="CENTER" text="Load data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font name="Segoe UI Bold" size="81.0" />
                                  </font>
                               </Label>
+                              <Label layoutX="10.0" layoutY="10.0" prefHeight="161.0" prefWidth="580.0" styleClass="fileChooserInfo" text="Here you can load your current data. For more information on how to use this feature please visit the help section." wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="50.0" />
+                              <VBox alignment="CENTER" layoutX="10.0" layoutY="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+                                 <children>
+                                    <HBox alignment="CENTER" spacing="10.0">
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                       <children>
+                                          <Button fx:id="chooseFileLoadButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
+                                          <Button fx:id="loadData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Load data" />
+                                       </children>
+                                    </HBox>
+                                    <Label styleClass="fileChooserText, fileChosen" text="No file selected">
+                                       <font>
+                                          <Font name="Calibri Bold" size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
