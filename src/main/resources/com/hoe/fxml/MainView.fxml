@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
+   <children>
+      <HBox VBox.vgrow="ALWAYS">
+         <children>
+            <VBox maxWidth="500.0" minWidth="200.0" prefWidth="200.0" style="-fx-background-color: #3d3542; -fx-border-style: solid; -fx-border-width: 0 5 0 0; -fx-border-color: f37d59;">
+               <children>
+                  <BorderPane style="-fx-background-color: #3d3542;">
+                     <center>
+                        <ImageView fitHeight="83.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../img/logo/hoe_logo_orange.png" />
+                           </image>
+                        </ImageView>
+                     </center>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </BorderPane>
+                  <VBox prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="overviewButton" mnemonicParsing="false" onAction="#overviewClicked" styleClass="mainMenuButton" text="Overview">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="showsButton" mnemonicParsing="false" onAction="#showsClicked" styleClass="mainMenuButton" text="Shows">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="locationsButton" mnemonicParsing="false" onAction="#locationsClicked" styleClass="mainMenuButton" text="Locations">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="ticketsButton" mnemonicParsing="false" onAction="#ticketsClicked" styleClass="mainMenuButton" text="Tickets">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="promotionsButton" mnemonicParsing="false" onAction="#promotionsClicked" styleClass="mainMenuButton" text="Promotions">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveDataClicked" styleClass="mainMenuButton" text="Save Data">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="loadDataButton" mnemonicParsing="false" onAction="#loadDataClicked" styleClass="mainMenuButton" text="Load Data">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpClicked" styleClass="mainMenuButton" text="Help">
+                           <font>
+                              <Font name="Calibri Bold" size="25.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox prefWidth="1080.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;">
+                           <children>
+                              <Label alignment="CENTER" text="&lt;- Select menu" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="overviewWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Overview" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Shows" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Locations" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Tickets" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="promotionsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Promotions" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="saveDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Save data" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="loadDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Load data" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" text="Help" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font name="Segoe UI Bold" size="81.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </StackPane>
+                  <HBox prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 0; -fx-border-color: #3d3542;">
+                     <children>
+                        <Region prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" HBox.hgrow="ALWAYS" />
+                        <Label style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 10; -fx-border-color: #3d3542;" text="Statusbar...">
+                           <font>
+                              <Font name="SimSun" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>
