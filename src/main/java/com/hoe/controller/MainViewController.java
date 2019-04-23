@@ -82,4 +82,14 @@ public class MainViewController {
     public void saveData(ActionEvent event) {
         // TODO
     }
+
+    public void addShow(ActionEvent actionEvent) {
+        //hoe.addShow();
+    }
+
+    public void editShow(ActionEvent actionEvent) {
+    }
+
+    public void deleteShow(ActionEvent actionEvent) {
+    }
 }

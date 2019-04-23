@@ -75,4 +75,24 @@ public class Database {
         // TODO: Exceptionhandling, confirmation-messages, logging etc
         return true;
     }
+
+    public ArrayList<Location> getLocations() {
+        return locations;
+    }
+
+    public ArrayList<Show> getShows() {
+        return shows;
+    }
+
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
+    }
+
+    public ArrayList<ContactPerson> getContacts() {
+        return contacts;
+    }
+
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
+    }
 }

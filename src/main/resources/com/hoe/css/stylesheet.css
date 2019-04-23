@@ -190,3 +190,15 @@ Card design 2
     -fx-max-height: 150px;
     -fx-text-fill: -primary-color;
 }
+
+/*
+====================
+Add shows form
+====================
+ */
+
+.addShowFormTitle {
+    -fx-font: 20px Calibri;
+    -fx-font-weight: bold;
+    -fx-tile-alignment: right;
+}
