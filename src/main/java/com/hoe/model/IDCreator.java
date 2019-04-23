@@ -1,4 +1,4 @@
-package model;
+package com.hoe.model;
 
 import java.security.SecureRandom;
 import java.util.Base64;
