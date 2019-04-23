@@ -1,6 +1,6 @@
 package com.hoe.model.datasaving;
 
-import model.*;
+import com.hoe.model.Database;
 
 import java.io.FileWriter;
 import java.io.IOException;
