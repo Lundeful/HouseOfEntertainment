@@ -3,6 +3,6 @@ module HouseOfEntertainment {
     requires javafx.fxml;
     requires junit;
 
-    opens org.openjfx to javafx.fxml;
-    exports org.openjfx;
+    opens com.hoe.controller to javafx.fxml;
+    exports com.hoe;
 }
