@@ -23,6 +23,7 @@ Global variables
     -secondary-color: #3d3542;
     -primary-accent: #d06d4f;
     -secondary-accent: #211d24;
+    -button-click: #121014;
 }
 
 /*
@@ -43,6 +44,11 @@ The main menu
 
 .mainMenuButton:hover {
     -fx-background-color: -secondary-accent;
+}
+
+.mainMenuButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
 }
 
 .mainMenuButtonHighlighted{
@@ -72,6 +78,11 @@ File-choose menu
     -fx-background-color: -secondary-accent;
 }
 
+.fileChooserButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
+}
+
 .fileChooserText {
     -fx-text-fill: -secondary-color;
     -fx-font: 30px Calibri;
@@ -90,4 +101,92 @@ File-choose menu
     -fx-font: 30px Calibri;
     -fx-font-weight: bold;
     -fx-background-color: -primary-color;
+}
+
+/*
+====================
+View menu
+====================
+ */
+
+.viewMenuBar {
+/*    -fx-border-width: 0 0 5 0;
+    -fx-border-style: solid;
+    -fx-border-color: -secondary-color;*/
+}
+
+.viewMenuTitle {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 60px Calibri;
+    -fx-font-weight: bold;
+    -fx-pref-height: 60px;
+}
+
+.viewMenuButton {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: -primary-color;
+    -fx-font: 30px Calibri;
+    -fx-font-weight: bold;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 60px;
+}
+
+.viewMenuButton:hover {
+    -fx-background-color: -secondary-accent;
+}
+
+.viewMenuButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
+}
+
+/*
+====================
+Shows view
+====================
+ */
+
+
+.showsSplitPane {
+    -fx-background-color: -primary-color;
+}
+
+.showsListView {
+    -fx-background-color: -primary-color;
+}
+
+/*
+Card design 1
+ */
+/*
+.showsCard {
+    -fx-background-color: -secondary-color;
+    -fx-background-radius: 10px;
+}
+
+
+.showsCardTitle {
+    -fx-background-color: #9480A0;
+    -fx-font: 35px Calibri;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-padding: 10px;
+    -fx-max-height: 150px;
+}*/
+
+/*
+Card design 2
+ */
+.showsCard {
+    -fx-background-color: -primary-accent;
+    -fx-background-radius: 10px;
+}
+.showsCardTitle {
+    -fx-background-color: -secondary-color;
+    -fx-font: 35px Calibri;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-padding: 10px;
+    -fx-max-height: 150px;
+    -fx-text-fill: -primary-color;
 }
