@@ -8,6 +8,7 @@ public class Database {
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
     private ArrayList<ContactPerson> contacts;
+    private ArrayList<Ticket> tickets;
 
     // New fresh database without content
     public Database() {
@@ -15,6 +16,7 @@ public class Database {
         shows = new ArrayList<>();
         promotions = new ArrayList<>();
         contacts = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
     // Database from existing sources
