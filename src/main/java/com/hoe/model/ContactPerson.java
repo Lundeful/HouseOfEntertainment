@@ -37,4 +37,32 @@ public class ContactPerson {
     public void setOther(String other) {
         this.other = other;
     }
+
+    public String getContactID() {
+        return contactID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getAffiliation() {
+        return affiliation;
+    }
+
+    public String getOther() {
+        return other;
+    }
 }
