@@ -24,6 +24,10 @@ Global variables
     -primary-accent: #d06d4f;
     -secondary-accent: #211d24;
     -button-click: #121014;
+/*    -primary-color: #f9f9f9;
+    -secondary-color: #2f2f2f;
+    -secondary-accent: #0d3f60;
+    -primary-accent: #e5e5e5;*/
 }
 
 /*
@@ -31,6 +35,14 @@ Global variables
 The main menu
 ====================
  */
+
+.mainMenuVBox {
+    -fx-background-color: -secondary-color;
+    -fx-border-style:  solid;
+    -fx-border-width:  0 5 0 0;
+    -fx-border-color: -primary-color;
+}
+
 .mainMenuButton {
     -fx-text-fill: -primary-color;
     -fx-background-color:-secondary-color;
@@ -56,7 +68,24 @@ The main menu
     -fx-text-fill: white;
 }
 
+/*
+====================
+Statusbar
+====================
+ */
 
+.statusBar {
+    -fx-background-color: -primary-accent;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 0 10;
+    -fx-border-color: -secondary-color;
+    -fx-text-fill: -secondary-color;
+
+}
+
+.statusbarBG {
+    -fx-background-color: -primary-color;
+}
 /*
 ====================
 File-choose menu
@@ -109,6 +138,10 @@ View menu
 ====================
  */
 
+.viewMenuAnchorPane {
+    -fx-background-color: -primary-color;
+}
+
 .viewMenuBar {
 /*    -fx-border-width: 0 0 5 0;
     -fx-border-style: solid;
@@ -147,18 +180,20 @@ Shows view
  */
 
 
-.showsSplitPane {
-    -fx-background-color: -primary-color;
+.showsTableView  {
+    -fx-background-color: -primary-accent;
 }
 
-.showsListView {
-    -fx-background-color: -primary-color;
-}
+/*.showsTableView .filler{
+    -fx-background-color: -primary-accent;
+}*/
 
 /*
 Card design 1
  */
 /*
+
+// TODO remove one or the other
 .showsCard {
     -fx-background-color: -secondary-color;
     -fx-background-radius: 10px;
@@ -197,8 +232,60 @@ Add shows form
 ====================
  */
 
+.addShowsView {
+    -fx-background-color: -primary-color;
+}
 .addShowFormTitle {
-    -fx-font: 20px Calibri;
+    -fx-font: 40px Calibri;
     -fx-font-weight: bold;
     -fx-tile-alignment: right;
+    -fx-text-fill: -secondary-color;
+    -fx-border-width: 0 0 5 0;
+    -fx-border-style: solid;
+    -fx-border-color: -secondary-color;
+}
+
+.addShowFormQuestion {
+    -fx-font: 27px Calibri;
+    -fx-font-weight: bold;
+    -fx-tile-alignment: right;
+    -fx-text-fill: -secondary-color;
+}
+
+.addShowInputField {
+    -fx-text-fill: -secondary-color;
+    -fx-prompt-text-fill: rgba(0,0,0,0.5);
+    -fx-background-color: -primary-accent;
+    -fx-font: 17px Calibri;
+    -fx-font-weight: bold;
+}
+
+.addShowInputArea  {
+    -fx-text-fill: -secondary-color;
+    -fx-prompt-text-fill: rgba(0,0,0,0.5);
+    -fx-background-color: -primary-accent;
+
+    -fx-font: 17px Calibri;
+    -fx-font-weight: bold;
+}
+
+.addShowInputArea .content {
+    -fx-background-color: -primary-accent;
+    -fx-border-style: none;
+    -fx-background-radius: 0px;
+
+}
+
+.addShowErrorMessage {
+    -fx-font: 17px Calibri;
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 5px;
+    -fx-background-radius: 3px 10px 10px 3px;
+    -fx-text-fill: red;
+}
+
+.addShowDropdown {
+    -fx-background-color: -primary-accent;
+    -fx-font: 15px Calibri;
+    -fx-font-weight: bold;
 }

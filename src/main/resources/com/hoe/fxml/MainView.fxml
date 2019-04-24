@@ -2,9 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,13 +21,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
+<VBox maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="1280.0" prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
    <children>
       <HBox VBox.vgrow="ALWAYS">
          <children>
-            <VBox maxWidth="500.0" minWidth="200.0" style="-fx-background-color: #3d3542; -fx-border-style: solid; -fx-border-width: 0 5 0 0; -fx-border-color: f37d59;">
+            <VBox maxWidth="500.0" minWidth="200.0" styleClass="mainMenuVBox">
                <children>
-                  <BorderPane style="-fx-background-color: #3d3542;">
+                  <BorderPane>
                      <center>
                         <ImageView fitHeight="83.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                            <image>
@@ -90,16 +92,25 @@
                <children>
                   <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                      <children>
-                        <AnchorPane fx:id="selectMenuWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;">
+                        <AnchorPane fx:id="selectMenuWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                            <children>
-                              <Label alignment="CENTER" text="&lt;- Select menu" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <font>
-                                    <Font name="Segoe UI Bold" size="81.0" />
-                                 </font>
-                              </Label>
+                              <VBox alignment="TOP_CENTER" spacing="50.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="100.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="House of Entertainment administration software" textAlignment="CENTER" textFill="#3d3542" wrapText="true">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="55.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" text="&lt;- Select menu to begin" textFill="#3d3542" wrapText="true">
+                                       <font>
+                                          <Font name="Segoe UI Bold" size="35.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="overviewWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="overviewWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Overview" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -108,7 +119,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;">
+                        <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -137,9 +148,9 @@
                                     </HBox>
                                     <StackPane VBox.vgrow="ALWAYS">
                                        <children>
-                                          <HBox fx:id="showsViewer" spacing="30.0" visible="false">
+                                          <HBox fx:id="showsView" spacing="30.0" styleClass="showsView">
                                              <children>
-                                                <TableView prefHeight="500.0" prefWidth="475.0">
+                                                <TableView prefHeight="500.0" prefWidth="475.0" styleClass="showsTableView">
                                                   <columns>
                                                     <TableColumn prefWidth="75.0" text="Show" />
                                                     <TableColumn prefWidth="75.0" text="Date" />
@@ -165,26 +176,69 @@
                                                 <Insets bottom="20.0" left="15.0" right="20.0" top="20.0" />
                                              </padding>
                                           </HBox>
-                                          <GridPane fx:id="addShowInputGrid" alignment="CENTER_LEFT" hgap="20.0">
-                                            <columnConstraints>
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                            </rowConstraints>
+                                          <VBox fx:id="addShowsView" prefHeight="200.0" prefWidth="100.0" styleClass="addShowsView" visible="false">
                                              <children>
-                                                <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormTitle" text="Label" GridPane.halignment="RIGHT" />
-                                                <Label styleClass="addShowFormTitle" text="Label" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                                                <Label styleClass="addShowFormTitle" text="Label" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                                                <TextField GridPane.columnIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label styleClass="addShowFormTitle" text="Add new show">
+                                                   <VBox.margin>
+                                                      <Insets bottom="40.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <HBox VBox.vgrow="NEVER">
+                                                   <children>
+                                                      <GridPane fx:id="addShowInputGrid" hgap="15.0" vgap="20.0">
+                                                        <columnConstraints>
+                                                          <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" />
+                                                          <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                            <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                        </columnConstraints>
+                                                        <rowConstraints>
+                                                          <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                          <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                          <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                            <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                                                            <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                        </rowConstraints>
+                                                         <children>
+                                                            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Name of show" />
+                                                            <Label styleClass="addShowFormQuestion" text="Type of show" GridPane.rowIndex="1" />
+                                                            <Label styleClass="addShowFormQuestion" text="Date" GridPane.rowIndex="2" />
+                                                            <Label styleClass="addShowFormQuestion" text="Time" GridPane.rowIndex="3" />
+                                                            <Label styleClass="addShowFormQuestion" text="Location" GridPane.rowIndex="4" />
+                                                            <Label styleClass="addShowFormQuestion" text="Ticketprice" GridPane.rowIndex="5" />
+                                                            <Label styleClass="addShowFormQuestion" text="Program" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                                                            <TextField promptText="e.g. Harry Potter 7" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                                                            <TextField promptText="e.g. Movie" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                            <TextField promptText="DD-MM-YYYY" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                            <TextField promptText="HH:MM" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                            <TextField promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                            <Label styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                            <Label styleClass="addShowErrorMessage" text="Error message" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                            <Label styleClass="addShowErrorMessage" text="Enter date in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                            <Label styleClass="addShowErrorMessage" text="Enter time in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                                            <TextArea prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="6" GridPane.vgrow="NEVER" />
+                                                            <ChoiceBox fx:id="addShowChoiceBox" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                         </children>
+                                                      </GridPane>
+                                                      <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                                                      <VBox alignment="TOP_RIGHT" fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" spacing="30.0" HBox.hgrow="NEVER">
+                                                         <children>
+                                                            <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#addShow" styleClass="viewMenuButton" text="Add" textAlignment="CENTER" />
+                                                            <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#clearAddShowFields" styleClass="viewMenuButton" text="Clear" textAlignment="CENTER" />
+                                                            <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#closeAddShowMenu" styleClass="viewMenuButton" text="Close" textAlignment="CENTER" />
+                                                         </children>
+                                                         <padding>
+                                                            <Insets right="45.0" />
+                                                         </padding>
+                                                      </VBox>
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </GridPane>
+                                             <padding>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </padding>
+                                          </VBox>
                                        </children>
                                     </StackPane>
                                  </children>
@@ -194,7 +248,7 @@
                               <Insets />
                            </StackPane.margin>
                         </AnchorPane>
-                        <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Locations" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -203,7 +257,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Tickets" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -212,7 +266,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="promotionsWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="promotionsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Promotions" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -221,7 +275,7 @@
                               </Label>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="saveDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="saveDataWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Save Data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -249,7 +303,7 @@
                               </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="loadDataWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="loadDataWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Load data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -277,7 +331,7 @@
                               </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" visible="false">
+                        <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                            <children>
                               <Label alignment="CENTER" text="Help" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <font>
@@ -288,10 +342,10 @@
                         </AnchorPane>
                      </children>
                   </StackPane>
-                  <HBox prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 0; -fx-border-color: #3d3542;">
+                  <HBox prefHeight="30.0" prefWidth="100.0" styleClass="statusbarBG">
                      <children>
-                        <Region prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #f37d59;" HBox.hgrow="ALWAYS" />
-                        <Label style="-fx-background-color: #d06d4f; -fx-border-style: solid; -fx-border-width: 0 0 0 10; -fx-border-color: #3d3542;" text="House Of Entertainment - Beta">
+                        <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                        <Label styleClass="statusBar" text="House Of Entertainment - Beta">
                            <font>
                               <Font name="SimSun" size="20.0" />
                            </font>

@@ -1,7 +1,6 @@
 package com.hoe.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Show {
 
@@ -10,8 +9,9 @@ public class Show {
     private String showType;
     private String program;
     private Location location;
-    private Date time;
-    private int ticketPrice;
+    private String time;
+    private String date;
+    private String ticketPrice;
     private ArrayList<Ticket> soldTickets;
     private int availableTickets;
 
@@ -30,7 +30,7 @@ public class Show {
         }
     }
 
-    public void setTicketPrice(int ticketPrice) {
+    public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
 
@@ -46,7 +46,7 @@ public class Show {
         this.location = location;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -54,7 +54,7 @@ public class Show {
         this.showName = showName;
     }
 
-    public int getTicketPrice() {
+    public String getTicketPrice() {
         return ticketPrice;
     }
 
@@ -78,10 +78,13 @@ public class Show {
         return location;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
+    public String getDate() {
+        return date;
+    }
     public ArrayList<Ticket> getSoldTickets() {
         return soldTickets;
     }

@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 
 public class MainViewController {
@@ -21,12 +23,30 @@ public class MainViewController {
             promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
     @FXML
+    private VBox addShowsView;
+
+    @FXML
+    private HBox showsView;
+
+    @FXML
     private Label status;
 
     // Main app (Model in MVC)
     private HoE hoe;
 
     public void initialize() {
+
+        // Clear visibility on windows TODO: Remove this bit
+        overviewWindow.setVisible(false);
+        showsWindow.setVisible(false);
+        locationsWindow.setVisible(false);
+        ticketsWindow.setVisible(false);
+        promotionsWindow.setVisible(false);
+        saveDataWindow.setVisible(false);
+        loadDataWindow.setVisible(false);
+        helpWindow.setVisible(false);
+
+
         currentView = selectMenuWindow;
         currentView.setVisible(true);
         currentButton = overviewButton;
@@ -84,6 +104,14 @@ public class MainViewController {
     }
 
     public void addShow(ActionEvent actionEvent) {
+        if(!addShowsView.isVisible()) {
+            showsView.setVisible(false);
+            addShowsView.setVisible(true);
+        } else {
+            showsView.setVisible(true);
+            addShowsView.setVisible(false);
+        }
+
         //hoe.addShow();
     }
 
@@ -91,5 +119,11 @@ public class MainViewController {
     }
 
     public void deleteShow(ActionEvent actionEvent) {
+    }
+
+    public void clearAddShowFields(ActionEvent event) {
+    }
+
+    public void closeAddShowMenu(ActionEvent event) {
     }
 }
