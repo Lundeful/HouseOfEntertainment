@@ -4,6 +4,8 @@ import com.hoe.model.HoE;
 import com.hoe.model.Location;
 import com.hoe.model.Show;
 import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -79,6 +81,15 @@ public class MainViewController {
         currentButton = overviewButton;
         hoe = new HoE();
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
+
+        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
+        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
+        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
+        hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Your mom"), "", "");
+
+        for (int i = 0; i < 100; i++) {
+            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
+        }
         initializeShows();
     }
 
@@ -173,15 +184,21 @@ public class MainViewController {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                     addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
+
+        updateShowsList();
         }
     }
 
+    private void updateShowsList() {
+        ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
+        showData.setAll(hoe.getShows());
+        showsTableView.setItems(showData);
+    }
+
     private void initializeShows() {
-        // hoe.initializeShowsList(tableColumnShow, tableColumnDate, tableColumnLocation);
-        // hoe.initializeShowsList(showsTableView);
-        tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("Show"));
-        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("Location"));
-        showsTableView.setItems(hoe.getShows());
+        tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        updateShowsList();
     }
 }

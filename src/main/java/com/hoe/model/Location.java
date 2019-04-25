@@ -39,4 +39,9 @@ public class Location {
     public int getNumberOfSeats() {
         return numberOfSeats;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

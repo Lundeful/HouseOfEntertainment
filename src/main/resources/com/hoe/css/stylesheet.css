@@ -28,6 +28,7 @@ Global variables
     -secondary-color: #2f2f2f;
     -secondary-accent: #0d3f60;
     -primary-accent: #e5e5e5;*/
+    -fx-font-size: 16px;
 }
 
 /*
@@ -183,25 +184,79 @@ Shows view
 .showsTableView  {
     -fx-background-color: -primary-accent;
     -fx-background-radius: 5px;
+    -fx-font: 20px Calibri;
+    -fx-font-weight: bold;
 }
 
-.tableViewColumn {
+.showsTableView .column-header,
+.showsTableView .column-header-background,
+.column-header-background .filler{
     -fx-background-color: -secondary-color;
 }
 
-/* Column header text */
+.table-row-cell  {
+    -fx-table-cell-border-color: transparent;
+}
+
+.tableViewColumn .column-header-background {
+    -fx-background-color: -secondary-color;
+}
+
 .showsTableView .column-header .label {
     -fx-text-fill: -primary-color;
     -fx-font: 25px Calibri;
     -fx-font-weight: bold;
     -fx-padding: 10px;
+}
 
+.showsTableView .table-cell {
+    -fx-padding: 4px 8px 4px 8px;
+    -fx-text-alignment: center;
+}
+
+.table-row-cell{
+    -fx-background-color: -primary-accent;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -primary-color;
+}
+
+.showsTableView .table-row-cell:selected {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: white;
+}
+
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal {
+
+}
+.scroll-bar .thumb {
+    -fx-background-color: -secondary-color;
+}
+
+.showsTableView .corner {
+    -fx-background-color: -primary-accent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button,
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    visibility: hidden;
 }
 
 .showsCard {
     -fx-background-color: -primary-accent;
     -fx-background-radius: 5px;
 }
+
 .showsCardTitle {
     -fx-background-color: -secondary-color;
     -fx-font: 25px Calibri;
@@ -211,7 +266,6 @@ Shows view
     -fx-max-height: 150px;
     -fx-text-fill: -primary-color;
 }
-
 
 
 /*

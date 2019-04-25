@@ -1,7 +1,6 @@
 package com.hoe.model;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.ArrayList;
 
 
 public class HoE {
@@ -11,15 +10,26 @@ public class HoE {
         database = new Database();
     }
 
+    /**
+     * This method creates a new instance of the show object and
+     * @param name
+     * @param type
+     * @param date
+     * @param time
+     * @param location
+     * @param ticketPrice
+     * @param program
+     */
     public void addShow(String name, String type, String date, String time, Location location,
                         String ticketPrice, String program) {
         Show show = new Show("TEMP-ID", formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
         show.setDate(formatInput(date));
-        show.setTime(formatInput(date));
+        show.setTime(formatInput(time));
         show.setLocation(location);
         show.setTicketPrice(formatInput(ticketPrice));
+        show.setProgram(formatInput(program));
 
         database.addShow(show);
         System.out.println("current shows: "); //TODO Remove test
@@ -42,9 +52,7 @@ public class HoE {
         return false; // No shows with matching show ID found
     }
 
-    public ObservableList getShows() {
-        ObservableList<Show> showData = FXCollections.observableArrayList(database.getShows());
-        showData.addAll(database.getShows());
-        return showData;
+    public ArrayList<Show> getShows() {
+        return database.getShows();
     }
 }
