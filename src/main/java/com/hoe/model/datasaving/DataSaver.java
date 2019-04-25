@@ -1,9 +1,6 @@
 package com.hoe.model.datasaving;
 
-import model.*;
-
-import java.io.FileWriter;
-import java.io.IOException;
+import com.hoe.model.Database;
 
 public abstract class DataSaver {
 

@@ -82,5 +82,5 @@ public class ContactPerson {
         return getContactID() + "|" + getName() + "|" + getPhoneNumber() + "|" + getEmail() + "|" +
                 getWebsite() + "|" + getAffiliation() + "|" + getOther();
     }
-    
+
 }

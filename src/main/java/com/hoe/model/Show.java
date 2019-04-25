@@ -32,10 +32,6 @@ public class Show {
         return ticketPrice;
     }
 
-    public String getShowID() {
-        return showID;
-    }
-
     public void setShowType(String showType) {
         this.showType = showType;
     }
