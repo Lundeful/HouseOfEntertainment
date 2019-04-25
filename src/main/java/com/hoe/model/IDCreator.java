@@ -79,4 +79,8 @@ public class IDCreator {
         if (locationID1 == locationID2) return true;
         return false;
     }
+
+    public int getObject(String ID){
+        return Integer.parseInt(ID.substring(0,1));
+    }
 }

@@ -1,10 +1,14 @@
 package com.hoe;
 
+import com.hoe.model.IDCreator;
+import com.hoe.model.Location;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.Locale;
 
 public class Main extends Application {
 
