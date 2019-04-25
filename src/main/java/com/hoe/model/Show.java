@@ -1,4 +1,4 @@
-package model;
+package com.hoe.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +12,8 @@ public class Show {
     private String time;
     private int ticketPrice;
     private ArrayList<Ticket> soldTickets;
+
+
     private ArrayList<Ticket> availiableTickets;
 
     /**
@@ -28,6 +30,10 @@ public class Show {
 
     public int getTicketPrice() {
         return ticketPrice;
+    }
+
+    public String getShowID() {
+        return showID;
     }
 
     public void setShowType(String showType) {

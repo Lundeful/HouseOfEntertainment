@@ -1,0 +1,93 @@
+/*
+ ====================
+This is the CSS stylesheet for styling the HoE app
+====================
+*/
+
+/*
+Colors:
+Orange: #f37d59
+Darker Orange:  #d06d4f
+
+Purple: #3d3542
+Darker purple: #211d24
+
+ */
+/*
+====================
+Global variables
+====================
+*/
+.root {
+    -primary-color: #f37d59;
+    -secondary-color: #3d3542;
+    -primary-accent: #d06d4f;
+    -secondary-accent: #211d24;
+}
+
+/*
+====================
+The main menu
+====================
+ */
+.mainMenuButton {
+    -fx-text-fill: -primary-color;
+    -fx-background-color:-secondary-color;
+    -fx-font: 25px Calibri;
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200px;
+    -fx-alignment: center-left;
+    -fx-background-radius: 5 0 0 5;
+}
+
+.mainMenuButton:hover {
+    -fx-background-color: -secondary-accent;
+}
+
+.mainMenuButtonHighlighted{
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+}
+
+
+/*
+====================
+File-choose menu
+====================
+ */
+
+.fileChooserMenu {
+}
+
+.fileChooserButton {
+    -fx-text-fill: -primary-color;
+    -fx-background-color:-secondary-color;
+    -fx-font: 25px Calibri;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5 5 5 5;
+}
+
+.fileChooserButton:hover {
+    -fx-background-color: -secondary-accent;
+}
+
+.fileChooserText {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 30px Calibri;
+    -fx-font-weight: bold;
+}
+
+.fileChosen {
+    -fx-background-color: -primary-accent;
+    -fx-padding: 10px;
+    -fx-background-radius: 5 5 5 5;
+
+}
+
+.fileChooserInfo {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 30px Calibri;
+    -fx-font-weight: bold;
+    -fx-background-color: -primary-color;
+}

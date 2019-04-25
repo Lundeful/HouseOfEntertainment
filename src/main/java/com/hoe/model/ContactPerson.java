@@ -1,4 +1,4 @@
-package model;
+package com.hoe.model;
 
 /**
  * This is the standard Contact Person class. This class defines what a Contact Person is and what sort of data fields
@@ -82,4 +82,5 @@ public class ContactPerson {
         return getContactID() + "|" + getName() + "|" + getPhoneNumber() + "|" + getEmail() + "|" +
                 getWebsite() + "|" + getAffiliation() + "|" + getOther();
     }
+    
 }

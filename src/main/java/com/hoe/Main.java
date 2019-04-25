@@ -1,29 +1,25 @@
-package org.openjfx;
+package com.hoe;
 
+import com.hoe.model.IDCreator;
+import com.hoe.model.Location;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-<<<<<<< Updated upstream:src/main/java/org/openjfx/MainApp.java
-
-public class MainApp extends Application {
-=======
-import java.util.Date;
 
 public class Main extends Application {
->>>>>>> Stashed changes:src/main/java/com/hoe/Main.java
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("scene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/hoe/fxml/MainView.fxml"));
+
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/com/hoe/css/stylesheet.css").toExternalForm());
 
-        stage.setTitle("JavaFX and Maven");
+        stage.setTitle("House of Entertainment");
         stage.setScene(scene);
         stage.show();
     }
