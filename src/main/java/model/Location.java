@@ -7,12 +7,16 @@ public class Location {
     private String typeOfLocation; // TODO: Enums instead of strings?
     private int numberOfSeats;
 
+    /**
+     * Standard constructor for the Location class.
+     * @param id A unique ID for the Location class.
+     * @param name A name for the Location.
+     */
     public Location(String id, String name) {
         this.locationID = id;
         this.name = name;
     }
 
-    // Simple getters and setters below
     public void setName(String name) {
         this.name = name;
     }
@@ -38,5 +42,13 @@ public class Location {
 
     public int getNumberOfSeats() {
         return numberOfSeats;
+    }
+
+    /**
+     * This method is meant to print out a string with a CSV format so that is it easier to save.
+     * @return Returns a String with complete information and in CSV-format.
+     */
+    public String toCSVString(){
+        return getLocationID() + "|" + getName() + "|" + getTypeOfLocation() + "|" + String.valueOf(getNumberOfSeats());
     }
 }
