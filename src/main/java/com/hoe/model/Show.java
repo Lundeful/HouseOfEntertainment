@@ -102,4 +102,8 @@ public class Show {
             return false;
         }
     }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

@@ -160,8 +160,8 @@ View menu
     -fx-text-fill: -primary-color;
     -fx-font: 30px Calibri;
     -fx-font-weight: bold;
-    -fx-pref-width: 120px;
-    -fx-pref-height: 60px;
+    -fx-padding: 15px;
+    -fx-min-width: 120px;
 }
 
 .viewMenuButton:hover {
@@ -182,49 +182,37 @@ Shows view
 
 .showsTableView  {
     -fx-background-color: -primary-accent;
+    -fx-background-radius: 5px;
 }
 
-/*.showsTableView .filler{
-    -fx-background-color: -primary-accent;
-}*/
-
-/*
-Card design 1
- */
-/*
-
-// TODO remove one or the other
-.showsCard {
+.tableViewColumn {
     -fx-background-color: -secondary-color;
-    -fx-background-radius: 10px;
 }
 
-
-.showsCardTitle {
-    -fx-background-color: #9480A0;
-    -fx-font: 35px Calibri;
+/* Column header text */
+.showsTableView .column-header .label {
+    -fx-text-fill: -primary-color;
+    -fx-font: 25px Calibri;
     -fx-font-weight: bold;
-    -fx-background-radius: 10px 10px 0 0;
     -fx-padding: 10px;
-    -fx-max-height: 150px;
-}*/
 
-/*
-Card design 2
- */
+}
+
 .showsCard {
     -fx-background-color: -primary-accent;
-    -fx-background-radius: 10px;
+    -fx-background-radius: 5px;
 }
 .showsCardTitle {
     -fx-background-color: -secondary-color;
-    -fx-font: 35px Calibri;
+    -fx-font: 25px Calibri;
     -fx-font-weight: bold;
-    -fx-background-radius: 10px 10px 0 0;
+    -fx-background-radius: 5px 5px 0 0;
     -fx-padding: 10px;
     -fx-max-height: 150px;
     -fx-text-fill: -primary-color;
 }
+
+
 
 /*
 ====================
@@ -288,4 +276,8 @@ Add shows form
     -fx-background-color: -primary-accent;
     -fx-font: 15px Calibri;
     -fx-font-weight: bold;
+}
+
+.addShowMenuButton {
+    -fx-min-width: 242px;
 }

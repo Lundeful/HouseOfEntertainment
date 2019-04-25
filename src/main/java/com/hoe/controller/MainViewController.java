@@ -1,13 +1,17 @@
 package com.hoe.controller;
 
 import com.hoe.model.HoE;
+import com.hoe.model.Location;
+import com.hoe.model.Show;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 
 public class MainViewController {
@@ -22,21 +26,44 @@ public class MainViewController {
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
             promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
+    // Add shows menu
     @FXML
     private VBox addShowsView;
 
+    // Add show input form view
+    @FXML
+    private TextField addShowTextFieldName, addShowTextFieldType, addShowTextFieldDate, addShowTextFieldTime,
+            addShowTextFieldTicketPrice;
+    @FXML
+    private TextArea addShowFieldProgram;
+    @FXML
+    private ChoiceBox<Location> addShowChoiceBoxLocation;
+
+    // View with list of shows
     @FXML
     private HBox showsView;
 
     @FXML
+    private TableView<Show> showsTableView;
+    @FXML
+    private TableColumn<Show, String> tableColumnShow, tableColumnDate;
+
+    @FXML
+    private TableColumn<Location, String> tableColumnLocation;
+
+    @FXML
+    private Label addShowFormNameError;
+
+    // Statusbar at the bottom of screen
+    @FXML
     private Label status;
 
-    // Main app (Model in MVC)
+    // Main app object
     private HoE hoe;
 
     public void initialize() {
 
-        // Clear visibility on windows TODO: Remove this bit
+        // Clear visibility on windows TODO: Remove these or extract to method
         overviewWindow.setVisible(false);
         showsWindow.setVisible(false);
         locationsWindow.setVisible(false);
@@ -51,6 +78,8 @@ public class MainViewController {
         currentView.setVisible(true);
         currentButton = overviewButton;
         hoe = new HoE();
+        // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
+        initializeShows();
     }
 
     public void overviewClicked() {
@@ -103,27 +132,56 @@ public class MainViewController {
         // TODO
     }
 
-    public void addShow(ActionEvent actionEvent) {
+    public void showAddShowMenu(ActionEvent actionEvent) {
         if(!addShowsView.isVisible()) {
-            showsView.setVisible(false);
             addShowsView.setVisible(true);
         } else {
-            showsView.setVisible(true);
             addShowsView.setVisible(false);
         }
-
-        //hoe.addShow();
     }
 
-    public void editShow(ActionEvent actionEvent) {
+    public void showEditShow(ActionEvent actionEvent) {
     }
 
     public void deleteShow(ActionEvent actionEvent) {
     }
 
     public void clearAddShowFields(ActionEvent event) {
+        addShowTextFieldName.clear();
+        addShowTextFieldType.clear();
+        addShowTextFieldDate.clear();
+        addShowTextFieldTime.clear();
+        addShowChoiceBoxLocation.setValue(null);
+        addShowTextFieldTicketPrice.clear();
+        addShowFieldProgram.clear();
     }
 
     public void closeAddShowMenu(ActionEvent event) {
+        addShowsView.setVisible(false);
+    }
+
+    public void submitShowForm(ActionEvent actionEvent) {
+        if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
+            addShowFormNameError.setVisible(true);
+            addShowFormNameError.setOpacity(1);
+            FadeTransition ft = new FadeTransition(Duration.seconds(1), addShowFormNameError);
+            ft.setFromValue(1);
+            ft.setToValue(0);
+            ft.setDelay(Duration.seconds(3));
+            ft.play();
+        } else {
+        hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
+                    addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
+                    addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
+        }
+    }
+
+    private void initializeShows() {
+        // hoe.initializeShowsList(tableColumnShow, tableColumnDate, tableColumnLocation);
+        // hoe.initializeShowsList(showsTableView);
+        tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("Show"));
+        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("Location"));
+        showsTableView.setItems(hoe.getShows());
     }
 }
