@@ -1,6 +1,8 @@
 package com.hoe.model;
 
-public class ContactPerson {
+import java.io.Serializable;
+
+public class ContactPerson implements Serializable {
 
     private final String contactID;
     private String name;
