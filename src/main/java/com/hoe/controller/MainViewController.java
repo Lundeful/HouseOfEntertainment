@@ -56,16 +56,31 @@ public class MainViewController {
     @FXML
     private Label addShowFormNameError;
 
-    // Statusbar at the bottom of screen
+    // Statusbar and notifications
     @FXML
-    private Label status;
+    private Label status, notification;
 
     // Main app object
     private HoE hoe;
 
     public void initialize() {
+        initializeVisibility();
+        hoe = new HoE();
+        // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
-        // Clear visibility on windows TODO: Remove these or extract to method
+        // TODO Remove test-objects
+        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
+        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
+        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
+        hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Rooftop"), "", "");
+        for (int i = 0; i < 100; i++) {
+            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
+        }
+
+        initializeShows();
+    }
+
+    private void initializeVisibility() {
         overviewWindow.setVisible(false);
         showsWindow.setVisible(false);
         locationsWindow.setVisible(false);
@@ -74,23 +89,24 @@ public class MainViewController {
         saveDataWindow.setVisible(false);
         loadDataWindow.setVisible(false);
         helpWindow.setVisible(false);
-
-
         currentView = selectMenuWindow;
         currentView.setVisible(true);
         currentButton = overviewButton;
-        hoe = new HoE();
-        // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
+        notification.setText("");
+        notification.setVisible(false);
+    }
 
-        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
-        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
-        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
-        hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Your mom"), "", "");
+    private void initializeShows() {
+        tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        updateShowsList();
+    }
 
-        for (int i = 0; i < 100; i++) {
-            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
-        }
-        initializeShows();
+    private void updateShowsList() {
+        ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
+        showData.setAll(hoe.getShows());
+        showsTableView.setItems(showData);
     }
 
     public void overviewClicked() {
@@ -143,7 +159,7 @@ public class MainViewController {
         // TODO
     }
 
-    public void showAddShowMenu(ActionEvent actionEvent) {
+    public void toggleAddShowMenu(ActionEvent actionEvent) {
         if(!addShowsView.isVisible()) {
             addShowsView.setVisible(true);
         } else {
@@ -173,32 +189,31 @@ public class MainViewController {
 
     public void submitShowForm(ActionEvent actionEvent) {
         if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
-            addShowFormNameError.setVisible(true);
-            addShowFormNameError.setOpacity(1);
-            FadeTransition ft = new FadeTransition(Duration.seconds(1), addShowFormNameError);
-            ft.setFromValue(1);
-            ft.setToValue(0);
-            ft.setDelay(Duration.seconds(3));
-            ft.play();
+            fadeTransition(addShowFormNameError);
         } else {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                     addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
 
         updateShowsList();
+        toggleAddShowMenu(actionEvent);
+        displayNotification("Show added");
         }
     }
 
-    private void updateShowsList() {
-        ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
-        showData.setAll(hoe.getShows());
-        showsTableView.setItems(showData);
+    private void displayNotification(String s) {
+        notification.setText(s);
+        fadeTransition(notification);
     }
 
-    private void initializeShows() {
-        tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
-        tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
-        tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
-        updateShowsList();
+    public void fadeTransition(Label label) {
+        label.setVisible(true);
+        label.setOpacity(1);
+        FadeTransition ft = new FadeTransition(Duration.seconds(1), label);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setDelay(Duration.seconds(3));
+        ft.play();
     }
+
 }

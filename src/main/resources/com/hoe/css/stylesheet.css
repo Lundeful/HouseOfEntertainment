@@ -71,7 +71,7 @@ The main menu
 
 /*
 ====================
-Statusbar
+Statusbar and notification
 ====================
  */
 
@@ -81,12 +81,25 @@ Statusbar
     -fx-border-width: 0 0 0 10;
     -fx-border-color: -secondary-color;
     -fx-text-fill: -secondary-color;
-
 }
 
 .statusbarBG {
     -fx-background-color: -primary-color;
 }
+
+.notification {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: -secondary-accent;
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);
+    -fx-text-fill: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-font: 25px Calibri;
+    -fx-font-weight: bold;
+}
+
 /*
 ====================
 File-choose menu
@@ -143,12 +156,6 @@ View menu
     -fx-background-color: -primary-color;
 }
 
-.viewMenuBar {
-/*    -fx-border-width: 0 0 5 0;
-    -fx-border-style: solid;
-    -fx-border-color: -secondary-color;*/
-}
-
 .viewMenuTitle {
     -fx-text-fill: -secondary-color;
     -fx-font: 60px Calibri;
@@ -186,6 +193,7 @@ Shows view
     -fx-background-radius: 5px;
     -fx-font: 20px Calibri;
     -fx-font-weight: bold;
+    -fx-focus-color: red;
 }
 
 .showsTableView .column-header,
@@ -195,6 +203,7 @@ Shows view
 }
 
 .table-row-cell  {
+    -fx-faint-focus-color: red;
     -fx-table-cell-border-color: transparent;
 }
 
@@ -222,7 +231,7 @@ Shows view
     -fx-background-color: -primary-color;
 }
 
-.showsTableView .table-row-cell:selected {
+.showsTableView:focused .table-row-cell:selected {
     -fx-background-color: -secondary-color;
     -fx-text-fill: white;
 }
