@@ -28,7 +28,11 @@ public class MainViewController {
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
             promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
-    // Add shows menu
+    /*
+    ==============================
+    Add shows menu
+    ==============================
+     */
     @FXML
     private VBox addShowsView;
 
@@ -56,12 +60,18 @@ public class MainViewController {
     @FXML
     private Label addShowFormNameError;
 
+    /*
+    ==============================
+    Edit shows menu
+    ==============================
+     */
     // Statusbar and notifications
     @FXML
     private Label status, notification;
 
     // Main app object
     private HoE hoe;
+    private Show selectedShow;
 
     public void initialize() {
         initializeVisibility();
@@ -73,7 +83,7 @@ public class MainViewController {
         hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
         hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
         hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Rooftop"), "", "");
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
         }
 
@@ -101,6 +111,13 @@ public class MainViewController {
         tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         updateShowsList();
+
+        // Listen for selected show in table
+/*        showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
+            if (!s2.equals(s1)) {
+                selectedShow = s2;
+            }
+        });*/
     }
 
     private void updateShowsList() {
@@ -167,10 +184,20 @@ public class MainViewController {
         }
     }
 
-    public void showEditShow(ActionEvent actionEvent) {
+    public void toggleEditShow(ActionEvent actionEvent) {
+        addShowsView.setVisible(false);
+
+        // displayNotification("Show to be edited: " + selectedShow.getShowName());
     }
 
     public void deleteShow(ActionEvent actionEvent) {
+        Show s = showsTableView.getSelectionModel().getSelectedItem();
+        if (hoe.removeShow(s)) {
+            displayNotification("Show removed");
+        } else {
+            displayNotification("Error: Show not removed");
+        }
+        updateShowsList();
     }
 
     public void clearAddShowFields(ActionEvent event) {
@@ -212,8 +239,15 @@ public class MainViewController {
         FadeTransition ft = new FadeTransition(Duration.seconds(1), label);
         ft.setFromValue(1);
         ft.setToValue(0);
-        ft.setDelay(Duration.seconds(3));
+        ft.setDelay(Duration.millis(1000));
         ft.play();
     }
 
+    public void confirmEditShow(ActionEvent actionEvent) {
+
+    }
+
+    public void discardEditShow(ActionEvent actionEvent) {
+
+    }
 }

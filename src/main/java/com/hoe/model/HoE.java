@@ -28,17 +28,11 @@ public class HoE {
         return s.trim();
     }
 
-    public boolean removeShow(String showID) {
-        for (Show show: database.getShows()) {
-            if (show.getShowID().equals(showID)) {
-                database.removeShow(show);
-                return true; // Show with matching ID found
-            }
-        }
-        return false; // No shows with matching show ID found
+    public boolean removeShow(Show s) {
+        return database.removeShow(s);
     }
-
     public ArrayList<Show> getShows() {
         return database.getShows();
     }
+
 }

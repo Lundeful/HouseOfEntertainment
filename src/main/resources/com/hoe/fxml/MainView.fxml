@@ -124,7 +124,7 @@
                               </AnchorPane>
                               <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
-                                    <VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <HBox spacing="50.0" styleClass="viewMenuBar">
                                              <children>
@@ -138,7 +138,7 @@
                                                 </Label>
                                                 <Region HBox.hgrow="ALWAYS" />
                                                 <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#toggleAddShowMenu" styleClass="viewMenuButton" text="Add" textAlignment="CENTER" />
-                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#showEditShow" styleClass="viewMenuButton" text="Edit" textAlignment="CENTER" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#toggleEditShow" styleClass="viewMenuButton" text="Edit" textAlignment="CENTER" />
                                                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#deleteShow" styleClass="viewMenuButton" text="Del" textAlignment="CENTER">
                                                    <HBox.margin>
                                                       <Insets right="50.0" />
@@ -207,6 +207,7 @@
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
                                                                   <RowConstraints minHeight="10.0" vgrow="NEVER" />
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="118.0" valignment="CENTER" vgrow="NEVER" />
                                                               </rowConstraints>
                                                                <children>
                                                                   <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Name of show" />
@@ -215,7 +216,7 @@
                                                                   <Label styleClass="addShowFormQuestion" text="Time" GridPane.rowIndex="3" />
                                                                   <Label styleClass="addShowFormQuestion" text="Location" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowFormQuestion" text="Ticketprice" GridPane.rowIndex="5" />
-                                                                  <Label styleClass="addShowFormQuestion" text="Program" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Program" GridPane.rowIndex="7" GridPane.valignment="TOP" />
                                                                   <TextField fx:id="addShowTextFieldName" promptText="e.g. Harry Potter 7" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                                                                   <TextField fx:id="addShowTextFieldType" promptText="e.g. Movie" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="addShowTextFieldDate" promptText="DD-MM-YYYY" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -225,8 +226,10 @@
                                                                   <Label styleClass="addShowErrorMessage" text="Error message" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter date in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter time in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                                                                  <TextArea fx:id="addShowFieldProgram" prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="6" GridPane.vgrow="NEVER" />
+                                                                  <TextArea fx:id="addShowFieldProgram" prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
                                                                   <ChoiceBox fx:id="addShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Contactperson" GridPane.rowIndex="6" />
+                                                                  <ChoiceBox fx:id="addShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -245,6 +248,76 @@
                                                                      </styleClass>
                                                                   </Button>
                                                                   <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#closeAddShowMenu" text="Close form" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                               </children>
+                                                            </VBox>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox fx:id="editShowsView" styleClass="addShowsView" visible="false">
+                                                   <children>
+                                                      <Label styleClass="addShowFormTitle" text="Edit Show">
+                                                         <VBox.margin>
+                                                            <Insets bottom="40.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox VBox.vgrow="ALWAYS">
+                                                         <children>
+                                                            <GridPane fx:id="editShowInputGrid" hgap="15.0" vgap="20.0">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="NEVER" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Name of show" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Type of show" GridPane.rowIndex="1" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Date" GridPane.rowIndex="2" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Time" GridPane.rowIndex="3" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Location" GridPane.rowIndex="4" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Ticketprice" GridPane.rowIndex="5" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Contactperson" GridPane.rowIndex="6" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Program" GridPane.rowIndex="7" GridPane.valignment="TOP" />
+                                                                  <TextField fx:id="editShowTextFieldName" promptText="e.g. Harry Potter 7" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+                                                                  <TextField fx:id="editShowTextFieldType" promptText="e.g. Movie" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="editShowTextFieldDate" promptText="DD-MM-YYYY" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="editShowTextFieldTime" promptText="HH:MM" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                                  <TextField fx:id="editShowTextFieldTicketPrice" promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                  <Label fx:id="addShowFormNameError1" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <TextArea fx:id="editShowFieldProgram" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
+                                                                  <ChoiceBox fx:id="editShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                  <ChoiceBox fx:id="editShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                               </children>
+                                                            </GridPane>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" spacing="30.0">
+                                                               <children>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#confirmEditShow" text="Confirm" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#discardEditShow" text="Discard" textAlignment="CENTER">
                                                                      <styleClass>
                                                                         <String fx:value="viewMenuButton" />
                                                                         <String fx:value="addShowMenuButton" />
@@ -363,19 +436,6 @@
                               </AnchorPane>
                            </children>
                         </StackPane>
-                        <HBox prefHeight="30.0" prefWidth="100.0" styleClass="statusbarBG">
-                           <children>
-                              <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                              <Label styleClass="statusBar" text="House Of Entertainment - Beta">
-                                 <font>
-                                    <Font name="SimSun" size="20.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
-                                 </padding>
-                              </Label>
-                           </children>
-                        </HBox>
                      </children>
                   </VBox>
                </children>

@@ -59,9 +59,8 @@ public class Database {
     }
 
     public boolean removeShow(Show s) {
-        // TODO: Iterate through list and remove according to unique ID
+        return shows.remove(s);
         // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
     }
 
     public boolean removePromotion(Promotion p) {
