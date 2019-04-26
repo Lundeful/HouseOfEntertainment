@@ -6,6 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Path;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 public class MainViewController {
@@ -76,10 +83,24 @@ public class MainViewController {
 
 
     public void chooseSaveFile(ActionEvent event) {
-        // TODO
+        fileChooser();
     }
 
     public void saveData(ActionEvent event) {
         // TODO
+    }
+
+    // TODO(1) Fix exceptions,
+    public void fileChooser() {
+        Stage stage = new Stage();
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select a file");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Excel file", "*.csv"),
+                new FileChooser.ExtensionFilter("Serializable file", "*.ser"));
+        File selected = chooser.showOpenDialog(stage);
+        if (selected != null) {
+            Path pathToFile = (Path) selected.toPath();
+        }
     }
 }

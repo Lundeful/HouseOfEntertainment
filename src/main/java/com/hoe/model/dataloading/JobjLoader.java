@@ -8,9 +8,6 @@ import java.io.*;
  */
 
 public class JobjLoader extends DataLoader implements Serializable {
-
-    // TODO(1): Configure the abstract Loader class
-
     Database data = null;
 
     /**
@@ -19,9 +16,10 @@ public class JobjLoader extends DataLoader implements Serializable {
      * @param filename Passes in a given filename that needs to be loaded to get the needed information
      *                 of previously state of the program
      */
-    public void loadObject(String filename){
-
+    @Override
+    public void loadData(String filename) {
         try{
+
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
             data = (Database) inputStream.readObject();
@@ -33,6 +31,5 @@ public class JobjLoader extends DataLoader implements Serializable {
             System.out.println("Object not found!");
             c.printStackTrace();
         }
-
     }
 }
