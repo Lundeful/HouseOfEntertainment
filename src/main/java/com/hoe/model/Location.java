@@ -1,6 +1,8 @@
 package com.hoe.model;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 
     private final String locationID;
     private String name;

@@ -7,14 +7,7 @@ import java.io.IOException;
 
 public abstract class DataSaver {
 
-    public void saveData(String filename, Database data) throws IOException {
+     public abstract void saveData(String filename, Database data) throws IOException;
 
-        FileWriter fileWriter = new FileWriter(filename);
 
-        fileWriter.write(databaseToString(data));
-        fileWriter.flush();
-        fileWriter.close();
-    }
-
-    protected abstract String databaseToString(Database data);
 }

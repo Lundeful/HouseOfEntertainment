@@ -1,8 +1,9 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ticket {
+public class Ticket implements Serializable {
 
     private final String ticketID;
     private int seatNumber;

@@ -1,9 +1,10 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Show {
+public class Show implements Serializable {
 
     private final String showID;
     private String showType;
