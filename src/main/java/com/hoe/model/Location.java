@@ -41,4 +41,9 @@ public class Location implements Serializable {
     public int getNumberOfSeats() {
         return numberOfSeats;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

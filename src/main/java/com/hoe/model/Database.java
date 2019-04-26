@@ -9,6 +9,7 @@ public class Database  implements Serializable {
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
     private ArrayList<ContactPerson> contacts;
+    private ArrayList<Ticket> tickets;
 
     // New fresh database without content
     public Database() {
@@ -16,6 +17,7 @@ public class Database  implements Serializable {
         shows = new ArrayList<>();
         promotions = new ArrayList<>();
         contacts = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
     // Database from existing sources
@@ -58,9 +60,8 @@ public class Database  implements Serializable {
     }
 
     public boolean removeShow(Show s) {
-        // TODO: Iterate through list and remove according to unique ID
+        return shows.remove(s);
         // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
     }
 
     public boolean removePromotion(Promotion p) {
@@ -75,19 +76,23 @@ public class Database  implements Serializable {
         return true;
     }
 
-    public ArrayList<Location> getLocations(){
-        return this.locations;
+    public ArrayList<Location> getLocations() {
+        return locations;
     }
 
-    public ArrayList<Show> getShows(){
-        return this.shows;
+    public ArrayList<Show> getShows() {
+        return shows;
     }
 
-    public ArrayList<Promotion> getPromotions(){
-        return this.promotions;
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
     }
 
-    public ArrayList<ContactPerson> getContacts(){
-        return this.contacts;
+    public ArrayList<ContactPerson> getContacts() {
+        return contacts;
+    }
+
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
     }
 }
