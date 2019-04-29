@@ -1,7 +1,6 @@
 package com.hoe.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Show {
 
@@ -11,10 +10,8 @@ public class Show {
     private String locationID;
     private String time;
     private int ticketPrice;
-    private ArrayList<Ticket> soldTickets;
-
-
-    private ArrayList<Ticket> availiableTickets;
+    private ArrayList<Ticket> soldTickets = new ArrayList<>();
+    private int availableTickets;
 
     /**
      * Standard constructor for the Show class.
@@ -74,7 +71,37 @@ public class Show {
      */
     public String toCSVString(){
         return getShowID() + "|" + getLocationID() + "|" + String.valueOf(getTicketPrice()) + "|"
-                + getShowType() + "|" + getTime() + "|" + getProgram();
-                        //String.valueOf(availiableTickets.size()) + "," + String.valueOf(soldTickets.size())
+                + getShowType() + "|" + getTime() + "|" + getProgram() + "|" + String.valueOf(getAvailableTickets())
+                + "|" + String.valueOf((Object)getSoldTickets().size());
+    }
+
+    public int getAvailableTickets() {
+        return availableTickets;
+    }
+
+    public void setAvailableTickets(int availableTickets) {
+        this.availableTickets = availableTickets;
+    }
+
+    public ArrayList<Ticket> getSoldTickets() {
+        return soldTickets;
+    }
+
+    public void setSoldTickets(ArrayList<Ticket> soldTickets) {
+        this.soldTickets = soldTickets;
+    }
+
+    /**
+     *
+     * @param t
+     * @return
+     */
+    public boolean addTicket(Ticket t){
+        if(0< availableTickets) {
+            soldTickets.add(t);
+            availableTickets--;
+            return true;
+        }
+        return false;
     }
 }

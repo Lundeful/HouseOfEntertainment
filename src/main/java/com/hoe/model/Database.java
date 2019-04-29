@@ -8,6 +8,7 @@ public class Database {
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
     private ArrayList<ContactPerson> contacts;
+    private ArrayList<Ticket> tickets;
 
     // New fresh database without content
     public Database() {
@@ -15,15 +16,17 @@ public class Database {
         shows = new ArrayList<>();
         promotions = new ArrayList<>();
         contacts = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
     // Database from existing sources
     public Database(ArrayList<Location> locations, ArrayList<Show> shows, ArrayList<Promotion> promotions,
-                    ArrayList<ContactPerson> contacts) {
+                    ArrayList<ContactPerson> contacts, ArrayList<Ticket> tickets) {
         this.locations = locations;
         this.shows = shows;
         this.promotions = promotions;
         this.contacts = contacts;
+        this.tickets = tickets;
     }
 
     public boolean addLocation(Location l) {
@@ -46,6 +49,12 @@ public class Database {
 
     public boolean addContact(ContactPerson c) {
         contacts.add(c);
+        // TODO: Exceptionhandling, confirmation-messages, logging etc
+        return true;
+    }
+
+    public boolean addTicket(Ticket t){
+        tickets.add(t);
         // TODO: Exceptionhandling, confirmation-messages, logging etc
         return true;
     }
@@ -74,6 +83,12 @@ public class Database {
         return true;
     }
 
+    public boolean removeTicket(Ticket t){
+        // TODO: Iterate through list and remove according to unique ID
+        // TODO: Exceptionhandling, confirmation-messages, logging etc
+        return true;
+    }
+
     public ArrayList<Location> getLocations(){
         return this.locations;
     }
@@ -88,5 +103,9 @@ public class Database {
 
     public ArrayList<ContactPerson> getContacts(){
         return this.contacts;
+    }
+
+    public ArrayList<Ticket> getTickets(){
+        return this.tickets;
     }
 }

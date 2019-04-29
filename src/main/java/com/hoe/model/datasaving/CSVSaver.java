@@ -43,6 +43,7 @@ public class CSVSaver extends DataSaver {
         ArrayList<ContactPerson> contactPerson = data.getContacts();
         ArrayList<Show> shows = data.getShows();
         ArrayList<Promotion> promotions = data.getPromotions();
+        ArrayList<Ticket> tickets = data.getTickets();
 
         StringBuilder line = new StringBuilder();
 
@@ -67,7 +68,7 @@ public class CSVSaver extends DataSaver {
         }
 
         //Adding shows to the string
-        String header_Show = "ID|Show Type|Program|Location ID|Time|Price";
+        String header_Show = "ID|Show Type|Program|Location ID|Time|Price|Available Tickets|Sold Tickets";
         line.append(header_Show);
         line.append(NEW_LINE);
 
@@ -85,6 +86,21 @@ public class CSVSaver extends DataSaver {
             line.append(promotion.toCSVString());
             line.append(NEW_LINE);
         }
+
+        //Getting all the tickets from every show
+        for(Show show : shows){
+            tickets.addAll(show.getSoldTickets());
+        }
+
+        //Adding tickets to the string
+        String header_ticket = "ID|Show ID|Price|Date|Phone Number|Seat Number";
+        line.append(header_ticket);
+        line.append(NEW_LINE);
+        for(Ticket t : tickets){
+            line.append(t.toCSVString());
+            line.append(NEW_LINE);
+        }
+
         return line.toString();
     }
 }
