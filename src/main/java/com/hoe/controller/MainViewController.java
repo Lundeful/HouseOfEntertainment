@@ -1,8 +1,12 @@
 package com.hoe.controller;
 
+import com.hoe.model.Database;
 import com.hoe.model.HoE;
 import com.hoe.model.Location;
 import com.hoe.model.Show;
+import com.hoe.model.datasaving.DataSaver;
+import com.hoe.model.datasaving.DirectorySelector;
+import com.hoe.model.datasaving.JobjSaver;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -176,25 +180,10 @@ public class MainViewController {
 
 
     public void chooseSaveFile(ActionEvent event) {
-        fileChooser();
     }
 
     public void saveData(ActionEvent event) {
         // TODO
-    }
-
-    // TODO(1) Fix exceptions,
-    public void fileChooser() {
-        Stage stage = new Stage();
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Select a file");
-        chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel file", "*.csv"),
-                new FileChooser.ExtensionFilter("Serializable file", "*.ser"));
-        File selected = chooser.showOpenDialog(stage);
-        if (selected != null) {
-            Path pathToFile = (Path) selected.toPath();
-        }
     }
 
     public void toggleAddShowMenu(ActionEvent actionEvent) {

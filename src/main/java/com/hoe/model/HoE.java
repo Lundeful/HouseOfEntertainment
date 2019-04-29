@@ -1,5 +1,10 @@
 package com.hoe.model;
 
+import com.hoe.model.dataloading.FileSelecter;
+import com.hoe.model.dataloading.JobjLoader;
+import com.hoe.model.datasaving.DirectorySelector;
+import com.hoe.model.datasaving.JobjSaver;
+
 import java.util.ArrayList;
 
 
@@ -35,4 +40,25 @@ public class HoE {
         return database.getShows();
     }
 
+    public boolean save() {
+        try {
+            DirectorySelector d = new DirectorySelector();
+            JobjSaver save = new JobjSaver();
+            save.saveData(d.directoryChooser() + "save.ser", database);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    public Boolean load() {
+        try {
+            FileSelecter f = new FileSelecter();
+            JobjLoader loader = new JobjLoader();
+            database = loader.loadData(f.fileChooser());
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
 }

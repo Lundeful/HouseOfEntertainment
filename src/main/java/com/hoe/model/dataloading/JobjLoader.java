@@ -17,19 +17,20 @@ public class JobjLoader extends DataLoader implements Serializable {
      *                 of previously state of the program
      */
     @Override
-    public void loadData(String filename) {
+    public Database loadData(String filename) {
         try{
-
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
             data = (Database) inputStream.readObject();
             fileInputStream.close();
             inputStream.close();
+            return data;
         } catch (IOException e){
             e.printStackTrace();
         } catch (ClassNotFoundException c){
             System.out.println("Object not found!");
             c.printStackTrace();
         }
+        return null;
     }
 }

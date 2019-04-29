@@ -15,11 +15,8 @@ public class JobjSaver extends DataSaver implements Serializable {
     // TODO: Make the seri class make a fixed *.ser file.
 
     @Override
-    public void saveData(String filename, Database data, String fileChooser){
+    public void saveData(String filename, Database data){
         try {
-            DirectoryChooser dirChooser = new DirectoryChooser();
-            File givenDir = new File(fileChooser);
-            dirChooser.setInitialDirectory(givenDir);
             FileOutputStream fileOutputStream = new FileOutputStream(filename, false);
             ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
             out.writeObject(data);
