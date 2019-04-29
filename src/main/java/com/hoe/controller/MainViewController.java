@@ -20,13 +20,14 @@ public class MainViewController {
 
     // Main menu buttons
     @FXML
-    private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, promotionsButton,
+    private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, contactsButton,
+            promotionsButton,
             saveDataButton, loadDataButton, helpButton;
 
     // The different panes / views in this app
     @FXML
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
-            promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
+            contactsWindow, promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
     /*
     ==============================
@@ -122,6 +123,25 @@ public class MainViewController {
     private VBox editTicketView;
 
 
+        /*
+    ==============================
+    Add contacts menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addContactView;
+
+    /*
+    ==============================
+    Edit contacts menu
+    ==============================
+     */
+    @FXML
+    private VBox editContactView;
+
+
+
 
     /*
     ==============================
@@ -202,6 +222,10 @@ public class MainViewController {
 
     public void ticketsClicked() {
         menuClicked(ticketsWindow, ticketsButton);
+    }
+
+    public void contactsClicked() {
+        menuClicked(contactsWindow, contactsButton);
     }
 
     public void promotionsClicked() {
@@ -349,6 +373,7 @@ public class MainViewController {
     }
 
     public void closeAddLocationMenu(ActionEvent event) {
+        addLocationView.setVisible(false);
     }
 
     public void confirmEditLocation(ActionEvent event) {
@@ -388,6 +413,7 @@ public class MainViewController {
     }
 
     public void closeAddTicketMenu(ActionEvent event) {
+        addTicketView.setVisible(false);
     }
 
     public void confirmEditTicket(ActionEvent event) {
@@ -395,5 +421,44 @@ public class MainViewController {
 
     public void discardEditTicket(ActionEvent event) {
 
+    }
+
+    public void toggleAddContactsMenu(ActionEvent event) {
+        if(!addContactView.isVisible()) {
+            addContactView.setVisible(true);
+            editContactView.setVisible(false);
+        } else {
+            addContactView.setVisible(false);
+            editContactView.setVisible(false);
+        }
+    }
+
+    public void toggleEditContact(ActionEvent event) {
+        if(!editContactView.isVisible()) {
+            editContactView.setVisible(true);
+            addContactView.setVisible(false);
+        } else {
+            editContactView.setVisible(false);
+            addContactView.setVisible(false);
+        }
+    }
+
+    public void deleteContact(ActionEvent event) {
+    }
+
+    public void submitContactForm(ActionEvent event) {
+    }
+
+    public void clearAddContactForm(ActionEvent event) {
+    }
+
+    public void closeAddContactForm(ActionEvent event) {
+        addContactView.setVisible(false);
+    }
+
+    public void confirmEditContact(ActionEvent event) {
+    }
+
+    public void discardEditContact(ActionEvent event) {
     }
 }
