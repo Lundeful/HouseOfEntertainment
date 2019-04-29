@@ -65,6 +65,67 @@ public class MainViewController {
     Edit shows menu
     ==============================
      */
+
+    @FXML
+    private VBox editShowsView;
+
+
+    /*
+    ==============================
+    Add locations menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addLocationView;
+
+    @FXML
+    private TextField addLocationFieldName, addLocationFieldType, addLocationFieldSeats;
+
+    @FXML
+    private HBox locationsView;
+
+    @FXML
+    private TableView<Location> locationTableView;
+
+    @FXML
+    private TableColumn<Location, String> tableColumnLocationName, tableColumnLocationType, tableColumnLocationSeats;
+
+    @FXML
+    private Label addLocationNameError;
+
+    /*
+    ==============================
+    Edit locations menu
+    ==============================
+     */
+
+    @FXML
+    private VBox editLocationView;
+
+
+    /*
+    ==============================
+    Add tickets menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addTicketView;
+
+    /*
+    ==============================
+    Edit tickets menu
+    ==============================
+     */
+    @FXML
+    private VBox editTicketView;
+
+
+
+    /*
+    ==============================
+     */
     // Statusbar and notifications
     @FXML
     private Label status, notification;
@@ -72,6 +133,7 @@ public class MainViewController {
     // Main app object
     private HoE hoe;
     private Show selectedShow;
+
 
     public void initialize() {
         initializeVisibility();
@@ -179,15 +241,21 @@ public class MainViewController {
     public void toggleAddShowMenu(ActionEvent actionEvent) {
         if(!addShowsView.isVisible()) {
             addShowsView.setVisible(true);
+            editShowsView.setVisible(false);
         } else {
             addShowsView.setVisible(false);
+            editShowsView.setVisible(false);
         }
     }
 
     public void toggleEditShow(ActionEvent actionEvent) {
-        addShowsView.setVisible(false);
-
-        // displayNotification("Show to be edited: " + selectedShow.getShowName());
+        if(!editShowsView.isVisible()) {
+            editShowsView.setVisible(true);
+            addShowsView.setVisible(false);
+        } else {
+            editShowsView.setVisible(false);
+            addShowsView.setVisible(false);
+        }
     }
 
     public void deleteShow(ActionEvent actionEvent) {
@@ -248,6 +316,84 @@ public class MainViewController {
     }
 
     public void discardEditShow(ActionEvent actionEvent) {
+
+    }
+
+    public void toggleAddLocationMenu(ActionEvent event) {
+        if(!addLocationView.isVisible()) {
+            addLocationView.setVisible(true);
+            editLocationView.setVisible(false);
+        } else {
+            addLocationView.setVisible(false);
+            editLocationView.setVisible(false);
+        }
+    }
+
+    public void toggleEditLocation(ActionEvent event) {
+        if(!editLocationView.isVisible()) {
+            editLocationView.setVisible(true);
+            addLocationView.setVisible(false);
+        } else {
+            editLocationView.setVisible(false);
+            addLocationView.setVisible(false);
+        }
+    }
+
+    public void deleteLocation(ActionEvent event) {
+    }
+
+    public void submitLocationForm(ActionEvent event) {
+    }
+
+    public void clearAddLocationFields(ActionEvent event) {
+    }
+
+    public void closeAddLocationMenu(ActionEvent event) {
+    }
+
+    public void confirmEditLocation(ActionEvent event) {
+    }
+
+    public void discardEditLocation(ActionEvent event) {
+    }
+
+    public void toggleAddTicket(ActionEvent event) {
+        if(!addTicketView.isVisible()) {
+            addTicketView.setVisible(true);
+            editTicketView.setVisible(false);
+        } else {
+            addTicketView.setVisible(false);
+            editTicketView.setVisible(false);
+        }
+    }
+
+    public void toggleEditTicket(ActionEvent event) {
+        if(!editTicketView.isVisible()) {
+            editTicketView.setVisible(true);
+            addTicketView.setVisible(false);
+        } else {
+            editTicketView.setVisible(false);
+            addTicketView.setVisible(false);
+        }
+
+    }
+
+    public void deleteTicket(ActionEvent event) {
+    }
+
+    public void submitTicketForm(ActionEvent event) {
+    }
+
+    public void clearAddTicketForm(ActionEvent event) {
+    }
+
+    public void closeAddTicketMenu(ActionEvent event) {
+    }
+
+    public void confirmEditTicket(ActionEvent event) {
+    }
+
+    public void discardEditTicket(ActionEvent event) {
 
     }
 }

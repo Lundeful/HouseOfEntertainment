@@ -15,7 +15,6 @@ public class Ticket {
         this.ticketID = ticketID; // TODO(1): Make method that generates ID's
         this.location = location;
         this.price = price;
-
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -33,5 +32,4 @@ public class Ticket {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }
