@@ -29,50 +29,36 @@ public class Database {
     }
 
     public boolean addLocation(Location l) {
-        locations.add(l);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+            return locations.add(l);
     }
 
     public boolean addShow(Show s) {
-        shows.add(s);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return shows.add(s);
+
     }
 
     public boolean addPromotion(Promotion p) {
-        promotions.add(p);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return promotions.add(p);
     }
 
     public boolean addContact(ContactPerson c) {
-        contacts.add(c);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return contacts.add(c);
     }
 
     public boolean removeLocation(Location l) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return locations.remove(l);
     }
 
     public boolean removeShow(Show s) {
         return shows.remove(s);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
     }
 
     public boolean removePromotion(Promotion p) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return promotions.remove(p);
     }
 
     public boolean removeContact(ContactPerson c) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return contacts.remove(c);
     }
 
     public ArrayList<Location> getLocations() {

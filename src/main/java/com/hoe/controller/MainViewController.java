@@ -3,9 +3,11 @@ package com.hoe.controller;
 import com.hoe.model.HoE;
 import com.hoe.model.Location;
 import com.hoe.model.Show;
+import com.hoe.model.Ticket;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -114,6 +116,19 @@ public class MainViewController {
     @FXML
     private VBox addTicketView;
 
+    @FXML
+    private TableColumn<Ticket, String> tableColumnTicketShow, tableColumnTicketPhone,
+            tableColumnTicketDate;
+
+    @FXML
+    private TableColumn<Location, String> tableColumnTicketLocation;
+
+    @FXML
+    private TableView<Ticket> ticketTableView;
+
+    @FXML
+    private ChoiceBox<Show> addTicketChoiceBoxShow;
+
     /*
     ==============================
     Edit tickets menu
@@ -142,7 +157,6 @@ public class MainViewController {
 
 
 
-
     /*
     ==============================
      */
@@ -160,16 +174,23 @@ public class MainViewController {
         hoe = new HoE();
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
+        hoe.addLocation("TEMP", "Big Hall", "", 100);
+        hoe.addLocation("TEMP", "Small Hall", "", 100);
+        hoe.addLocation("TEMP", "Outside", "", 100);
+        hoe.addLocation("TEMP", "Roof", "", 100);
+
         // TODO Remove test-objects
         hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
         hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
         hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
         hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Rooftop"), "", "");
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 1000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
         }
 
+        initializeLocations();
         initializeShows();
+        initializeTickets();
     }
 
     private void initializeVisibility() {
@@ -204,8 +225,39 @@ public class MainViewController {
 
     private void updateShowsList() {
         ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
-        showData.setAll(hoe.getShows());
         showsTableView.setItems(showData);
+        // addTicketChoiceBoxShow.setItems(showData);
+    }
+
+    private void initializeLocations() {
+        tableColumnLocationName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
+        tableColumnLocationSeats.setCellValueFactory(new PropertyValueFactory<>("numberOfSeats"));
+        updateLocationsList();
+    }
+
+    private void updateLocationsList() {
+        ObservableList<Location> locationsData = FXCollections.observableArrayList(hoe.getLocations());
+        locationTableView.setItems(locationsData);
+        addShowChoiceBoxLocation.setItems(locationsData);
+    }
+
+    private void initializeTickets() {
+        tableColumnTicketShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        tableColumnTicketDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tableColumnTicketLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        tableColumnTicketPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        updateTicketsList();
+    }
+
+    private void updateTicketsList() {
+        hoe.getTickets();
+        try {
+            ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
+            ticketTableView.setItems(ticketsData);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void overviewClicked() {
@@ -283,6 +335,10 @@ public class MainViewController {
     }
 
     public void deleteShow(ActionEvent actionEvent) {
+        if (showsTableView.getSelectionModel().isEmpty()){
+            displayNotification("No show selected");
+            return;
+        }
         Show s = showsTableView.getSelectionModel().getSelectedItem();
         if (hoe.removeShow(s)) {
             displayNotification("Show removed");
@@ -313,7 +369,6 @@ public class MainViewController {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                     addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
-
         updateShowsList();
         toggleAddShowMenu(actionEvent);
         displayNotification("Show added");
