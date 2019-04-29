@@ -108,4 +108,13 @@ public class Database  implements Serializable {
     public ArrayList<Ticket> getTickets(){
         return this.tickets;
     }
+
+    public Location findLocation(String id){
+        for(Location location : locations){
+            if(location.getLocationID().equals(id)){
+                return location;
+            }
+        }
+        return null;
+    }
 }

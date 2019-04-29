@@ -83,10 +83,11 @@ public class CSVLoader {
         //TODO: add a method that locates a location object that already exists
         if(data.length<=9) {
             int counter = 0;
-            Show show = new Show(data[counter], data[++counter], Integer.parseInt(data[++counter]));
+            Show show = new Show(data[counter], data[++counter],(data[++counter]));
             show.setShowType(data[++counter]);
             show.setTime(data[++counter]);
             show.setProgram(data[++counter]);
+            show.setLocation(database.findLocation(show.getLocationID()));
             database.addShow(show);
         } else {
             throw new UnsupportedOperationException("This is not the correct method to use to create this object");

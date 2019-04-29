@@ -18,11 +18,11 @@ public class Ticket implements Serializable {
     public Ticket(String ticketID, String showID, int price) {
         this.ticketID = ticketID;
         this.showID = showID;
-    public Ticket(String ticketID, String showID, String location, int price){
+    }
+
+    public Ticket(String ticketID, Show show, String phoneNumber){
         this.ticketID = ticketID; // TODO(1): Make method that generates ID's
         this.location = location;
-        this.price = price;
-
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -68,11 +68,13 @@ public class Ticket implements Serializable {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
+    }
+
     public void setLocation(String location) {
         this.location = location;
     }
 
-    public String getShowID() {
+    public String getShowID(){
         return showID;
     }
 
@@ -88,13 +90,4 @@ public class Ticket implements Serializable {
         return getTicketID() + "|" + getShowID() +"|" + String.valueOf(getPrice()) + "|" + getDate()
                 + "|" + getPhoneNumber() + "|" + getSeatNumber();
     }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
 }

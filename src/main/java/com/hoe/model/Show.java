@@ -13,9 +13,7 @@ public class Show implements Serializable {
     private String locationID;
     private String time;
     private ArrayList<Ticket> soldTickets = new ArrayList<>();
-    private int availableTickets;
     private Location location;
-    private String date;
     private String ticketPrice;
     private int availableTickets;
 
@@ -25,10 +23,15 @@ public class Show implements Serializable {
      * @param locationID The unique ID for a location object to connect to a show object.
      * @param ticketPrice The price for a ticket.
      */
-    public Show(String showID, String locationID, int ticketPrice){
+    public Show(String showID, String locationID, String ticketPrice){
         this.showID = showID;       // TODO(1): Method that generates ID's
         this.locationID = locationID;
         this.ticketPrice = ticketPrice;
+    }
+
+    public Show(String showID, String showName){
+        this.showName = showName;
+        this.showID = showID;
     }
 
 
@@ -59,5 +62,62 @@ public class Show implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getShowID() {
+        return showID;
+    }
+
+    public void setSoldTickets(ArrayList<Ticket> ticket) {
+        this.soldTickets = ticket;
+    }
+
+    public void setDate(String s) {
+        this.date = s;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String toCSVString(){
+        return getShowID() + "|" + getLocationID() + "|" + getTicketPrice() + "|"
+            + getShowType() + "|" + getTime() + "|" + getProgram();
+}
+
+    public String getLocationID() {
+        return locationID;
+    }
+
+    public String getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public String getShowType() {
+        return showType;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public String getProgram() {
+        return program;
+    }
+
+    public ArrayList<Ticket> getSoldTickets(){
+        return this.soldTickets;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public Location getLocation() {
+        return location;
     }
 }

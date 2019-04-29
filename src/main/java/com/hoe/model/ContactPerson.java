@@ -5,7 +5,6 @@ import java.io.Serializable;
  * This is the standard Contact Person class. This class defines what a Contact Person is and what sort of data fields
  * the object should have.
  */
-public class ContactPerson {
 
 public class ContactPerson implements Serializable {
 

@@ -1,9 +1,6 @@
 package com.hoe.controller;
 
-import com.hoe.model.Database;
-import com.hoe.model.HoE;
-import com.hoe.model.Location;
-import com.hoe.model.Show;
+import com.hoe.model.*;
 import com.hoe.model.datasaving.DataSaver;
 import com.hoe.model.datasaving.DirectorySelector;
 import com.hoe.model.datasaving.JobjSaver;
@@ -87,15 +84,18 @@ public class MainViewController {
     public void initialize() {
         initializeVisibility();
         hoe = new HoE();
+        IDCreator id = new IDCreator();
+        Show s = new Show("","");
+        Location l = new Location("","");
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
         // TODO Remove test-objects
-        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
-        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
-        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
-        hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Rooftop"), "", "");
-        for (int i = 0; i < 1000000; i++) {
-            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
+        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location(id.randomKeyGen(s), "Big hall"), "", "");
+        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location(id.randomKeyGen(s), "Small hall"), "", "");
+        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location(id.randomKeyGen(s), "Outside"), "", "");
+        hoe.addShow("AC/DC", "Concert", "", "", new Location(id.randomKeyGen(s), "Rooftop"), "", "");
+        for (int i = 0; i < 1000; i++) {
+            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
         }
 
         initializeShows();
@@ -180,6 +180,8 @@ public class MainViewController {
 
 
     public void chooseSaveFile(ActionEvent event) {
+        hoe.load();
+        updateShowsList();
     }
 
     public void saveData(ActionEvent event) {

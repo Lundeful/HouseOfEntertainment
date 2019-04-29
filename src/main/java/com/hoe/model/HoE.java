@@ -1,7 +1,9 @@
 package com.hoe.model;
 
+import com.hoe.model.dataloading.CSVLoader;
 import com.hoe.model.dataloading.FileSelecter;
 import com.hoe.model.dataloading.JobjLoader;
+import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.DirectorySelector;
 import com.hoe.model.datasaving.JobjSaver;
 
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 
 public class HoE {
     private Database database;
+    IDCreator id = new IDCreator();
+    Show s = new Show("","");
 
     public HoE() {
         database = new Database();
@@ -17,7 +21,7 @@ public class HoE {
 
     public void addShow(String name, String type, String date, String time, Location location,
                         String ticketPrice, String program) {
-        Show show = new Show("TEMP-ID", formatInput(name)); // TODO: Use ID-generator
+        Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
         show.setDate(formatInput(date));
@@ -42,9 +46,15 @@ public class HoE {
 
     public boolean save() {
         try {
-            DirectorySelector d = new DirectorySelector();
-            JobjSaver save = new JobjSaver();
-            save.saveData(d.directoryChooser() + "save.ser", database);
+            DirectorySelector f = new DirectorySelector();
+            JobjSaver jobj = new JobjSaver();
+            CSVSaver csv = new CSVSaver();
+            String path = f.directoryChooser();
+            if(path.endsWith(".csv")){
+                csv.saveData(path,database);
+            } else if(path.endsWith(".ser")){
+                jobj.saveData(path,database);
+            }
             return true;
         } catch (Exception e){
             return false;
@@ -54,8 +64,14 @@ public class HoE {
     public Boolean load() {
         try {
             FileSelecter f = new FileSelecter();
-            JobjLoader loader = new JobjLoader();
-            database = loader.loadData(f.fileChooser());
+            JobjLoader jobj = new JobjLoader();
+            CSVLoader csv = new CSVLoader();
+            String path = f.fileChooser();
+            if(path.endsWith(".csv")){
+                database = csv.readData(path);
+            } else if(path.endsWith(".ser")){
+                database = jobj.loadData(path);
+            }
             return true;
         } catch (Exception e){
             return false;
