@@ -18,7 +18,7 @@ public class HoE {
         database = new Database();
     }
 
-    public void addShow(String name, String type, String date, String time, Location location,
+    public boolean addShow(String name, String type, String date, String time, Location location,
                         String ticketPrice, String program) {
         Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
 

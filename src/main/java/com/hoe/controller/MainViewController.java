@@ -1,9 +1,6 @@
 package com.hoe.controller;
 
-import com.hoe.model.HoE;
-import com.hoe.model.Location;
-import com.hoe.model.Show;
-import com.hoe.model.Ticket;
+import com.hoe.model.*;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -184,10 +181,10 @@ public class MainViewController {
         Location l = new Location("","");
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
-        hoe.addLocation("TEMP", "Big Hall", "", 100);
-        hoe.addLocation("TEMP", "Small Hall", "", 100);
-        hoe.addLocation("TEMP", "Outside", "", 100);
-        hoe.addLocation("TEMP", "Roof", "", 100);
+        /*hoe.addLocation(id.randomKeyGen(l), "Big Hall", "", 100);
+        hoe.addLocation(id.randomKeyGen(l), "Small Hall", "", 100);
+        hoe.addLocation(id.randomKeyGen(l), "Outside", "", 100);
+        hoe.addLocation(id.randomKeyGen(l), "Roof", "", 100);
 
         // TODO Remove test-objects
         hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location(id.randomKeyGen(s), "Big hall"), "", "");
@@ -197,7 +194,7 @@ public class MainViewController {
         for (int i = 0; i < 1000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
         }
-
+ */
         initializeLocations();
         initializeShows();
         initializeTickets();
