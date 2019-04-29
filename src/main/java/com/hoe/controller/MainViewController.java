@@ -7,7 +7,6 @@ import com.hoe.model.Ticket;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,6 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+
+import java.util.function.UnaryOperator;
 
 
 public class MainViewController {
@@ -174,10 +175,10 @@ public class MainViewController {
         hoe = new HoE();
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
-        hoe.addLocation("TEMP", "Big Hall", "", 100);
-        hoe.addLocation("TEMP", "Small Hall", "", 100);
-        hoe.addLocation("TEMP", "Outside", "", 100);
-        hoe.addLocation("TEMP", "Roof", "", 100);
+        hoe.addLocation("Big Hall", "", 151);
+        hoe.addLocation("Small Hall", "", 52);
+        hoe.addLocation("Outside", "", 200);
+        hoe.addLocation("Roof", "", 150);
 
         // TODO Remove test-objects
         hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
@@ -188,9 +189,23 @@ public class MainViewController {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
         }
 
+        addTextFormattingFilters();
         initializeLocations();
         initializeShows();
         initializeTickets();
+    }
+
+    private void addTextFormattingFilters() {
+        UnaryOperator<TextFormatter.Change> intFilter = change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("-?([1-9][0-9]*)?")) {
+                return change;
+            }
+            return null;
+        };
+        addShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
+        addLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
+        // TODO: Format phone number input
     }
 
     private void initializeVisibility() {
@@ -422,6 +437,15 @@ public class MainViewController {
     }
 
     public void submitLocationForm(ActionEvent event) {
+        if (addLocationFieldName.getText().trim().equals("")) { // If name field is empty
+            fadeTransition(addLocationNameError);
+        } {
+            hoe.addLocation(addLocationFieldName.getText(), addLocationFieldType.getText(),
+                    Integer.parseInt(addLocationFieldSeats.getText()));
+            updateLocationsList();
+            toggleAddLocationMenu(event);
+            displayNotification("Location added");
+        }
     }
 
     public void clearAddLocationFields(ActionEvent event) {

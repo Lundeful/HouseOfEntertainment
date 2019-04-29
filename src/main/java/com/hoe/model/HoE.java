@@ -49,12 +49,12 @@ public class HoE {
     public ArrayList<Promotion> getPromotions() {
         return database.getPromotions();
     }
-    public boolean addLocation(String id, String name, String typeOfLocation, int numberOfSeats) {
-        Location l = new Location(id, name);
+
+    public boolean addLocation(String name, String typeOfLocation, int numberOfSeats) {
+        Location l = new Location("TEMP-ID", name); // TODO: Bruk ID-generator
         l.setTypeOfLocation(formatInput(typeOfLocation));
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
     }
-
 
 }
