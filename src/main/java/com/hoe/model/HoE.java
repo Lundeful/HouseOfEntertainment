@@ -1,12 +1,45 @@
 package com.hoe.model;
 
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HoE {
     private Database database;
 
     public HoE() {
         database = new Database();
+        generateTestObjects();
+    }
+
+    private void generateTestObjects() {
+        Location l1 = new Location("Temp-ID", "Big Hall");
+        l1.setNumberOfSeats(578);
+        l1.setTypeOfLocation("Theatre");
+
+        Location l2 = new Location("Temp-ID", "Small stage");
+        l2.setTypeOfLocation("Theatre");
+        l2.setNumberOfSeats(300);
+
+        Location l3 = new Location("Temp-ID", "Supreme");
+        l2.setNumberOfSeats(258);
+        l2.setTypeOfLocation("Movie theatre");
+
+        Location l4 = new Location("Temp-iD", "IMAX");
+        l4.setTypeOfLocation("Movie Theatre");
+        l4.setNumberOfSeats(420);
+
+        database.addLocation(l1);
+        database.addLocation(l2);
+        database.addLocation(l3);
+        database.addLocation(l4);
+        addShow("Harry potter", "Movie", "28-10-2019", "", l4, "120", "");
+        addShow("Cats", "Stage show", "", "Midnight", l2, "260", "");
+        addShow("Bohemian Rhapsody", "Movie", "", "", l4, "190", "");
+        addShow("AC/DC", "Concert", "", "", l1, "499", "");
+
+        for (int i = 0; i < 1000; i++) {
+            addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
+        }
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,

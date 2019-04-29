@@ -171,24 +171,10 @@ public class MainViewController {
 
 
     public void initialize() {
-        initializeVisibility();
         hoe = new HoE();
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
-        hoe.addLocation("Big Hall", "", 151);
-        hoe.addLocation("Small Hall", "", 52);
-        hoe.addLocation("Outside", "", 200);
-        hoe.addLocation("Roof", "", 150);
-
-        // TODO Remove test-objects
-        hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location("temp-ID", "Big hall"), "", "");
-        hoe.addShow("Cats", "Stage show", "", "Midnight", new Location("temp-ID", "Small hall"), "", "");
-        hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location("temp-ID", "Outside"), "", "");
-        hoe.addShow("AC/DC", "Concert", "", "", new Location("Temp-id", "Rooftop"), "", "");
-        for (int i = 0; i < 1000; i++) {
-            hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), "", "");
-        }
-
+        initializeVisibility();
         addTextFormattingFilters();
         initializeLocations();
         initializeShows();
