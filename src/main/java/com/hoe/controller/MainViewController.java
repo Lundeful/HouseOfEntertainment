@@ -46,7 +46,7 @@ public class MainViewController {
     @FXML
     private TextArea addShowFieldProgram;
     @FXML
-    private ChoiceBox<Location> addShowChoiceBoxLocation;
+    private ComboBox<Location> addShowChoiceBoxLocation;
 
     // View with list of shows
     @FXML
@@ -127,7 +127,7 @@ public class MainViewController {
     private TableView<Ticket> ticketTableView;
 
     @FXML
-    private ChoiceBox<Show> addTicketChoiceBoxShow;
+    private ComboBox<Show> addTicketChoiceBoxShow;
 
     /*
     ==============================
@@ -226,7 +226,7 @@ public class MainViewController {
     private void updateShowsList() {
         ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
         showsTableView.setItems(showData);
-        // addTicketChoiceBoxShow.setItems(showData);
+        addTicketChoiceBoxShow.setItems(showData);
     }
 
     private void initializeLocations() {
