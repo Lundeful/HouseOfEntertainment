@@ -120,4 +120,9 @@ public class Show implements Serializable {
     public Location getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return this.showName + " - " + this.date;
+    }
 }

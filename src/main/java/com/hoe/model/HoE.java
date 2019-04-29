@@ -9,7 +9,6 @@ import com.hoe.model.datasaving.JobjSaver;
 
 import java.util.ArrayList;
 
-
 public class HoE {
     private Database database;
     IDCreator id = new IDCreator();
@@ -30,7 +29,7 @@ public class HoE {
         show.setTicketPrice(formatInput(ticketPrice));
         show.setProgram(formatInput(program));
 
-        database.addShow(show);
+        return database.addShow(show);
     }
 
     private String formatInput(String s) {
@@ -77,4 +76,27 @@ public class HoE {
             return false;
         }
     }
+    public ArrayList<Location> getLocations() {
+        return database.getLocations();
+    }
+
+    public ArrayList<Ticket> getTickets() {
+        return database.getTickets();
+    }
+
+    public ArrayList<ContactPerson> getContacts() {
+        return database.getContacts();
+    }
+
+    public ArrayList<Promotion> getPromotions() {
+        return database.getPromotions();
+    }
+    public boolean addLocation(String id, String name, String typeOfLocation, int numberOfSeats) {
+        Location l = new Location(id, name);
+        l.setTypeOfLocation(formatInput(typeOfLocation));
+        l.setNumberOfSeats(numberOfSeats);
+        return database.addLocation(l);
+    }
+
+
 }

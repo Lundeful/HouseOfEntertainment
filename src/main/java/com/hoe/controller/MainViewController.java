@@ -1,12 +1,13 @@
 package com.hoe.controller;
 
-import com.hoe.model.*;
-import com.hoe.model.datasaving.DataSaver;
-import com.hoe.model.datasaving.DirectorySelector;
-import com.hoe.model.datasaving.JobjSaver;
+import com.hoe.model.HoE;
+import com.hoe.model.Location;
+import com.hoe.model.Show;
+import com.hoe.model.Ticket;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -28,13 +29,14 @@ public class MainViewController {
 
     // Main menu buttons
     @FXML
-    private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, promotionsButton,
+    private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, contactsButton,
+            promotionsButton,
             saveDataButton, loadDataButton, helpButton;
 
     // The different panes / views in this app
     @FXML
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
-            promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
+            contactsWindow, promotionsWindow, saveDataWindow, loadDataWindow, helpWindow;
 
     /*
     ==============================
@@ -51,7 +53,7 @@ public class MainViewController {
     @FXML
     private TextArea addShowFieldProgram;
     @FXML
-    private ChoiceBox<Location> addShowChoiceBoxLocation;
+    private ComboBox<Location> addShowChoiceBoxLocation;
 
     // View with list of shows
     @FXML
@@ -73,6 +75,98 @@ public class MainViewController {
     Edit shows menu
     ==============================
      */
+
+    @FXML
+    private VBox editShowsView;
+
+
+    /*
+    ==============================
+    Add locations menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addLocationView;
+
+    @FXML
+    private TextField addLocationFieldName, addLocationFieldType, addLocationFieldSeats;
+
+    @FXML
+    private HBox locationsView;
+
+    @FXML
+    private TableView<Location> locationTableView;
+
+    @FXML
+    private TableColumn<Location, String> tableColumnLocationName, tableColumnLocationType, tableColumnLocationSeats;
+
+    @FXML
+    private Label addLocationNameError;
+
+    /*
+    ==============================
+    Edit locations menu
+    ==============================
+     */
+
+    @FXML
+    private VBox editLocationView;
+
+
+    /*
+    ==============================
+    Add tickets menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addTicketView;
+
+    @FXML
+    private TableColumn<Ticket, String> tableColumnTicketShow, tableColumnTicketPhone,
+            tableColumnTicketDate;
+
+    @FXML
+    private TableColumn<Location, String> tableColumnTicketLocation;
+
+    @FXML
+    private TableView<Ticket> ticketTableView;
+
+    @FXML
+    private ComboBox<Show> addTicketChoiceBoxShow;
+
+    /*
+    ==============================
+    Edit tickets menu
+    ==============================
+     */
+    @FXML
+    private VBox editTicketView;
+
+
+        /*
+    ==============================
+    Add contacts menu
+    ==============================
+     */
+
+    @FXML
+    private VBox addContactView;
+
+    /*
+    ==============================
+    Edit contacts menu
+    ==============================
+     */
+    @FXML
+    private VBox editContactView;
+
+
+
+    /*
+    ==============================
+     */
     // Statusbar and notifications
     @FXML
     private Label status, notification;
@@ -81,6 +175,7 @@ public class MainViewController {
     private HoE hoe;
     private Show selectedShow;
 
+
     public void initialize() {
         initializeVisibility();
         hoe = new HoE();
@@ -88,6 +183,11 @@ public class MainViewController {
         Show s = new Show("","");
         Location l = new Location("","");
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
+
+        hoe.addLocation("TEMP", "Big Hall", "", 100);
+        hoe.addLocation("TEMP", "Small Hall", "", 100);
+        hoe.addLocation("TEMP", "Outside", "", 100);
+        hoe.addLocation("TEMP", "Roof", "", 100);
 
         // TODO Remove test-objects
         hoe.addShow("Harry potter", "Movie", "28-10-2019", "", new Location(id.randomKeyGen(s), "Big hall"), "", "");
@@ -98,7 +198,9 @@ public class MainViewController {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
         }
 
+        initializeLocations();
         initializeShows();
+        initializeTickets();
     }
 
     private void initializeVisibility() {
@@ -133,8 +235,39 @@ public class MainViewController {
 
     private void updateShowsList() {
         ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
-        showData.setAll(hoe.getShows());
         showsTableView.setItems(showData);
+        addTicketChoiceBoxShow.setItems(showData);
+    }
+
+    private void initializeLocations() {
+        tableColumnLocationName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
+        tableColumnLocationSeats.setCellValueFactory(new PropertyValueFactory<>("numberOfSeats"));
+        updateLocationsList();
+    }
+
+    private void updateLocationsList() {
+        ObservableList<Location> locationsData = FXCollections.observableArrayList(hoe.getLocations());
+        locationTableView.setItems(locationsData);
+        addShowChoiceBoxLocation.setItems(locationsData);
+    }
+
+    private void initializeTickets() {
+        tableColumnTicketShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        tableColumnTicketDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tableColumnTicketLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        tableColumnTicketPhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        updateTicketsList();
+    }
+
+    private void updateTicketsList() {
+        hoe.getTickets();
+        try {
+            ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
+            ticketTableView.setItems(ticketsData);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void overviewClicked() {
@@ -151,6 +284,10 @@ public class MainViewController {
 
     public void ticketsClicked() {
         menuClicked(ticketsWindow, ticketsButton);
+    }
+
+    public void contactsClicked() {
+        menuClicked(contactsWindow, contactsButton);
     }
 
     public void promotionsClicked() {
@@ -191,18 +328,28 @@ public class MainViewController {
     public void toggleAddShowMenu(ActionEvent actionEvent) {
         if(!addShowsView.isVisible()) {
             addShowsView.setVisible(true);
+            editShowsView.setVisible(false);
         } else {
             addShowsView.setVisible(false);
+            editShowsView.setVisible(false);
         }
     }
 
     public void toggleEditShow(ActionEvent actionEvent) {
-        addShowsView.setVisible(false);
-
-        // displayNotification("Show to be edited: " + selectedShow.getShowName());
+        if(!editShowsView.isVisible()) {
+            editShowsView.setVisible(true);
+            addShowsView.setVisible(false);
+        } else {
+            editShowsView.setVisible(false);
+            addShowsView.setVisible(false);
+        }
     }
 
     public void deleteShow(ActionEvent actionEvent) {
+        if (showsTableView.getSelectionModel().isEmpty()){
+            displayNotification("No show selected");
+            return;
+        }
         Show s = showsTableView.getSelectionModel().getSelectedItem();
         if (hoe.removeShow(s)) {
             displayNotification("Show removed");
@@ -233,7 +380,6 @@ public class MainViewController {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                     addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
-
         updateShowsList();
         toggleAddShowMenu(actionEvent);
         displayNotification("Show added");
@@ -261,5 +407,124 @@ public class MainViewController {
 
     public void discardEditShow(ActionEvent actionEvent) {
 
+    }
+
+    public void toggleAddLocationMenu(ActionEvent event) {
+        if(!addLocationView.isVisible()) {
+            addLocationView.setVisible(true);
+            editLocationView.setVisible(false);
+        } else {
+            addLocationView.setVisible(false);
+            editLocationView.setVisible(false);
+        }
+    }
+
+    public void toggleEditLocation(ActionEvent event) {
+        if(!editLocationView.isVisible()) {
+            editLocationView.setVisible(true);
+            addLocationView.setVisible(false);
+        } else {
+            editLocationView.setVisible(false);
+            addLocationView.setVisible(false);
+        }
+    }
+
+    public void deleteLocation(ActionEvent event) {
+    }
+
+    public void submitLocationForm(ActionEvent event) {
+    }
+
+    public void clearAddLocationFields(ActionEvent event) {
+    }
+
+    public void closeAddLocationMenu(ActionEvent event) {
+        addLocationView.setVisible(false);
+    }
+
+    public void confirmEditLocation(ActionEvent event) {
+    }
+
+    public void discardEditLocation(ActionEvent event) {
+    }
+
+    public void toggleAddTicket(ActionEvent event) {
+        if(!addTicketView.isVisible()) {
+            addTicketView.setVisible(true);
+            editTicketView.setVisible(false);
+        } else {
+            addTicketView.setVisible(false);
+            editTicketView.setVisible(false);
+        }
+    }
+
+    public void toggleEditTicket(ActionEvent event) {
+        if(!editTicketView.isVisible()) {
+            editTicketView.setVisible(true);
+            addTicketView.setVisible(false);
+        } else {
+            editTicketView.setVisible(false);
+            addTicketView.setVisible(false);
+        }
+
+    }
+
+    public void deleteTicket(ActionEvent event) {
+    }
+
+    public void submitTicketForm(ActionEvent event) {
+    }
+
+    public void clearAddTicketForm(ActionEvent event) {
+    }
+
+    public void closeAddTicketMenu(ActionEvent event) {
+        addTicketView.setVisible(false);
+    }
+
+    public void confirmEditTicket(ActionEvent event) {
+    }
+
+    public void discardEditTicket(ActionEvent event) {
+
+    }
+
+    public void toggleAddContactsMenu(ActionEvent event) {
+        if(!addContactView.isVisible()) {
+            addContactView.setVisible(true);
+            editContactView.setVisible(false);
+        } else {
+            addContactView.setVisible(false);
+            editContactView.setVisible(false);
+        }
+    }
+
+    public void toggleEditContact(ActionEvent event) {
+        if(!editContactView.isVisible()) {
+            editContactView.setVisible(true);
+            addContactView.setVisible(false);
+        } else {
+            editContactView.setVisible(false);
+            addContactView.setVisible(false);
+        }
+    }
+
+    public void deleteContact(ActionEvent event) {
+    }
+
+    public void submitContactForm(ActionEvent event) {
+    }
+
+    public void clearAddContactForm(ActionEvent event) {
+    }
+
+    public void closeAddContactForm(ActionEvent event) {
+        addContactView.setVisible(false);
+    }
+
+    public void confirmEditContact(ActionEvent event) {
+    }
+
+    public void discardEditContact(ActionEvent event) {
     }
 }
