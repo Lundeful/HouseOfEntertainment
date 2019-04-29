@@ -1,6 +1,8 @@
 package com.hoe.model;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
 
     private final String locationID;
     private String name;
@@ -42,6 +44,11 @@ public class Location {
 
     public int getNumberOfSeats() {
         return numberOfSeats;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 
     /**

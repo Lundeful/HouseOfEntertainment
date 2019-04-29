@@ -1,9 +1,10 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // TODO: JavaDoc
-public class Database {
+public class Database  implements Serializable {
     private ArrayList<Location> locations;
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
@@ -66,9 +67,8 @@ public class Database {
     }
 
     public boolean removeShow(Show s) {
-        // TODO: Iterate through list and remove according to unique ID
+        return shows.remove(s);
         // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
     }
 
     public boolean removePromotion(Promotion p) {
@@ -93,16 +93,16 @@ public class Database {
         return this.locations;
     }
 
-    public ArrayList<Show> getShows(){
-        return this.shows;
+    public ArrayList<Show> getShows() {
+        return shows;
     }
 
-    public ArrayList<Promotion> getPromotions(){
-        return this.promotions;
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
     }
 
-    public ArrayList<ContactPerson> getContacts(){
-        return this.contacts;
+    public ArrayList<ContactPerson> getContacts() {
+        return contacts;
     }
 
     public ArrayList<Ticket> getTickets(){

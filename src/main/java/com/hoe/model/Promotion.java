@@ -1,8 +1,9 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Promotion {
+public class Promotion implements Serializable {
     private final String LOCATION_ID;
     private String showID;
     private String from;

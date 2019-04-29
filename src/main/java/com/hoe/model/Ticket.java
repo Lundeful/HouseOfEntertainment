@@ -1,21 +1,28 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ticket {
+public class Ticket implements Serializable {
 
     private final String ticketID;
     private String locationID;
     private String showID;
     private String date;
+    private String location;
     private int price;
     private String phoneNumber;
     private int seatNumber;
+    private Show show;
 
     public Ticket(String ticketID, String showID, int price) {
         this.ticketID = ticketID;
         this.showID = showID;
+    public Ticket(String ticketID, String showID, String location, int price){
+        this.ticketID = ticketID; // TODO(1): Make method that generates ID's
+        this.location = location;
         this.price = price;
+
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -61,6 +68,8 @@ public class Ticket {
 
     public void setSeatNumber(int seatNumber) {
         this.seatNumber = seatNumber;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getShowID() {
@@ -79,4 +88,13 @@ public class Ticket {
         return getTicketID() + "|" + getShowID() +"|" + String.valueOf(getPrice()) + "|" + getDate()
                 + "|" + getPhoneNumber() + "|" + getSeatNumber();
     }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
 }

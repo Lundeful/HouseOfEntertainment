@@ -16,7 +16,7 @@
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
-        <name>Your Organisation</name>
+        <name>HouseOfEntertainment</name>
     </organization>
 
     <dependencies>
@@ -58,7 +58,6 @@
                     <mainClass>com.hoe.Main</mainClass>
                 </configuration>
             </plugin>
-
         </plugins>
     </build>
 

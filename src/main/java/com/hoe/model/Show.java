@@ -1,16 +1,22 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Show {
+public class Show implements Serializable {
 
     private final String showID;
+    private String showName;
     private String showType;
     private String program;
+    private String date;
     private String locationID;
     private String time;
-    private int ticketPrice;
     private ArrayList<Ticket> soldTickets = new ArrayList<>();
+    private int availableTickets;
+    private Location location;
+    private String date;
+    private String ticketPrice;
     private int availableTickets;
 
     /**
@@ -25,8 +31,18 @@ public class Show {
         this.ticketPrice = ticketPrice;
     }
 
-    public int getTicketPrice() {
-        return ticketPrice;
+
+    public boolean setAvailableTickets(int n) {
+        if (soldTickets.size() <= n) {
+            availableTickets = n;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void setTicketPrice(String ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     public void setShowType(String showType) {
@@ -43,65 +59,5 @@ public class Show {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getShowID() {
-        return showID;
-    }
-
-    public String getShowType() {
-        return showType;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public String getLocationID() {
-        return locationID;
-    }
-
-    /**
-     * This method is meant to print out a string with a CSV format so that is it easier to save.
-     * @return Returns a String with complete information and in CSV-format.
-     */
-    public String toCSVString(){
-        return getShowID() + "|" + getLocationID() + "|" + String.valueOf(getTicketPrice()) + "|"
-                + getShowType() + "|" + getTime() + "|" + getProgram() + "|" + String.valueOf(getAvailableTickets())
-                + "|" + String.valueOf((Object)getSoldTickets().size());
-    }
-
-    public int getAvailableTickets() {
-        return availableTickets;
-    }
-
-    public void setAvailableTickets(int availableTickets) {
-        this.availableTickets = availableTickets;
-    }
-
-    public ArrayList<Ticket> getSoldTickets() {
-        return soldTickets;
-    }
-
-    public void setSoldTickets(ArrayList<Ticket> soldTickets) {
-        this.soldTickets = soldTickets;
-    }
-
-    /**
-     *
-     * @param t
-     * @return
-     */
-    public boolean addTicket(Ticket t){
-        if(0< availableTickets) {
-            soldTickets.add(t);
-            availableTickets--;
-            return true;
-        }
-        return false;
     }
 }
