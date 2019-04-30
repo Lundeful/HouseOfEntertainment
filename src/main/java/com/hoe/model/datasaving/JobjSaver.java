@@ -12,8 +12,14 @@ import java.nio.file.NoSuchFileException;
  */
 public class JobjSaver extends DataSaver implements Serializable {
 
-    // TODO: Make the seri class make a fixed *.ser file.
 
+    /**
+     * Method used to save the state of the program if the user wants to
+     * Method utilizes Serializable to save the state of the Database class, with it's object.
+     * @param filename Passes in the filename that is given by the user.
+     * @param data Passes in the given Database object, to save the entire program at the time of the given usage
+     *             of the method.
+     */
     @Override
     public void saveData(String filename, Database data){
         try {

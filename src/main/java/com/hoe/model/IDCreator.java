@@ -6,11 +6,11 @@ import java.util.Base64;
 
 /**
  * Class that contains an ID creator.
- * Produces unique ID's depending on which type of passing object is needed.
+ * Produces unique ID's depending on which type of object is needed.
+ * All the different objects has its own start value, to differ the them from each other
+ * Utilizes Base64 to create unique
  */
 
-// TODO(1): TEST THE CLASS
-// TODO(2): Better comments and JDoc.
 
 public class IDCreator {
     private final String SHOW_ID = "5";
@@ -21,10 +21,7 @@ public class IDCreator {
     private final SecureRandom random = new SecureRandom();
     private final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
 
-    /**
-     * Method that creates a random secure key-string.
-     * @return Returns a random created key-string of a length of 10.
-     */
+
     public String randomKeyGen(Location location) {
         byte[] id = new byte[10];
         random.nextBytes(id);

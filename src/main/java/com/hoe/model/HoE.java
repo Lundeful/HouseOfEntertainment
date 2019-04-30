@@ -6,6 +6,7 @@ import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.DirectorySelector;
 import com.hoe.model.datasaving.JobjSaver;
+import javafx.scene.control.skin.TableHeaderRow;
 
 import java.util.ArrayList;
 
@@ -43,19 +44,32 @@ public class HoE {
         return database.getShows();
     }
 
+
+    /**
+     * Method that
+     * @return returns true and saves the given file-type if it's successful,
+     * returns false if there is any exceptions, leading the save to not being applied.
+     */
     public boolean save() {
         try {
             DirectorySelector f = new DirectorySelector();
             JobjSaver jobj = new JobjSaver();
             CSVSaver csv = new CSVSaver();
             String path = f.directoryChooser();
-            if(path.endsWith(".csv")){
-                csv.saveData(path,database);
-            } else if(path.endsWith(".ser")){
-                jobj.saveData(path,database);
-            }
+            System.out.println("Starting Thread");
+            new Thread(() -> {
+                if (path.endsWith(".csv")) {
+                    csv.saveData(path, database);
+                } else if (path.endsWith(".ser")) {
+                    jobj.saveData(path, database);
+                }
+                System.out.println("Save Complete");
+                Thread.currentThread().interrupt();
+                System.out.println("Thread shutdown");
+            }).start();
             return true;
         } catch (Exception e){
+            Thread.currentThread().interrupt();
             return false;
         }
     }
@@ -66,13 +80,20 @@ public class HoE {
             JobjLoader jobj = new JobjLoader();
             CSVLoader csv = new CSVLoader();
             String path = f.fileChooser();
-            if(path.endsWith(".csv")){
-                database = csv.readData(path);
-            } else if(path.endsWith(".ser")){
-                database = jobj.loadData(path);
-            }
+            System.out.println("Starting Thread");
+            new Thread(() -> {
+                if(path.endsWith(".csv")){
+                    database = csv.readData(path);
+                } else if(path.endsWith(".ser")){
+                    database = jobj.loadData(path);
+                }
+                System.out.println("Loading Complete");
+                Thread.currentThread().interrupt();
+                System.out.println("Thread shutdown");
+            }).start();
             return true;
         } catch (Exception e){
+            Thread.currentThread().interrupt();
             return false;
         }
     }
@@ -97,6 +118,8 @@ public class HoE {
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
     }
+
+
 
 
 }

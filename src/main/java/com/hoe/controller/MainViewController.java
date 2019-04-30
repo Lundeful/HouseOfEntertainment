@@ -181,7 +181,7 @@ public class MainViewController {
         Location l = new Location("","");
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
-        /*hoe.addLocation(id.randomKeyGen(l), "Big Hall", "", 100);
+      /* hoe.addLocation(id.randomKeyGen(l), "Big Hall", "", 100);
         hoe.addLocation(id.randomKeyGen(l), "Small Hall", "", 100);
         hoe.addLocation(id.randomKeyGen(l), "Outside", "", 100);
         hoe.addLocation(id.randomKeyGen(l), "Roof", "", 100);
@@ -191,10 +191,9 @@ public class MainViewController {
         hoe.addShow("Cats", "Stage show", "", "Midnight", new Location(id.randomKeyGen(s), "Small hall"), "", "");
         hoe.addShow("Bohemian Rhapsody", "Movie", "", "", new Location(id.randomKeyGen(s), "Outside"), "", "");
         hoe.addShow("AC/DC", "Concert", "", "", new Location(id.randomKeyGen(s), "Rooftop"), "", "");
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
-        }
- */
+        } */
         initializeLocations();
         initializeShows();
         initializeTickets();
