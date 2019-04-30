@@ -1,6 +1,7 @@
 package com.hoe.controller;
 
 import com.hoe.model.*;
+import com.hoe.model.exceptions.NotEnoughSeatsException;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,7 @@ public class MainViewController {
     // TODO: Byttet fra TableColumn<Location, String> Sjekk at det fungerer
 
     @FXML
-    private Label addShowFormNameError;
+    private Label addShowFormNameError, addShowFormLocationerror;
 
     /*
     ==============================
@@ -182,6 +183,7 @@ public class MainViewController {
     // Main app object
     private HoE hoe;
     private Show selectedShow;
+    private Location selectedLocation;
 
 
     public void initialize() {
@@ -230,7 +232,6 @@ public class MainViewController {
         tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         updateShowsList();
 
-        // selectedShow = showsTableView.getSelectionModel().selectedItemProperty().addListener(Obser);
         // Listen for selected show in table
         showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
             if (s1 != null && s2 != null && !s2.equals(s1)) {
@@ -250,6 +251,12 @@ public class MainViewController {
         tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
         tableColumnLocationSeats.setCellValueFactory(new PropertyValueFactory<>("numberOfSeats"));
         updateLocationsList();
+
+        locationTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
+            if (s1 != null && s2 != null && !s2.equals(s1)) {
+                selectedLocation = s2;
+            }
+        });
     }
 
     private void updateLocationsList() {
@@ -321,7 +328,6 @@ public class MainViewController {
         currentButton = b;
     }
 
-
     public void chooseSaveFile(ActionEvent event) {
         // TODO
     }
@@ -342,22 +348,27 @@ public class MainViewController {
 
     public void toggleEditShow(ActionEvent actionEvent) {
         if(!editShowsView.isVisible() && showsTableView.getSelectionModel().getSelectedItem() != null) {
-            loadShowValues(showsTableView.getSelectionModel().getSelectedItem());
-            editShowsView.setVisible(true);
+            loadShowValues();
+            editShowsView.setVisible(true);loadShowValues();
             addShowsView.setVisible(false);
         } else {
             editShowsView.setVisible(false);
             addShowsView.setVisible(false);
-            selectedShow = null;
+            // selectedShow = null;
             discardEditShow();
         }
     }
 
-    private void loadShowValues(Show selectedItem) {
+    private void loadShowValues() {
+        Show selectedItem = showsTableView.getSelectionModel().getSelectedItem();
         editShowTextFieldName.setText(selectedItem.getShowName());
         editShowTextFieldType.setText(selectedItem.getShowType());
+        editShowTextFieldDate.setText(selectedItem.getDate());
+        editShowTextFieldTime.setText(selectedItem.getTime());
+        editShowTextFieldTicketPrice.setText(selectedItem.getTicketPrice());
         editShowChoiceBoxLocation.setValue(selectedItem.getLocation());
         editShowChoiceBoxContactPerson.setValue(selectedItem.getContact());
+        editShowFieldProgram.setText(selectedItem.getProgram());
     }
 
     public void deleteShow(ActionEvent actionEvent) {
@@ -396,6 +407,8 @@ public class MainViewController {
     public void submitShowForm(ActionEvent actionEvent) {
         if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
             fadeTransition(addShowFormNameError);
+        } else if (addShowChoiceBoxLocation.getValue() == null) {
+            fadeTransition(addShowFormLocationerror);
         } else {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
@@ -422,12 +435,32 @@ public class MainViewController {
     }
 
     public void confirmEditShow(ActionEvent actionEvent) {
-        //if (!editShowTextFieldName.getText().isEmpty()) selectedShow.setShowName();
+        if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
+            fadeTransition(addShowFormNameError);
+        } else {
+            try {
+                selectedShow.setShowName(editShowTextFieldName.getText());
+                selectedShow.setShowType(editShowTextFieldType.getText());
+                selectedShow.setDate(editShowTextFieldDate.getText());
+                selectedShow.setTime(editShowTextFieldTime.getText());
+                selectedShow.setTicketPrice(editShowTextFieldTicketPrice.getText());
+                selectedShow.setLocation(editShowChoiceBoxLocation.getValue());
+                selectedShow.setContactPerson(editShowChoiceBoxContactPerson.getValue());
+                selectedShow.setProgram(editShowFieldProgram.getText());
 
+                updateShowsList();
+                editShowsView.setVisible(false);
+                displayNotification("Show edited");
+            } catch (NotEnoughSeatsException e) {
+                displayNotification("Error: " + e.getMessage());
+                System.err.println(e.getMessage());
+                // TODO Fyll ut exception-class
+            }
+        }
     }
 
     public void discardEditShow() {
-
+        editShowsView.setVisible(false);
     }
 
     public void toggleAddLocationMenu(ActionEvent event) {

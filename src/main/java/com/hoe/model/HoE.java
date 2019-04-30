@@ -1,5 +1,7 @@
 package com.hoe.model;
 
+import com.hoe.model.exceptions.NotEnoughSeatsException;
+
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,6 +13,7 @@ public class HoE {
         generateTestObjects();
     }
 
+    // TODO: Remove this method before final delivery
     private void generateTestObjects() {
         Location l1 = new Location("Temp-ID", "Big Hall");
         l1.setNumberOfSeats(578);
@@ -37,7 +40,7 @@ public class HoE {
         addShow("Bohemian Rhapsody", "Movie", "", "", l4, "190", "");
         addShow("AC/DC", "Concert", "", "", l1, "499", "");
 
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100000; i++) {
             addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
         }
     }
@@ -49,7 +52,11 @@ public class HoE {
         show.setShowType(formatInput(type));
         show.setDate(formatInput(date));
         show.setTime(formatInput(time));
-        show.setLocation(location);
+        try {
+            show.setLocation(location);
+        } catch (NotEnoughSeatsException e) {
+            e.printStackTrace();
+        }
         show.setTicketPrice(formatInput(ticketPrice));
         show.setProgram(formatInput(program));
 

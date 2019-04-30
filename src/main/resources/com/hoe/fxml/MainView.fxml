@@ -22,13 +22,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
+<StackPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1280.0">
          <children>
             <HBox VBox.vgrow="ALWAYS">
                <children>
-                  <VBox maxWidth="500.0" minWidth="220.0" styleClass="mainMenuVBox">
+                  <VBox maxWidth="500.0" minWidth="220.0" prefHeight="720.0" prefWidth="220.0" styleClass="mainMenuVBox">
                      <children>
                         <BorderPane>
                            <center>
@@ -42,7 +42,7 @@
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </padding>
                         </BorderPane>
-                        <VBox prefHeight="200.0" prefWidth="200.0">
+                        <VBox>
                            <children>
                               <Button fx:id="overviewButton" mnemonicParsing="false" onAction="#overviewClicked" styleClass="mainMenuButton" text="Overview">
                                  <font>
@@ -228,7 +228,7 @@
                                                                   <TextField fx:id="addShowTextFieldTime" promptText="HH:MM" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <TextField fx:id="addShowTextFieldTicketPrice" promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                                   <Label fx:id="addShowFormNameError" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
-                                                                  <Label styleClass="addShowErrorMessage" text="Error message" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="addShowFormLocationerror" styleClass="addShowErrorMessage" text="You must enter a location" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter date in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter time in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                                   <TextArea fx:id="addShowFieldProgram" prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />

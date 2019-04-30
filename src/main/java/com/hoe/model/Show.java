@@ -1,5 +1,7 @@
 package com.hoe.model;
 
+import com.hoe.model.exceptions.NotEnoughSeatsException;
+
 import java.util.ArrayList;
 
 public class Show {
@@ -19,6 +21,7 @@ public class Show {
     public Show(String showID, String showName){
         this.showName = showName;
         this.showID = showID;
+        this.soldTickets = new ArrayList<>();
     }
 
 
@@ -43,8 +46,13 @@ public class Show {
         this.program = program;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(Location location) throws NotEnoughSeatsException {
+        if (soldTickets.size() <= location.getNumberOfSeats()) {
+            this.location = location;
+            availableTickets = location.getNumberOfSeats();
+        } else {
+            throw new NotEnoughSeatsException("Tickets sold is larger than number of seats");
+        }
     }
 
     public void setTime(String time) {
