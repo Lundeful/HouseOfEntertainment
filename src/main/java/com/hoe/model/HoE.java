@@ -40,7 +40,7 @@ public class HoE {
         addShow("Bohemian Rhapsody", "Movie", "", "", l4, "190", "");
         addShow("AC/DC", "Concert", "", "", l1, "499", "");
 
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 200000; i++) {
             addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
         }
     }

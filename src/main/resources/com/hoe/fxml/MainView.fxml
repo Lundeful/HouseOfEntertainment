@@ -98,7 +98,7 @@
                   </VBox>
                   <VBox prefWidth="1080.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                        <StackPane fx:id="mainViewsStackPane" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                            <children>
                               <AnchorPane fx:id="selectMenuWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
@@ -268,7 +268,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editShowsView" styleClass="addShowsView" visible="false">
+                                                <VBox fx:id="editShowsView" styleClass="addShowsView">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit Show">
                                                          <VBox.margin>
@@ -307,10 +307,11 @@
                                                                   <TextField fx:id="editShowTextFieldDate" promptText="DD-MM-YYYY" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <TextField fx:id="editShowTextFieldTime" promptText="HH:MM" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <TextField fx:id="editShowTextFieldTicketPrice" promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                                  <Label fx:id="addShowFormNameError1" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editShowFormNameError" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
                                                                   <TextArea fx:id="editShowFieldProgram" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
                                                                   <ComboBox fx:id="editShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <ComboBox fx:id="editShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                  <Label fx:id="editShowFormLocationError" styleClass="addShowErrorMessage" text="You must enter a location" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
