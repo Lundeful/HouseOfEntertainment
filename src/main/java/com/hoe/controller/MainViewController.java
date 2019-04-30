@@ -1,12 +1,16 @@
 package com.hoe.controller;
 
 import com.hoe.model.*;
+import com.hoe.model.dataloading.CSVLoader;
+import com.hoe.model.dataloading.FileSelecter;
+import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -195,8 +199,7 @@ public class MainViewController {
         hoe.addShow("AC/DC", "Concert", "", "", new Location(id.randomKeyGen(s), "Rooftop"), "", "");
         for (int i = 0; i < 1000000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
-        }
-*/
+        } */
         initializeLocations();
         initializeShows();
         initializeTickets();
@@ -316,16 +319,27 @@ public class MainViewController {
 
 
     public void chooseSaveFile(ActionEvent event) {
-        hoe.save();
-        updateShowsList();
+        FileSelecter f = new FileSelecter();
+        String path = f.fileChooser();
+        System.out.println("Starting Thread");
+        new Thread(() -> {
+            try {
+                hoe.load(path);
+                updateShowsList();
+                Thread.currentThread().interrupt();
+            } catch (WrongCSVFormatException e) {
+                System.out.println("FEEEIL");
+                e.printStackTrace();
+                displayNotification(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+            System.out.println("Loading Complete, closing thread");
+        }).start();
+
     }
 
     public void saveData(ActionEvent event) {
-        try {
-            hoe.load();
-        } catch (WrongCSVFormatException e) {
-            e.printStackTrace();
-        }
+        hoe.save();
         updateShowsList();
     }
 

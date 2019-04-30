@@ -6,9 +6,11 @@ import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.DirectorySelector;
 import com.hoe.model.datasaving.JobjSaver;
+import com.hoe.model.exceptions.FileExtensionException;
 import javafx.scene.control.skin.TableHeaderRow;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -110,17 +112,22 @@ public class HoE {
             JobjSaver jobj = new JobjSaver();
             CSVSaver csv = new CSVSaver();
             String path = f.directoryChooser();
+
+            System.out.println(path);
             System.out.println("Starting Thread");
-            new Thread(() -> {
                 if (path.endsWith(".csv")) {
-                    csv.saveData(path, database);
+                    new Thread(() -> {
+                        csv.saveData(path, database);
+                        Thread.currentThread().interrupt();
+                    }).start();
                 } else if (path.endsWith(".ser")) {
-                    jobj.saveData(path, database);
+                    new Thread(() -> {
+                        jobj.saveData(path, database);
+                        Thread.currentThread().interrupt();
+                    }).start();
                 }
                 System.out.println("Save Complete");
-                Thread.currentThread().interrupt();
                 System.out.println("Thread shutdown");
-            }).start();
             return true;
         } catch (Exception e){
             Thread.currentThread().interrupt();
@@ -128,23 +135,15 @@ public class HoE {
         }
     }
 
-    public Boolean load() throws WrongCSVFormatException {
+    public Boolean load(String path) throws WrongCSVFormatException {
         try {
-            FileSelecter f = new FileSelecter();
             JobjLoader jobj = new JobjLoader();
             CSVLoader csv = new CSVLoader();
-            String path = f.fileChooser();
-            System.out.println("Starting Thread");
-            new Thread(() -> {
                 if(path.endsWith(".csv")){
-                    database = csv.readData(path);
+                        database = csv.readData(path);
                 } else if(path.endsWith(".ser")){
                     database = jobj.loadData(path);
                 }
-                System.out.println("Loading Complete");
-                Thread.currentThread().interrupt();
-                System.out.println("Thread shutdown");
-            }).start();
             return true;
         } catch (Exception e){
             Thread.currentThread().interrupt();

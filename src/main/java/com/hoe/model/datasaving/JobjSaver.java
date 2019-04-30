@@ -23,7 +23,7 @@ public class JobjSaver extends DataSaver implements Serializable {
     @Override
     public void saveData(String filename, Database data){
         try {
-            FileOutputStream fileOutputStream = new FileOutputStream(filename, false);
+            FileOutputStream fileOutputStream = new FileOutputStream(filename, true);
             ObjectOutputStream out = new ObjectOutputStream(fileOutputStream);
             out.writeObject(data);
             out.close();
