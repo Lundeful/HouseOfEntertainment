@@ -81,12 +81,17 @@ public class Show implements Serializable {
     }
 
     public String toCSVString(){
-        return getShowID() + "|" + getLocationID() + "|" + getTicketPrice() + "|"
-            + getShowType() + "|" + getTime() + "|" + getProgram();
+        return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
+                getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())  + "|" +
+                String.valueOf(getSoldTickets().size());
 }
 
     public String getLocationID() {
-        return locationID;
+        if(locationID != null){
+            return locationID;
+        }else{
+            return location.getLocationID();
+        }
     }
 
     public String getTicketPrice() {
@@ -124,5 +129,9 @@ public class Show implements Serializable {
     @Override
     public String toString() {
         return this.showName + " - " + this.date;
+    }
+
+    public int getAvailableTickets() {
+        return availableTickets;
     }
 }

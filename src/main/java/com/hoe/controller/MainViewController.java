@@ -1,6 +1,7 @@
 package com.hoe.controller;
 
 import com.hoe.model.*;
+import com.hoe.model.exceptions.WrongCSVFormatException;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -179,6 +180,7 @@ public class MainViewController {
         IDCreator id = new IDCreator();
         Show s = new Show("","");
         Location l = new Location("","");
+        hoe.generateTestObjects();
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
         /*hoe.addLocation(id.randomKeyGen(l), "Big Hall", "", 100);
@@ -194,7 +196,7 @@ public class MainViewController {
         for (int i = 0; i < 1000; i++) {
             hoe.addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location(id.randomKeyGen(l), "Location " + i%6), "", "");
         }
- */
+*/
         initializeLocations();
         initializeShows();
         initializeTickets();
@@ -314,12 +316,17 @@ public class MainViewController {
 
 
     public void chooseSaveFile(ActionEvent event) {
-        hoe.load();
+        hoe.save();
         updateShowsList();
     }
 
     public void saveData(ActionEvent event) {
-        // TODO
+        try {
+            hoe.load();
+        } catch (WrongCSVFormatException e) {
+            e.printStackTrace();
+        }
+        updateShowsList();
     }
 
     public void toggleAddShowMenu(ActionEvent actionEvent) {
