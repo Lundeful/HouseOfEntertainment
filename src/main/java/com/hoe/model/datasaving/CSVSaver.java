@@ -68,7 +68,7 @@ public class CSVSaver extends DataSaver {
         }
 
         //Adding shows to the string
-        String header_Show = "ID|Show Type|Program|Location ID|Time|Price|Available Tickets|Sold Tickets";
+        String header_Show = "ID|Name|Show Type|Location ID|Date|Time|Price|Available Tickets|Sold Tickets";
         line.append(header_Show);
         line.append(NEW_LINE);
 
