@@ -127,7 +127,7 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
+                              <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                                  <children>
                                     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -268,7 +268,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editShowsView" styleClass="addShowsView">
+                                                <VBox fx:id="editShowsView" styleClass="addShowsView" visible="false">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit Show">
                                                          <VBox.margin>
@@ -378,7 +378,7 @@
                                           </HBox>
                                           <StackPane VBox.vgrow="ALWAYS">
                                              <children>
-                                                <HBox fx:id="locationsView" styleClass="showsView" StackPane.alignment="TOP_LEFT">
+                                                <HBox fx:id="locationsView" prefWidth="1111.0" styleClass="showsView" StackPane.alignment="TOP_LEFT">
                                                    <children>
                                                       <TableView fx:id="locationTableView" styleClass="showsTableView">
                                                          <columns>
@@ -395,7 +395,7 @@
                                                       <Insets bottom="20.0" left="15.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </HBox>
-                                                <VBox fx:id="addLocationView" prefHeight="200.0" prefWidth="100.0" styleClass="addShowsView" visible="false">
+                                                <VBox fx:id="addLocationView" prefHeight="200.0" styleClass="addShowsView" visible="false">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Add new location">
                                                          <VBox.margin>
@@ -422,7 +422,8 @@
                                                                   <TextField fx:id="addLocationFieldName" promptText="e.g. Grand Hall" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                                                                   <TextField fx:id="addLocationFieldType" promptText="e.g. Movie Theatre" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="addLocationFieldSeats" promptText="e.g. 730" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label fx:id="addLocationNameError" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="addLocationNameError" styleClass="addShowErrorMessage" text="Enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="addLocationSeatsError" styleClass="addShowErrorMessage" text="Enter number of seats" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -470,6 +471,7 @@
                                                                   <ColumnConstraints halignment="RIGHT" minWidth="200.0" />
                                                                   <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
                                                                   <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
                                                                </columnConstraints>
                                                                <rowConstraints>
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
@@ -483,7 +485,8 @@
                                                                   <TextField fx:id="editLocationFieldName" promptText="e.g. Grand Hall" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                                                                   <TextField fx:id="editLocationFieldType" promptText="e.g. Movie Theatre" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="editLocationFieldSeats" promptText="e.g. 730" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label fx:id="addShowFormNameError12" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editLocationNameError" styleClass="addShowErrorMessage" text="Enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editLocationSeatsError" styleClass="addShowErrorMessage" text="Enter number of seats" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />

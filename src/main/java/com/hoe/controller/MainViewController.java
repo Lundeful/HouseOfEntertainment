@@ -110,7 +110,7 @@ public class MainViewController {
     private TableColumn<Location, String> tableColumnLocationName, tableColumnLocationType, tableColumnLocationSeats;
 
     @FXML
-    private Label addLocationNameError;
+    private Label addLocationNameError, addLocationSeatsError;
 
     /*
     ==============================
@@ -120,6 +120,12 @@ public class MainViewController {
 
     @FXML
     private VBox editLocationView;
+
+    @FXML
+    private TextField editLocationFieldName, editLocationFieldType, editLocationFieldSeats;
+
+    @FXML
+    private Label editLocationNameError, editLocationSeatsError;
 
 
     /*
@@ -209,6 +215,7 @@ public class MainViewController {
         };
         addShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
         addLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
+        editLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
         // TODO: Format phone number input
     }
 
@@ -296,13 +303,8 @@ public class MainViewController {
     }
 
     private void updateTicketsList() {
-        hoe.getTickets();
-        try {
-            ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
-            ticketTableView.setItems(ticketsData);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
+        ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
+        ticketTableView.setItems(ticketsData);
     }
 
     public void overviewClicked() {
@@ -473,7 +475,7 @@ public class MainViewController {
                 show.setContactPerson(editShowChoiceBoxContactPerson.getValue());
                 show.setProgram(editShowFieldProgram.getText());
 
-                // updateShowsList(); // Remove?
+                // updateShowsList(); // TODO Remove?
                 showsTableView.refresh();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
@@ -500,7 +502,8 @@ public class MainViewController {
     }
 
     public void toggleEditLocation() {
-        if(!editLocationView.isVisible()) {
+        if(!editLocationView.isVisible() && locationTableView.getSelectionModel().getSelectedItem() != null) {
+            loadLocationValues();
             editLocationView.setVisible(true);
             addLocationView.setVisible(false);
         } else {
@@ -509,7 +512,19 @@ public class MainViewController {
         }
     }
 
+    private void loadLocationValues() {
+        Location location = locationTableView.getSelectionModel().getSelectedItem();
+        editLocationFieldName.setText(location.getName());
+        editLocationFieldType.setText(location.getTypeOfLocation());
+        editLocationFieldSeats.setText(String.valueOf(location.getNumberOfSeats()));
+    }
+
     public void deleteLocation() {
+        if (addLocationView.isVisible() || editLocationView.isVisible()) {
+            addLocationView.setVisible(false);
+            editLocationView.setVisible(false);
+          return;
+        }
         if (locationTableView.getSelectionModel().isEmpty()){
             displayNotification("No location selected");
             return;
@@ -526,7 +541,9 @@ public class MainViewController {
     public void submitLocationForm() {
         if (addLocationFieldName.getText().trim().equals("")) { // If name field is empty
             fadeTransition(addLocationNameError);
-        } {
+        } else if (addLocationFieldSeats.getText().equals("")) {
+            fadeTransition(addLocationSeatsError);
+        } else {
             hoe.addLocation(addLocationFieldName.getText(), addLocationFieldType.getText(),
                     Integer.parseInt(addLocationFieldSeats.getText()));
             updateLocationsList();
@@ -536,6 +553,9 @@ public class MainViewController {
     }
 
     public void clearAddLocationFields() {
+        addLocationFieldName.clear();
+        addLocationFieldSeats.clear();
+        addLocationFieldType.clear();
     }
 
     public void closeAddLocationMenu() {
@@ -543,9 +563,29 @@ public class MainViewController {
     }
 
     public void confirmEditLocation() {
+        Location location = locationTableView.getSelectionModel().getSelectedItem();
+        if (editLocationFieldName.getText().trim().equals("")) { // If name field is empty
+            fadeTransition(editLocationNameError);
+        } else if (editLocationFieldSeats.getText().equals("")) {
+            fadeTransition(editLocationSeatsError);
+        } else {
+            try {
+                location.setName(editLocationFieldName.getText());
+                location.setTypeOfLocation(editLocationFieldType.getText());
+                location.setNumberOfSeats(Integer.parseInt(editLocationFieldSeats.getText()));
+
+                locationTableView.refresh();
+                editLocationView.setVisible(false);
+                displayNotification("Location edited");
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                displayNotification("Error: Enter a numeric value");
+            }
+        }
     }
 
     public void discardEditLocation() {
+        editLocationView.setVisible(false);
     }
 
     public void toggleAddTicket() {
@@ -559,13 +599,19 @@ public class MainViewController {
     }
 
     public void toggleEditTicket() {
-        if(!editTicketView.isVisible()) {
+        if(!editTicketView.isVisible() && ticketTableView.getSelectionModel().getSelectedItem() != null) {
+            loadTicketValues();
             editTicketView.setVisible(true);
             addTicketView.setVisible(false);
         } else {
             editTicketView.setVisible(false);
             addTicketView.setVisible(false);
         }
+    }
+
+    private void loadTicketValues() {
+        Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
+        //editTicketFieldPhoneNumber.setText()
     }
 
     public void deleteTicket() {
