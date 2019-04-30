@@ -53,6 +53,10 @@ public class Database {
         return shows.remove(s);
     }
 
+    public boolean removeTicket(Ticket t) {
+        return tickets.remove(t);
+    }
+
     public boolean removePromotion(Promotion p) {
         return promotions.remove(p);
     }
@@ -80,4 +84,6 @@ public class Database {
     public ArrayList<Ticket> getTickets() {
         return tickets;
     }
+
+
 }

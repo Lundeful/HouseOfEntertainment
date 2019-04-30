@@ -14,6 +14,7 @@ public class Show {
     private String ticketPrice;
     private ArrayList<Ticket> soldTickets;
     private int availableTickets;
+    private ContactPerson contactPerson;
 
     public Show(String showID, String showName){
         this.showName = showName;
@@ -48,6 +49,10 @@ public class Show {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public void setContactPerson(ContactPerson c) {
+        this.contactPerson = c;
     }
 
     public void setShowName(String showName) {
@@ -93,6 +98,10 @@ public class Show {
         return availableTickets;
     }
 
+    public ContactPerson getContact() {
+        return this.contactPerson;
+    }
+
     public boolean addSoldTicket(Ticket t) {
         if (availableTickets > 0) {
             soldTickets.add(t);
@@ -111,4 +120,5 @@ public class Show {
     public String toString() {
         return this.showName + " - " + this.date;
     }
+
 }

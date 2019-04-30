@@ -1,9 +1,6 @@
 package com.hoe.controller;
 
-import com.hoe.model.HoE;
-import com.hoe.model.Location;
-import com.hoe.model.Show;
-import com.hoe.model.Ticket;
+import com.hoe.model.*;
 import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,7 +56,8 @@ public class MainViewController {
     private TableColumn<Show, String> tableColumnShow, tableColumnDate;
 
     @FXML
-    private TableColumn<Location, String> tableColumnLocation;
+    private TableColumn<Location, Location> tableColumnLocation; //
+    // TODO: Byttet fra TableColumn<Location, String> Sjekk at det fungerer
 
     @FXML
     private Label addShowFormNameError;
@@ -72,6 +70,19 @@ public class MainViewController {
 
     @FXML
     private VBox editShowsView;
+
+    @FXML
+    private TextField editShowTextFieldName, editShowTextFieldType, editShowTextFieldDate, editShowTextFieldTime,
+            editShowTextFieldTicketPrice;
+
+    @FXML
+    private TextArea editShowFieldProgram;
+
+    @FXML
+    private ComboBox<Location> editShowChoiceBoxLocation;
+
+    @FXML
+    private ComboBox<ContactPerson> editShowChoiceBoxContactPerson;
 
 
     /*
@@ -146,6 +157,9 @@ public class MainViewController {
      */
 
     @FXML
+    private TableView<ContactPerson> contactsTableView;
+
+    @FXML
     private VBox addContactView;
 
     /*
@@ -216,12 +230,13 @@ public class MainViewController {
         tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         updateShowsList();
 
+        // selectedShow = showsTableView.getSelectionModel().selectedItemProperty().addListener(Obser);
         // Listen for selected show in table
-/*        showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
-            if (!s2.equals(s1)) {
+        showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
+            if (s1 != null && s2 != null && !s2.equals(s1)) {
                 selectedShow = s2;
             }
-        });*/
+        });
     }
 
     private void updateShowsList() {
@@ -326,16 +341,31 @@ public class MainViewController {
     }
 
     public void toggleEditShow(ActionEvent actionEvent) {
-        if(!editShowsView.isVisible()) {
+        if(!editShowsView.isVisible() && showsTableView.getSelectionModel().getSelectedItem() != null) {
+            loadShowValues(showsTableView.getSelectionModel().getSelectedItem());
             editShowsView.setVisible(true);
             addShowsView.setVisible(false);
         } else {
             editShowsView.setVisible(false);
             addShowsView.setVisible(false);
+            selectedShow = null;
+            discardEditShow();
         }
     }
 
+    private void loadShowValues(Show selectedItem) {
+        editShowTextFieldName.setText(selectedItem.getShowName());
+        editShowTextFieldType.setText(selectedItem.getShowType());
+        editShowChoiceBoxLocation.setValue(selectedItem.getLocation());
+        editShowChoiceBoxContactPerson.setValue(selectedItem.getContact());
+    }
+
     public void deleteShow(ActionEvent actionEvent) {
+        if (addShowsView.isVisible() || editShowsView.isVisible()) {
+            addShowsView.setVisible(false);
+            editShowsView.setVisible(false);
+            return;
+        }
         if (showsTableView.getSelectionModel().isEmpty()){
             displayNotification("No show selected");
             return;
@@ -384,7 +414,7 @@ public class MainViewController {
     public void fadeTransition(Label label) {
         label.setVisible(true);
         label.setOpacity(1);
-        FadeTransition ft = new FadeTransition(Duration.seconds(1), label);
+        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), label);
         ft.setFromValue(1);
         ft.setToValue(0);
         ft.setDelay(Duration.millis(1000));
@@ -392,10 +422,11 @@ public class MainViewController {
     }
 
     public void confirmEditShow(ActionEvent actionEvent) {
+        //if (!editShowTextFieldName.getText().isEmpty()) selectedShow.setShowName();
 
     }
 
-    public void discardEditShow(ActionEvent actionEvent) {
+    public void discardEditShow() {
 
     }
 
@@ -420,6 +451,17 @@ public class MainViewController {
     }
 
     public void deleteLocation(ActionEvent event) {
+        if (locationTableView.getSelectionModel().isEmpty()){
+            displayNotification("No location selected");
+            return;
+        }
+        Location l = locationTableView.getSelectionModel().getSelectedItem();
+        if (hoe.removeLocation(l)) {
+            displayNotification("Location removed");
+        } else {
+            displayNotification("Error: Location not removed");
+        }
+        updateLocationsList();
     }
 
     public void submitLocationForm(ActionEvent event) {
@@ -465,10 +507,20 @@ public class MainViewController {
             editTicketView.setVisible(false);
             addTicketView.setVisible(false);
         }
-
     }
 
     public void deleteTicket(ActionEvent event) {
+        if (ticketTableView.getSelectionModel().isEmpty()){
+            displayNotification("No ticket selected");
+            return;
+        }
+        Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
+        if (hoe.removeTicket(t)) {
+            displayNotification("Ticket removed");
+        } else {
+            displayNotification("Error: Ticket not removed");
+        }
+        updateShowsList();
     }
 
     public void submitTicketForm(ActionEvent event) {
@@ -509,6 +561,17 @@ public class MainViewController {
     }
 
     public void deleteContact(ActionEvent event) {
+        if (contactsTableView.getSelectionModel().isEmpty()){
+            displayNotification("No contact selected");
+            return;
+        }
+        Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
+        if (hoe.removeTicket(t)) {
+            displayNotification("Contact removed");
+        } else {
+            displayNotification("Error: Contact not removed");
+        }
+        updateTicketsList();
     }
 
     public void submitContactForm(ActionEvent event) {

@@ -90,4 +90,11 @@ public class HoE {
         return database.addLocation(l);
     }
 
+    public boolean removeLocation(Location l) {
+        return database.removeLocation(l);
+    }
+
+    public boolean removeTicket(Ticket t) {
+        return database.removeTicket(t);
+    }
 }
