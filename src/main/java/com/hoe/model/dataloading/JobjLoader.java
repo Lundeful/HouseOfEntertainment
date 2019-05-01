@@ -27,11 +27,8 @@ public class JobjLoader extends DataLoader implements Serializable {
             fileInputStream.close();
             inputStream.close();
             return data;
-        } catch (InvalidClassException | ClassNotFoundException e){
+        } catch (Exception e) {
             throw new CorruptFileException("Serializable file is corrupt");
-        } catch (IOException e){
-            e.printStackTrace();
         }
-        return null;
     }
 }
