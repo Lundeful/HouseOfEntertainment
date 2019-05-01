@@ -3,53 +3,47 @@ package com.hoe.model;
 public class Ticket {
 
     private final String ticketID;
-    private String location;
-    private String date;
-    private String price;
+    private Show show;
     private String phoneNumber;
-    private String showName;
-    private String showID;
+    private String seat;
 
-    public Ticket(String ticketID, Show show, String phoneNumber){
-        this.ticketID = ticketID; // TODO(1): Make method that generates ID's
-        this.showID = show.getShowID();
-        this.showName = show.getShowName();
-        this.location = show.getLocation().getName();
-        this.price = show.getTicketPrice();
+    public Ticket(String ticketID, Show show, String phoneNumber, String seat){
+        this.ticketID = ticketID;
+        this.show = show;
         this.phoneNumber = phoneNumber;
-        this.date = show.getDate();
+        this.seat = seat;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setShow(Show show) {
+        this.show = show;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
+    public void setSeat(String seat) {
+        this.seat = seat;
     }
 
     public String getTicketID() {
         return ticketID;
     }
 
-    public String getLocation() {
-        return location;
+    public Location getLocation() {
+        return show.getLocation();
     }
 
     public String getDate() {
-        return date;
+        return show.getDate();
+    }
+
+    public String getTime() {
+        return show.getTime();
     }
 
     public String getPrice() {
-        return price;
+        return show.getTicketPrice();
     }
 
     public String getPhoneNumber() {
@@ -57,6 +51,18 @@ public class Ticket {
     }
 
     public String getShowName() {
-        return showName;
+        return show.getShowName();
     }
+
+    public Show getShow() {
+        return show;
+    }
+
+    public String getSeat() {
+        return seat;
+    }
+
+
+
+
 }

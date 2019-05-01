@@ -74,12 +74,12 @@
                                     <Font name="Calibri Bold" size="25.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveDataClicked" styleClass="mainMenuButton" text="Save Data">
+                              <Button fx:id="saveDataButton" mnemonicParsing="false" onAction="#saveData" styleClass="mainMenuButton" text="Save Data">
                                  <font>
                                     <Font name="Calibri Bold" size="25.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="loadDataButton" mnemonicParsing="false" onAction="#loadDataClicked" styleClass="mainMenuButton" text="Load Data">
+                              <Button fx:id="loadDataButton" mnemonicParsing="false" onAction="#loadData" styleClass="mainMenuButton" text="Load Data">
                                  <font>
                                     <Font name="Calibri Bold" size="25.0" />
                                  </font>
@@ -228,13 +228,13 @@
                                                                   <TextField fx:id="addShowTextFieldTime" promptText="HH:MM" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <TextField fx:id="addShowTextFieldTicketPrice" promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                                   <Label fx:id="addShowFormNameError" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
-                                                                  <Label fx:id="addShowFormLocationerror" styleClass="addShowErrorMessage" text="You must enter a location" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                                                  <Label fx:id="addShowFormLocationError" styleClass="addShowErrorMessage" text="You must enter a location" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter date in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                                   <Label styleClass="addShowErrorMessage" text="Enter time in correct format" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                                                                   <TextArea fx:id="addShowFieldProgram" prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
                                                                   <ComboBox fx:id="addShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowFormQuestion" text="Contactperson" GridPane.rowIndex="6" />
-                                                                  <ComboBox fx:id="addShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                  <ComboBox fx:id="addShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select contact" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -309,8 +309,8 @@
                                                                   <TextField fx:id="editShowTextFieldTicketPrice" promptText="e.g. 200 NOK" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                                                   <Label fx:id="editShowFormNameError" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
                                                                   <TextArea fx:id="editShowFieldProgram" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
-                                                                  <ComboBox fx:id="editShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                                  <ComboBox fx:id="editShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                  <ComboBox fx:id="editShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select location" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                                  <ComboBox fx:id="editShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select contact" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                                   <Label fx:id="editShowFormLocationError" styleClass="addShowErrorMessage" text="You must enter a location" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                                                </children>
                                                             </GridPane>
@@ -520,9 +520,9 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
+                              <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
-                                    <VBox layoutX="10.0" layoutY="10.0">
+                                    <VBox>
                                        <children>
                                           <HBox spacing="50.0" styleClass="viewMenuBar">
                                              <children>
@@ -552,12 +552,13 @@
                                              <children>
                                                 <HBox fx:id="locationsView1" styleClass="showsView" StackPane.alignment="TOP_LEFT">
                                                    <children>
-                                                      <TableView fx:id="ticketTableView" prefWidth="868.0" styleClass="showsTableView">
+                                                      <TableView fx:id="ticketTableView" styleClass="showsTableView">
                                                          <columns>
                                                             <TableColumn fx:id="tableColumnTicketShow" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Show" />
                                                             <TableColumn fx:id="tableColumnTicketDate" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Date" />
                                                             <TableColumn fx:id="tableColumnTicketLocation" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Location" />
                                                             <TableColumn fx:id="tableColumnTicketPhone" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Phone" />
+                                                            <TableColumn fx:id="tableColumnTicketSeat" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Seat" />
                                                          </columns>
                                                          <columnResizePolicy>
                                                             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -570,7 +571,7 @@
                                                 </HBox>
                                                 <VBox fx:id="addTicketView" prefHeight="200.0" prefWidth="100.0" styleClass="addShowsView" visible="false">
                                                    <children>
-                                                      <Label styleClass="addShowFormTitle" text="Add new ticket">
+                                                      <Label focusTraversable="false" styleClass="addShowFormTitle" text="Add new ticket">
                                                          <VBox.margin>
                                                             <Insets bottom="40.0" />
                                                          </VBox.margin>
@@ -586,13 +587,17 @@
                                                                <rowConstraints>
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
                                                                </rowConstraints>
                                                                <children>
                                                                   <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Show" />
                                                                   <Label styleClass="addShowFormQuestion" text="Phone number" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="addTicketTextFieldPhone" promptText="e.g. 815 493 00" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <Label fx:id="addTicketErrorMessage" styleClass="addShowErrorMessage" text="You must enter a show" visible="false" GridPane.columnIndex="2" />
-                                                                  <ComboBox fx:id="addTicketChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <Label fx:id="addTicketErrorShow" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <ComboBox fx:id="addTicketChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select show" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <Label fx:id="addTicketErrorPhone" styleClass="addShowErrorMessage" text="Enter phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Seat" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="addTicketTextFieldSeat" promptText="e.g. 15A or Standing" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -644,13 +649,17 @@
                                                                <rowConstraints>
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
                                                                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
                                                                </rowConstraints>
                                                                <children>
-                                                                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Show" />
-                                                                  <Label styleClass="addShowFormQuestion" text="Phone number" GridPane.rowIndex="1" />
-                                                                  <TextField fx:id="editLocationFieldType1" promptText="e.g. 815  493 00" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                                  <Label fx:id="addShowFormNameError121" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
-                                                                  <ComboBox fx:id="addShowChoiceBoxLocation1" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="addShowFormQuestion" text="Show" />
+                                                                  <Label focusTraversable="false" styleClass="addShowFormQuestion" text="Phone number" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="editTicketFieldPhoneNumber" promptText="e.g. 815  493 00" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <Label focusTraversable="false" styleClass="addShowFormQuestion" text="Seat" GridPane.rowIndex="2" />
+                                                                  <ComboBox fx:id="editTicketChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select show" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <TextField fx:id="editTicketFieldSeat" promptText="e.g. 15A or Standing" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Label fx:id="editTicketShowError" focusTraversable="false" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editTicketPhoneError" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -881,62 +890,6 @@
                                           <Font name="Segoe UI Bold" size="81.0" />
                                        </font>
                                     </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane fx:id="saveDataWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
-                                 <children>
-                                    <Label alignment="CENTER" text="Save Data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="Segoe UI Bold" size="81.0" />
-                                       </font>
-                                    </Label>
-                                    <Label prefHeight="161.0" prefWidth="580.0" styleClass="fileChooserInfo" text="Here you can save your current data. For more information on how to use this feature please visit the help section." wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="50.0" />
-                                    <VBox alignment="CENTER" layoutY="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-                                       <children>
-                                          <HBox alignment="CENTER" spacing="10.0">
-                                             <VBox.margin>
-                                                <Insets bottom="20.0" />
-                                             </VBox.margin>
-                                             <children>
-                                                <Button fx:id="chooseFileSaveButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
-                                                <Button fx:id="saveData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Save data" />
-                                             </children>
-                                          </HBox>
-                                          <Label styleClass="fileChooserText, fileChosen" text="No file selected">
-                                             <font>
-                                                <Font name="Calibri Bold" size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane fx:id="loadDataWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
-                                 <children>
-                                    <Label alignment="CENTER" text="Load data" textFill="#3d3542" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="Segoe UI Bold" size="81.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="10.0" layoutY="10.0" prefHeight="161.0" prefWidth="580.0" styleClass="fileChooserInfo" text="Here you can load your previous data. For more information on how to use this feature please visit the help section." wrapText="true" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="50.0" />
-                                    <VBox alignment="CENTER" layoutX="10.0" layoutY="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
-                                       <children>
-                                          <HBox alignment="CENTER" spacing="10.0">
-                                             <VBox.margin>
-                                                <Insets bottom="20.0" />
-                                             </VBox.margin>
-                                             <children>
-                                                <Button fx:id="chooseFileLoadButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
-                                                <Button fx:id="loadData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Load data" />
-                                             </children>
-                                          </HBox>
-                                          <Label styleClass="fileChooserText, fileChosen" text="No file selected">
-                                             <font>
-                                                <Font name="Calibri Bold" size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">

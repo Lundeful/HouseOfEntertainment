@@ -45,6 +45,10 @@ public class Database {
         return contacts.add(c);
     }
 
+    public boolean addTicket(Ticket t) {
+        return tickets.add(t);
+    }
+
     public boolean removeLocation(Location l) {
         return locations.remove(l);
     }
@@ -84,6 +88,4 @@ public class Database {
     public ArrayList<Ticket> getTickets() {
         return tickets;
     }
-
-
 }

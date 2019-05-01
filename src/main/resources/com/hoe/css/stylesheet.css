@@ -1,6 +1,6 @@
 /*
  ====================
-This is the CSS stylesheet for styling the HoE app
+This is the CSS stylesheet for styling the House of Entertainment application
 ====================
 */
 
@@ -24,11 +24,8 @@ Global variables
     -primary-accent: #d06d4f;
     -secondary-accent: #211d24;
     -button-click: #121014;
-/*    -primary-color: #f9f9f9;
-    -secondary-color: #2f2f2f;
-    -secondary-accent: #0d3f60;
-    -primary-accent: #e5e5e5;*/
     -fx-font-size: 16px;
+    -fx-background-color: -secondary-color;
 }
 
 /*

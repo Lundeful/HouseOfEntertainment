@@ -40,7 +40,7 @@ public class HoE {
         addShow("Bohemian Rhapsody", "Movie", "", "", l4, "190", "");
         addShow("AC/DC", "Concert", "", "", l1, "499", "");
 
-        for (int i = 0; i < 200000; i++) {
+        for (int i = 0; i < 2000; i++) {
             addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
         }
     }
@@ -103,5 +103,14 @@ public class HoE {
 
     public boolean removeTicket(Ticket t) {
         return database.removeTicket(t);
+    }
+
+    public boolean addTicket(Show show, String phonenumber, String seat) {
+        Ticket t = new Ticket("TEMP-ID", show, phonenumber,seat); //TODO ID-generator
+        return database.addTicket(t);
+    }
+
+    public void updateTicket(Ticket t, Show show, String phoneNumberText, String seatText) {
+
     }
 }
