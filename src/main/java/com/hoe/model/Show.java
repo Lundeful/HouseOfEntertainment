@@ -24,16 +24,6 @@ public class Show {
         this.soldTickets = new ArrayList<>();
     }
 
-
-    public boolean setAvailableTickets(int n) {
-        if (soldTickets.size() <= n) {
-            availableTickets = n;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void setTicketPrice(String ticketPrice) {
         this.ticketPrice = ticketPrice;
     }

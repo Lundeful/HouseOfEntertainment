@@ -135,7 +135,7 @@ public class MainViewController {
 
     @FXML
     private TableColumn<Ticket, String> tableColumnTicketShow, tableColumnTicketPhone,
-            tableColumnTicketDate, tableColumnTicketSeat;
+            tableColumnTicketDate, tableColumnTicketTime, tableColumnTicketSeat;
 
     @FXML
     private TableColumn<Location, String> tableColumnTicketLocation;
@@ -314,6 +314,7 @@ public class MainViewController {
     private void initializeTickets() {
         tableColumnTicketShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
         tableColumnTicketDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        tableColumnTicketTime.setCellValueFactory(new PropertyValueFactory<>("time"));
         tableColumnTicketLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         tableColumnTicketPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         tableColumnTicketSeat.setCellValueFactory(new PropertyValueFactory<>("seat"));
@@ -488,14 +489,13 @@ public class MainViewController {
                 show.setProgram(editShowFieldProgram.getText());
 
                 // updateShowsList(); // TODO Remove?
-                updateTicketsList();
+                updateTicketsList(); // Update tickets with the new information from shows
                 showsTableView.refresh();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
             } catch (NotEnoughSeatsException e) {
                 displayNotification("Error: " + e.getMessage());
                 System.err.println(e.getMessage());
-                // TODO Fyll ut exception-class
             }
         }
     }
@@ -715,17 +715,20 @@ public class MainViewController {
     }
 
     public void deleteContact() {
-        if (contactsTableView.getSelectionModel().isEmpty()){
+        if (editContactView.isVisible() || addContactView.isVisible()) {
+            addContactView.setVisible(false);
+            editContactView.setVisible(false);
+        } else if (contactsTableView.getSelectionModel().isEmpty()){
             displayNotification("No contact selected");
-            return;
-        }
-        Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
-        if (hoe.removeTicket(t)) {
-            displayNotification("Contact removed");
         } else {
-            displayNotification("Error: Contact not removed");
+            Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
+            if (hoe.removeTicket(t)) {
+                displayNotification("Contact removed");
+            } else {
+                displayNotification("Error: Contact not removed");
+            }
+            updateTicketsList();
         }
-        updateTicketsList();
     }
 
     public void submitContactForm() {

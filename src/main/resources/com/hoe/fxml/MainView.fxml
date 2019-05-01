@@ -556,6 +556,7 @@
                                                          <columns>
                                                             <TableColumn fx:id="tableColumnTicketShow" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Show" />
                                                             <TableColumn fx:id="tableColumnTicketDate" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Date" />
+                                                            <TableColumn fx:id="tableColumnTicketTime" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Time" />
                                                             <TableColumn fx:id="tableColumnTicketLocation" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Location" />
                                                             <TableColumn fx:id="tableColumnTicketPhone" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Phone" />
                                                             <TableColumn fx:id="tableColumnTicketSeat" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Seat" />
