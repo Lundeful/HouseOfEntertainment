@@ -30,7 +30,8 @@ public class CSVLoader {
             while((line = fileReader.readLine()) != null){
                 String[] readIn = line.split(LINE_SPLITTER, -1);
                 if(readIn.length > 0){
-                    if(!readIn[0].equals("ID")){
+                    char ch = readIn[0].charAt(0);
+                    if(Character.isDigit(ch)){
                         switch(id.getObject(readIn[0])) {
                             case 3:
                                 ticketCreator(readIn, database);
@@ -81,7 +82,7 @@ public class CSVLoader {
      */
     private void showCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a location object that already exists
-        if(data.length<=10) {
+        if(data.length == 10) {
             int counter = 0;
             Show show = new Show(data[counter], data[++counter]);
             show.setShowType(data[++counter]);
@@ -105,7 +106,7 @@ public class CSVLoader {
     private void promotionCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a promotion object that already exists
         int counter = 0;
-        if(data.length<=4) {
+        if(data.length == 4) {
             Promotion promotion = new Promotion(data[counter], data[++counter]);
             promotion.setFrom(data[++counter]);
             promotion.setTo(data[++counter]);
@@ -121,7 +122,7 @@ public class CSVLoader {
      */
     private void contactPersonCreator(String[] data, Database database) throws WrongCSVFormatException {
         int counter = 0;
-        if(data.length <= 7) {
+        if(data.length == 7) {
             ContactPerson contactPerson = new ContactPerson(data[counter]);
             contactPerson.setName(data[++counter]);
             contactPerson.setPhoneNumber(data[++counter]);
@@ -137,7 +138,7 @@ public class CSVLoader {
 
     private void ticketCreator(String[] data, Database database) throws WrongCSVFormatException {
         int counter = 0;
-        if(data.length <= 7){
+        if(data.length == 7){
             Ticket ticket = new Ticket(data[counter], data[++counter], Integer.parseInt(data[++counter]));
             ticket.setDate(data[++counter]);
             ticket.setPhoneNumber(data[++counter]);

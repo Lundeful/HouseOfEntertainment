@@ -1,6 +1,8 @@
 package com.hoe.model.dataloading;
 
 import com.hoe.model.Database;
+import com.hoe.model.exceptions.CorruptFileException;
+
 import java.io.*;
 
 /**
@@ -17,7 +19,7 @@ public class JobjLoader extends DataLoader implements Serializable {
      *                 of previously state of the program
      */
     @Override
-    public Database loadData(String filename) {
+    public Database loadData(String filename) throws CorruptFileException {
         try{
             FileInputStream fileInputStream = new FileInputStream(filename);
             ObjectInputStream inputStream = new ObjectInputStream(fileInputStream);
@@ -25,11 +27,10 @@ public class JobjLoader extends DataLoader implements Serializable {
             fileInputStream.close();
             inputStream.close();
             return data;
+        } catch (InvalidClassException | ClassNotFoundException e){
+            throw new CorruptFileException("Serializable file is corrupt");
         } catch (IOException e){
             e.printStackTrace();
-        } catch (ClassNotFoundException c){
-            System.out.println("Object not found!");
-            c.printStackTrace();
         }
         return null;
     }

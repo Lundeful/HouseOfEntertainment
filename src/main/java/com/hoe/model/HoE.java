@@ -4,16 +4,12 @@ import com.hoe.model.dataloading.CSVLoader;
 import com.hoe.model.dataloading.FileSelecter;
 import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
-import com.hoe.model.datasaving.DirectorySelector;
 import com.hoe.model.datasaving.JobjSaver;
-import com.hoe.model.exceptions.FileExtensionException;
-import javafx.scene.control.skin.TableHeaderRow;
+import com.hoe.model.exceptions.CorruptFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class HoE {
     private Database database;
@@ -65,10 +61,10 @@ public class HoE {
         addShow("Bohemian Rhapsody", "Movie", "Mid-night", "", l4, "190", "");
         addShow("AC/DC", "Concert", "", "", l1, "499", ""); */
         String[] randomWord = generateRandomWords(1000000);
-        /*for(int i = 0; i < 1000000; i++){
+        for(int i = 0; i < 1000; i++){
             int loc = i%4;
             addShow(randomWord[i],randomWord[i],randomWord[i],randomWord[i],database.getLocations().get(loc),"100",randomWord[i]);
-        } */
+        }
        /* for (int i = 0; i < 1000; i++) {
             addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
         } */
@@ -105,16 +101,12 @@ public class HoE {
      * Method that
      * @return returns true and saves the given file-type if it's successful,
      * returns false if there is any exceptions, leading the save to not being applied.
+     * @param path
      */
-    public boolean save() {
+    public boolean save(String path) {
         try {
-            DirectorySelector f = new DirectorySelector();
             JobjSaver jobj = new JobjSaver();
             CSVSaver csv = new CSVSaver();
-            String path = f.directoryChooser();
-
-            System.out.println(path);
-            System.out.println("Starting Thread");
                 if (path.endsWith(".csv")) {
                     new Thread(() -> {
                         csv.saveData(path, database);
@@ -126,8 +118,6 @@ public class HoE {
                         Thread.currentThread().interrupt();
                     }).start();
                 }
-                System.out.println("Save Complete");
-                System.out.println("Thread shutdown");
             return true;
         } catch (Exception e){
             Thread.currentThread().interrupt();
@@ -135,19 +125,15 @@ public class HoE {
         }
     }
 
-    public Boolean load(String path) throws WrongCSVFormatException {
-        try {
-            JobjLoader jobj = new JobjLoader();
-            CSVLoader csv = new CSVLoader();
-                if(path.endsWith(".csv")){
-                        database = csv.readData(path);
-                } else if(path.endsWith(".ser")){
-                    database = jobj.loadData(path);
-                }
-            return true;
-        } catch (Exception e){
-            Thread.currentThread().interrupt();
-            return false;
+    public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException {
+        JobjLoader jobj = new JobjLoader();
+        CSVLoader csv = new CSVLoader();
+        if (path.endsWith(".csv")) {
+            database = csv.readData(path);
+        } else if (path.endsWith(".ser")) {
+            database = jobj.loadData(path);
+        } else{
+            throw new InvalidFileException("Wrong file type");
         }
     }
     public ArrayList<Location> getLocations() {
@@ -171,8 +157,4 @@ public class HoE {
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
     }
-
-
-
-
 }

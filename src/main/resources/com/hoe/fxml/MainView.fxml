@@ -895,7 +895,6 @@
                                                 <Insets bottom="20.0" />
                                              </VBox.margin>
                                              <children>
-                                                <Button fx:id="chooseFileSaveButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
                                                 <Button fx:id="saveData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Save data" />
                                              </children>
                                           </HBox>
@@ -923,8 +922,7 @@
                                                 <Insets bottom="20.0" />
                                              </VBox.margin>
                                              <children>
-                                                <Button fx:id="chooseFileLoadButton" mnemonicParsing="false" onAction="#chooseSaveFile" styleClass="fileChooserButton" text="Choose file" />
-                                                <Button fx:id="loadData" mnemonicParsing="false" onAction="#saveData" styleClass="fileChooserButton" text="Load data" />
+                                                <Button fx:id="loadData" mnemonicParsing="false" onAction="#loadData" styleClass="fileChooserButton" text="Load data" />
                                              </children>
                                           </HBox>
                                           <Label styleClass="fileChooserText, fileChosen" text="No file selected">

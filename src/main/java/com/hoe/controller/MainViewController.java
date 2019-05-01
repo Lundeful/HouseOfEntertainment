@@ -1,30 +1,24 @@
 package com.hoe.controller;
 
 import com.hoe.model.*;
-import com.hoe.model.dataloading.CSVLoader;
-import com.hoe.model.dataloading.FileSelecter;
-import com.hoe.model.dataloading.JobjLoader;
+import com.hoe.model.exceptions.CorruptFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.WeakEventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Path;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 public class MainViewController {
@@ -297,11 +291,13 @@ public class MainViewController {
     }
 
     public void saveDataClicked() {
-        menuClicked(saveDataWindow, saveDataButton);
+        saveData();
+        //menuClicked(saveDataWindow, saveDataButton);
     }
 
     public void loadDataClicked() {
-        menuClicked(loadDataWindow, loadDataButton);
+        loadData();
+        //menuClicked(loadDataWindow, loadDataButton);
     }
 
     public void helpClicked() {
@@ -317,29 +313,39 @@ public class MainViewController {
         currentButton = b;
     }
 
-
-    public void chooseSaveFile(ActionEvent event) {
-        FileSelecter f = new FileSelecter();
-        String path = f.fileChooser();
-        System.out.println("Starting Thread");
-        new Thread(() -> {
-            try {
-                hoe.load(path);
-                updateShowsList();
-                Thread.currentThread().interrupt();
-            } catch (WrongCSVFormatException e) {
-                System.out.println("FEEEIL");
-                e.printStackTrace();
-                displayNotification(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-            System.out.println("Loading Complete, closing thread");
-        }).start();
-
+    public FileChooser getFileChooser() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select a file");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Serializable file", "*.ser"),
+                new FileChooser.ExtensionFilter("CSV file", "*.csv"));
+        return chooser;
     }
 
-    public void saveData(ActionEvent event) {
-        hoe.save();
+    public void loadData() {
+        File selectedFile = getFileChooser().showOpenDialog(new Stage());
+        if (selectedFile == null) return;
+        String finalPath = selectedFile.toString();
+        new Thread(() -> {
+            try {
+                hoe.load(finalPath);
+                updateShowsList();
+                Thread.currentThread().interrupt();
+            } catch (InvalidFileException | WrongCSVFormatException | CorruptFileException e) {
+                e.printStackTrace();
+                Platform.runLater(
+                        () -> displayNotification(e.getMessage())
+                );
+                Thread.currentThread().interrupt();
+            }
+        }).start();
+    }
+
+    public void saveData() {
+        File selectedFile = getFileChooser().showSaveDialog(new Stage());
+        if (selectedFile == null) return;
+        String finalPath = selectedFile.toString();
+        hoe.save(finalPath);
         updateShowsList();
     }
 
