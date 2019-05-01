@@ -1,11 +1,11 @@
 package com.hoe.model;
 
 import com.hoe.model.dataloading.CSVLoader;
-import com.hoe.model.dataloading.FileSelecter;
 import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.JobjSaver;
 import com.hoe.model.exceptions.CorruptFileException;
+import com.hoe.model.exceptions.InvalidFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
 import java.util.ArrayList;

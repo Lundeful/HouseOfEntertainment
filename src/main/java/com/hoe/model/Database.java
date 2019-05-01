@@ -103,4 +103,13 @@ public class Database  implements Serializable {
         }
         return null;
     }
+
+    public Show findShow(String showID) {
+        for(Show s : shows){
+            if(s.getShowID().equals(showID)){
+                return s;
+            }
+        }
+        return null;
+    }
 }

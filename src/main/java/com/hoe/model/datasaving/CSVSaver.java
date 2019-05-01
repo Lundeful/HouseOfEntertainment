@@ -93,7 +93,7 @@ public class CSVSaver extends DataSaver {
         }
 
         //Adding tickets to the string
-        String header_ticket = "ID|Show ID|Price|Date|Phone Number|Seat Number";
+        String header_ticket = "ID|Show ID|Phone Number|Seat Number";
         line.append(header_ticket);
         line.append(NEW_LINE);
         for(Ticket t : tickets){

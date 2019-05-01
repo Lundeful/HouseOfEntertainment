@@ -2,6 +2,7 @@ package com.hoe.controller;
 
 import com.hoe.model.*;
 import com.hoe.model.exceptions.CorruptFileException;
+import com.hoe.model.exceptions.InvalidFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;

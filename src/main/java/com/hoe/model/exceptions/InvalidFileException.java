@@ -1,4 +1,4 @@
-package com.hoe.model;
+package com.hoe.model.exceptions;
 
 public class InvalidFileException extends Exception {
 

@@ -6,78 +6,15 @@ import java.util.Date;
 public class Ticket implements Serializable {
 
     private final String ticketID;
-    private String locationID;
-    private String showID;
-    private String date;
-    private String location;
-    private String price;
     private String phoneNumber;
-    private String showName;
-    private int seatNumber;
+    private String seatNumber;
     private Show show;
 
-    public Ticket(String ticketID, Show show, String phoneNumber) {
-        this.ticketID = ticketID; // TODO(1): Make method that generates ID's
-        this.showID = show.getShowID();
-        this.showName = show.getShowName();
-        this.location = show.getLocation().getName();
-        this.price = show.getTicketPrice();
-        this.phoneNumber = phoneNumber;
-        this.date = show.getDate();
-    }
 
-    public Ticket(String ticketID, String showID, int price) {
+    public Ticket(String ticketID, Show show, String seat) {
         this.ticketID = ticketID;
-        this.showID = showID;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-
-    public String getTicketID() {
-        return ticketID;
-    }
-
-    public String getLocationID() {
-        return locationID;
-    }
-
-    public void setLocationID(String location) {
-        this.locationID = location;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public int getSeatNumber() {
-        return seatNumber;
-    }
-
-    public void setSeatNumber(int seatNumber) {
-        this.seatNumber = seatNumber;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getShowID(){
-        return showID;
-    }
-
-    public void setShowID(String showID) {
-        this.showID = showID;
+        this.show = show;
+        this.seatNumber = seat;
     }
 
     /**
@@ -85,24 +22,58 @@ public class Ticket implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString() {
-        return getTicketID() + "|" + getShowID() + "|" + getPrice() + "|" + getDate()
-                + "|" + getPhoneNumber() + "|" + getSeatNumber();
+        return getTicketID() + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeatNumber();
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public String getTime() {
+        return show.getTime();
     }
 
-
-    public String getLocation() {
-        return location;
+    public String getDate() {
+        return show.getDate();
     }
 
     public String getPrice() {
-        return price;
+        return show.getTicketPrice();
     }
 
-    public String getShowName() {
-        return showName;
+    public String getShowID() {
+        return show.getShowID();
+    }
+
+    public String getTicketID() {
+        return ticketID;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public Show getShow() {
+        return show;
+    }
+
+    public void setShow(Show show) {
+        this.show = show;
+    }
+
+    public void setDate(String s) {
+        show.setDate(s);
+    }
+
+    public void setPhoneNumber(String s) {
+        this.phoneNumber = s;
+    }
+
+    public void setSeatNumber(String s) {
+        this.seatNumber = s;
+    }
+
+    public void setTime(String s) {
+        show.setTime(s);
     }
 }
