@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 import java.util.function.UnaryOperator;
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class MainViewController {
@@ -43,6 +44,18 @@ public class MainViewController {
      */
     @FXML
     private VBox addShowsView;
+
+    @FXML
+    private TextField showFilterInput;
+
+    @FXML
+    private TextField locationFilterInput;
+
+    @FXML
+    private TextField contactPersonFilterInput;
+
+    @FXML
+    private TextField ticketFilterInput;
 
     // Add show input form view
     @FXML
@@ -551,7 +564,7 @@ public class MainViewController {
         fadeTransition(notification);
     }
 
-    public void fadeTransition(Label label) {
+    private void fadeTransition(Label label) {
         label.setVisible(true);
         label.setOpacity(1);
         FadeTransition ft = new FadeTransition(Duration.seconds(0.5), label);
@@ -589,6 +602,52 @@ public class MainViewController {
     public void discardEditShow() {
         editShowsView.setVisible(false);
     }
+
+    public void filterShow() {
+        String filter = showFilterInput.getText();
+        if (filter.equals("")) {
+            updateShowsList();
+        } else {
+            ArrayList<Show> filteredShows = hoe.filterShow(filter);
+            ObservableList<Show> filteredShowData = FXCollections.observableArrayList(filteredShows);
+            showsTableView.setItems(filteredShowData);
+        }
+    }
+
+    private void filterLocation(){
+        String filter = locationFilterInput.getText();
+        if (filter.equals("")){
+            updateLocationsList();
+        } else {
+            ArrayList<Location> filteredLocation = hoe.filterLocation(filter);
+            ObservableList<Location> filteredLocationData = FXCollections.observableArrayList(filteredLocation);
+            locationTableView.setItems(filteredLocationData);
+        }
+    }
+
+    private void filterContact(){
+        String filter = contactPersonFilterInput.getText();
+        if (filter.equals("")){
+            updateContactList();
+        } else {
+            ArrayList<ContactPerson> filteredContacts = hoe.filterContactPerson(filter);
+            ObservableList<ContactPerson> filteredContactsData = FXCollections.observableArrayList(filteredContacts);
+            contactTableView.setItems(filteredContactsData);
+        }
+    }
+
+    private void filterTicket(){
+        String filter = ticketFilterInput.getText();
+        if (filter.equals("")){
+            updateTicketsList();
+        } else {
+            ArrayList<Ticket> filteredTicket = hoe.filterTickets(filter);
+            ObservableList<Ticket> filteredTicketData = FXCollections.observableArrayList(filteredTicket);
+            ticketTableView.setItems(filteredTicketData);
+        }
+    }
+
+
 
     public void toggleAddLocationMenu() {
         if(!addLocationView.isVisible()) {

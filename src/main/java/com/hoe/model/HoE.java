@@ -12,11 +12,17 @@ import com.hoe.model.exceptions.CorruptFileException;
 import com.hoe.model.exceptions.InvalidFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class HoE {
+    IDCreator id = new IDCreator();
+    Show s = new Show("", "");
+    Location l = new Location("", "");
     private Database database;
     private IDCreator id = new IDCreator();
     private Show s = new Show("","");
@@ -32,7 +38,7 @@ public class HoE {
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
-                        String ticketPrice, String program) {
+                           String ticketPrice, String program) {
         Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
@@ -82,27 +88,28 @@ public class HoE {
 
     /**
      * Method that
+     *
+     * @param path
      * @return returns true and saves the given file-type if it's successful,
      * returns false if there is any exceptions, leading the save to not being applied.
-     * @param path
      */
     public boolean save(String path) {
         try {
             JobjSaver jobj = new JobjSaver();
             CSVSaver csv = new CSVSaver();
-                if (path.endsWith(".csv")) {
-                    new Thread(() -> {
-                        csv.saveData(path, database);
-                        Thread.currentThread().interrupt();
-                    }).start();
-                } else if (path.endsWith(".ser")) {
-                    new Thread(() -> {
-                        jobj.saveData(path, database);
-                        Thread.currentThread().interrupt();
-                    }).start();
-                }
+            if (path.endsWith(".csv")) {
+                new Thread(() -> {
+                    csv.saveData(path, database);
+                    Thread.currentThread().interrupt();
+                }).start();
+            } else if (path.endsWith(".ser")) {
+                new Thread(() -> {
+                    jobj.saveData(path, database);
+                    Thread.currentThread().interrupt();
+                }).start();
+            }
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             Thread.currentThread().interrupt();
             return false;
         }
@@ -115,10 +122,11 @@ public class HoE {
             database = csv.readData(path);
         } else if (path.endsWith(".ser")) {
             database = jobj.loadData(path);
-        } else{
+        } else {
             throw new InvalidFileException("Wrong file type");
         }
     }
+
     public ArrayList<Location> getLocations() {
         return database.getLocations();
     }
@@ -140,6 +148,84 @@ public class HoE {
         l.setTypeOfLocation(formatInput(typeOfLocation));
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
+    }
+
+    public ArrayList<Show> filterShow(String filter) {
+        ArrayList<Show> filterList = new ArrayList<>();
+        for (Show show : database.getShows()) {
+            if (show.getShowName().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getShowType().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getDate().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getTime().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getLocation().getName().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getTicketPrice().contains(filter)) {
+                filterList.add(show);
+            }
+            if (show.getContactPerson() != null) {
+                if (show.getContactPerson().getName().contains(filter)) {
+                    filterList.add(show);
+                } else if (show.getContactPerson().getPhoneNumber().contains(filter)) {
+                    filterList.add(show);
+                }
+            }
+        }
+        return filterList;
+    }
+
+
+    public ArrayList<Location> filterLocation(String filter) {
+        ArrayList<Location> filterList = new ArrayList<>();
+        for (Location location : database.getLocations()) {
+            if (location.getName().contains(filter)) {
+                filterList.add(location);
+            } else if (location.getTypeOfLocation().contains(filter)) {
+                filterList.add(location);
+            }
+        }
+        return filterList;
+    }
+
+    public ArrayList<ContactPerson> filterContactPerson(String filter) {
+        ArrayList<ContactPerson> filterList = new ArrayList<>();
+        for (ContactPerson person : database.getContacts()) {
+            if (person.getName().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getPhoneNumber().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getEmail().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getOther().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getAffiliation().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getWebsite().contains(filter)) {
+                filterList.add(person);
+            }
+        }
+        return filterList;
+    }
+
+    public ArrayList<Ticket> filterTickets(String filter) {
+        ArrayList<Ticket> filterList = new ArrayList<>();
+        for (Ticket ticket : database.getTickets()) {
+            if (ticket.getDate().contains(filter)) {
+                filterList.add(ticket);
+            }
+            if (ticket.getShow() != null) {
+                if (ticket.getShow().getShowName().contains(filter)) {
+                    filterList.add(ticket);
+                }
+            }
+            if (ticket.getPhoneNumber().contains(filter)) {
+                filterList.add(ticket);
+            }
+        }
+        return filterList;
     }
 
     public boolean removeLocation(Location l) {
