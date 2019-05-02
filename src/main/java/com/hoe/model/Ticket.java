@@ -21,12 +21,9 @@ public class Ticket implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString() {
-        return getTicketID() + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeatNumber();
+        return getTicketID() + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeat();
     }
 
-    public void setShow(Show show) {
-        this.show = show;
-    }
 
     public void setSeat(String seat) {
         this.seat = seat;
@@ -55,8 +52,8 @@ public class Ticket implements Serializable {
         return phoneNumber;
     }
 
-    public String getSeatNumber() {
-        return seatNumber;
+    public Location getLocation() {
+        return show.getLocation();
     }
 
     public Show getShow() {
@@ -75,17 +72,10 @@ public class Ticket implements Serializable {
         this.phoneNumber = s;
     }
 
-    public void setSeatNumber(String s) {
-        this.seatNumber = s;
-    }
-
     public String getShowName() {
         return show.getShowName();
     }
 
-    public Show getShow() {
-        return show;
-      }
 
     public String getSeat() {
         return seat;

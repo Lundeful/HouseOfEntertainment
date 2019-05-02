@@ -1,6 +1,7 @@
 package com.hoe.model.dataloading;
 
 import com.hoe.model.*;
+import com.hoe.model.exceptions.NotEnoughSeatsException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
 import java.io.BufferedReader;
@@ -22,7 +23,7 @@ public class CSVLoader {
      * then correctly convert everything back to the right object.
      * @param filename The filepath to the CSV-file.
      */
-    public Database readData(String filename) throws WrongCSVFormatException {
+    public Database readData(String filename) throws WrongCSVFormatException, NotEnoughSeatsException {
         Database database = new Database();
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(filename));
@@ -70,7 +71,7 @@ public class CSVLoader {
             location.setNumberOfSeats(Integer.parseInt(data[3]));
             database.addLocation(location);
         } else {
-            throw new WrongCSVFormatException("This is not the correct method to use to create this object");
+            throw new WrongCSVFormatException("Corrupt CSV-file");
         }
         //TODO: add location object to Database object
     }
@@ -79,22 +80,21 @@ public class CSVLoader {
      * This method creates a Show object based on the input from the String[] with information.
      * @param data The String[] with the data.
      */
-    private void showCreator(String[] data, Database database) throws WrongCSVFormatException {
+    private void showCreator(String[] data, Database database) throws WrongCSVFormatException, NotEnoughSeatsException {
         //TODO: add a method that locates a location object that already exists
         if(data.length == 10) {
             Show show = new Show(data[0], data[1]);
             show.setShowType(data[2]);
-            show.setLocationID(data[3]);
+            show.setLocation(database.findLocation(data[3]));
             show.setDate(data[4]);
             show.setTime(data[5]);
             show.setTicketPrice(data[6]);
             show.setAvailableTickets(Integer.parseInt(data[7]));
             show.setProgram(data[8]);
             show.setContactPerson(database.findContactPerson(data[9]));
-            show.setLocation(database.findLocation(show.getLocationID()));
             database.addShow(show);
         } else {
-            throw new WrongCSVFormatException("This is not the correct method to use to create this object");
+            throw new WrongCSVFormatException("Corrupt CSV-file");
         }
     }
 
@@ -110,7 +110,7 @@ public class CSVLoader {
             promotion.setTo(data[3]);
             database.addPromotion(promotion);
         } else {
-            throw new WrongCSVFormatException("This is not the correct method to use to create this object");
+            throw new WrongCSVFormatException("Corrupt CSV-file");
         }
     }
 
@@ -120,27 +120,24 @@ public class CSVLoader {
      */
     private void contactPersonCreator(String[] data, Database database) throws WrongCSVFormatException {
         if(data.length == 7) {
-            ContactPerson contactPerson = new ContactPerson(data[0]);
-            contactPerson.setName(data[1]);
-            contactPerson.setPhoneNumber(data[2]);
+            ContactPerson contactPerson = new ContactPerson(data[0],data[1],data[2]);
             contactPerson.setEmail(data[3]);
             contactPerson.setWebsite(data[4]);
             contactPerson.setAffiliation(data[5]);
             contactPerson.setOther(data[6]);
             database.addContact(contactPerson);
         } else {
-            throw new WrongCSVFormatException("This is not the correct method to use to create this object");
+            throw new WrongCSVFormatException("Corrupt CSV-file");
         }
     }
 
     private void ticketCreator(String[] data, Database database) throws WrongCSVFormatException {
         int counter = 0;
         if(data.length == 4){
-            Ticket ticket = new Ticket(data[0], database.findShow(data[1]), data[2]);
-            ticket.setSeatNumber(data[3]);
+            Ticket ticket = new Ticket(data[0], database.findShow(data[1]), data[2],data[3]);
             database.addTicket(ticket);
         } else {
-            throw new WrongCSVFormatException("This is not the correct method to use to create this object");
+            throw new WrongCSVFormatException("Corrupt CSV-file");
         }
     }
 

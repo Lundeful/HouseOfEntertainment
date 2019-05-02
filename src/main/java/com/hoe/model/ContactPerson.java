@@ -16,13 +16,15 @@ public class ContactPerson implements Serializable {
     private String affiliation;
     private String other;
 
-    public ContactPerson(String id, String name, String contactID){
+
     /**
      * Standard constructor for the ContactPerson class.
      * @param contactID Takes in a unique ID for the Contact Person.
      */
-    public ContactPerson(String contactID){
-        this.contactID = contactID; // TODO(1): Method that generates ID's
+    public ContactPerson(String contactID, String name, String phoneNumber){
+        this.contactID = contactID;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public void setName(String name) {
@@ -86,4 +88,7 @@ public class ContactPerson implements Serializable {
                 getWebsite() + "|" + getAffiliation() + "|" + getOther();
     }
 
+    public String getContactID() {
+        return contactID;
+    }
 }

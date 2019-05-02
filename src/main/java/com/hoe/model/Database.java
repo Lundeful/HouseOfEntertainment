@@ -71,11 +71,6 @@ public class Database  implements Serializable {
         return contacts.remove(c);
     }
 
-    public boolean removeTicket(Ticket t){
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
-    }
 
     public ArrayList<Location> getLocations(){
         return this.locations;

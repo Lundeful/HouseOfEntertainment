@@ -63,9 +63,6 @@ public class Show implements Serializable {
         this.time = time;
     }
 
-    public void setContactPerson(ContactPerson c) {
-        this.contactPerson = c;
-    }
 
     public void setShowName(String showName) {
         this.showName = showName;
@@ -82,9 +79,6 @@ public class Show implements Serializable {
         this.date = s;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
     public String toCSVString(){
         return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
@@ -161,9 +155,8 @@ public class Show implements Serializable {
         this.contactPerson = contactPerson;
     }
 
-    public void addTicket(Ticket t){
-        this.soldTickets.add(t);
-        availableTickets--;
+    public void setAvailableTickets(int availableTickets){
+        this.availableTickets = availableTickets;
     }
 
 }

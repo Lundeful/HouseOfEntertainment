@@ -1,13 +1,15 @@
 package com.hoe.model;
 
+import com.hoe.model.exceptions.NotEnoughSeatsException;
+
 import java.util.Random;
 
 public class TestDataBase {
     IDCreator id = new IDCreator();
     Show s = new Show("","");
     Location l = new Location("","");
-    ContactPerson c = new ContactPerson("");
-    Ticket t = new Ticket("",s,"");
+    ContactPerson c = new ContactPerson("", "", "");
+    Ticket t = new Ticket("",s,"","");
 
     public String[] generateRandomWords(int numberOfWords){
         String[] randomStrings = new String[numberOfWords];
@@ -24,7 +26,7 @@ public class TestDataBase {
         return randomStrings;
     }
 
-    public Database generateTestObjects() {
+    public Database generateTestObjects() throws NotEnoughSeatsException {
         Database database = new Database();
         Location l1 = new Location(id.randomKeyGen(l), "Big Hall");
         l1.setNumberOfSeats(578);
@@ -57,33 +59,21 @@ public class TestDataBase {
         database.addLocation(l5);
         database.addLocation(l6);
 
-        ContactPerson c1 = new ContactPerson(id.randomKeyGen(c));
-        c1.setName("Emma Hansen");
-        c1.setPhoneNumber("54937654");
+        ContactPerson c1 = new ContactPerson(id.randomKeyGen(c), "Emma Hansen", "54937654");
         c1.setWebsite("www.vg.no");
         c1.setEmail("e.h@gmail.com");
-        ContactPerson c2 = new ContactPerson(id.randomKeyGen(c));
-        c2.setName("Oskar Pettersen");
-        c2.setPhoneNumber("98776123");
+        ContactPerson c2 = new ContactPerson(id.randomKeyGen(c), "Oskar Pettersen", "98776123");
         c2.setWebsite("www.nrk.no");
         c2.setEmail("o.p@gmail.com");
-        ContactPerson c3 = new ContactPerson(id.randomKeyGen(c));
-        c3.setName("Jakob Olsen");
-        c3.setPhoneNumber("78690435");
+        ContactPerson c3 = new ContactPerson(id.randomKeyGen(c), "Jakob Olsen", "78690435");
         c3.setWebsite("www.stackoverflow.com");
         c3.setEmail("j.o@gmail.com");
-        ContactPerson c4 = new ContactPerson(id.randomKeyGen(c));
-        c4.setName("Aksel Nilsen");
-        c4.setPhoneNumber("90478234");
+        ContactPerson c4 = new ContactPerson(id.randomKeyGen(c), "Aksel Nilsen", "90478234");
         c4.setEmail("a.n@gmail.com");
-        ContactPerson c5 = new ContactPerson(id.randomKeyGen(c));
-        c5.setName("Amalie Berg");
-        c5.setPhoneNumber("94587143");
+        ContactPerson c5 = new ContactPerson(id.randomKeyGen(c), "Amalie Berg", "94587143");
         c5.setEmail("a.m@gmail.com");
-        ContactPerson c6 = new ContactPerson(id.randomKeyGen(c));
-        c6.setName("Sara Eriksen");
+        ContactPerson c6 = new ContactPerson(id.randomKeyGen(c), "Sara Eriksen", "95476985");
         c6.setEmail("s.e@gmail.com");
-        c6.setPhoneNumber("95476985");
         database.addContact(c1);
         database.addContact(c2);
         database.addContact(c3);
@@ -97,9 +87,12 @@ public class TestDataBase {
         addShow("AC/DC", "Concert", "", "", l1, "499", ""); */
         String[] ord = {"Little", "Curse", "Captain", "Harry", "Amazing", "Missing", "Dragon", "Hotel", "Red", "Five",
                 "High", "Best", "Family", "White", "Black", "Movie", "Man", "Woman", "True", "False", "The", "Hacker",
-                "Mighty", "Dancing", "Huge"};
+                "Mighty", "Dancing", "Huge", "Single", "Big", "Schindler's", "Angry", "Lord of the", "Unusual",
+        "Terminator 5:", "American"};
         String[] ord2 = {"Dead", "Walking", "Game", "Weapon", "Lord", "Kill", "Amazing", "Suit", "Machine", "Jesus",
-        "Store", "Fight", "Killing", "Computer", "Shining", "Fantastic", "Flight", "Airplane", "Train", "Bond"};
+        "Store", "Fight", "Killing", "Computer", "Shining", "Fantastic", "Flight", "Airplane", "Train", "Bond",
+        "Chungus", "Death", "Girl", "Batman", "List", "Matrix", "Spiderman", "- Endgame", "Whiplash", "Joker", "History"
+        ,"Knight"};
 
         for (int i = 0; i < 1000; i++) {
             int loc = i % 6;
@@ -114,12 +107,10 @@ public class TestDataBase {
             show.setDate(String.valueOf(randomInt(2)) + "-" + String.valueOf(randomInt(2)) + "-" + String.valueOf(randomInt(2)));
             show.setShowType(show.getLocation().getTypeOfLocation());
             show.setContactPerson(database.getContacts().get(per));
-            /*for(int j = 0; j < show.getAvailableTickets()-10; j++ ){
-                Ticket ticket = new Ticket(id.randomKeyGen(t),show,String.valueOf(randomInt(3)));
-                ticket.setPhoneNumber("9" + String.valueOf(randomInt(7)));
-                database.addTicket(t);
-                show.addTicket(t);
-            } */
+            for(int j = 0; j < show.getAvailableTickets()-10; j++ ){
+                Ticket ticket = new Ticket(id.randomKeyGen(t),show, "9" + String.valueOf(randomInt(7)), String.valueOf(randomInt(3)));
+                database.addTicket(ticket);
+            }
             database.addShow(show);
         }
         return database;

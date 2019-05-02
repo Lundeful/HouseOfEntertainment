@@ -229,7 +229,11 @@ public class MainViewController {
 
     public void initialize() {
         // Initialize main system and database
-        hoe = new HoE();
+        try {
+            hoe = new HoE();
+        } catch (NotEnoughSeatsException e) {
+            e.printStackTrace(); //TODO FIX THIS, remove try/catch
+        }
 
         initializeVisibility();
         addTextFormattingFilters();
@@ -430,8 +434,15 @@ public class MainViewController {
             try {
                 hoe.load(finalPath);
                 updateShowsList();
+                updateContactsList();
+                updateLocationsList();
+                updatePromotions();
+                updateTicketsList();
+                Platform.runLater(
+                        () -> displayNotification("Loading complete")
+                );
                 Thread.currentThread().interrupt();
-            } catch (InvalidFileException | WrongCSVFormatException | CorruptFileException e) {
+            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | CorruptFileException e) {
                 e.printStackTrace();
                 Platform.runLater(
                         () -> displayNotification(e.getMessage())
@@ -446,7 +457,7 @@ public class MainViewController {
         if (selectedFile == null) return;
         String finalPath = selectedFile.toString();
         hoe.save(finalPath);
-        updateShowsList();
+        displayNotification("Saving complete");
     }
 
     public void toggleAddShowMenu() {
@@ -713,11 +724,12 @@ public class MainViewController {
             editTicketView.setVisible(false);
             addTicketView.setVisible(false);
             displayNotification("Choose ticket to remove");
-        } else if (ticketTableView.getSelectionModel().getSelectedItem() != null) {
+        } else if (ticketTableView.getSelectionModel().getSelectedItem() == null) {
             displayNotification("No ticket selected");
         } else {
             Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
             if (hoe.removeTicket(t)) {
+                updateTicketsList();
                 displayNotification("Ticket removed");
             } else {
                 displayNotification("Error: Ticket not removed");
