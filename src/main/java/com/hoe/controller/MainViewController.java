@@ -9,7 +9,6 @@ import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -47,15 +46,6 @@ public class MainViewController {
 
     @FXML
     private TextField showFilterInput;
-
-    @FXML
-    private TextField locationFilterInput;
-
-    @FXML
-    private TextField contactPersonFilterInput;
-
-    @FXML
-    private TextField ticketFilterInput;
 
     // Add show input form view
     @FXML
@@ -120,6 +110,9 @@ public class MainViewController {
     private VBox addLocationView;
 
     @FXML
+    private TextField locationFilterInput;
+
+    @FXML
     private TextField addLocationFieldName, addLocationFieldType, addLocationFieldSeats;
 
     @FXML
@@ -155,6 +148,10 @@ public class MainViewController {
 
     @FXML
     private VBox addTicketView;
+
+
+    @FXML
+    private TextField ticketFilterInput;
 
     @FXML
     private TableColumn<Ticket, String> tableColumnTicketShow, tableColumnTicketPhone,
@@ -203,6 +200,9 @@ public class MainViewController {
     private TableView<ContactPerson> contactsTableView;
 
     @FXML
+    private TextField contactFilterInput;
+
+    @FXML
     private VBox addContactView;
 
     @FXML
@@ -230,13 +230,18 @@ public class MainViewController {
 
     /*
     ==============================
+    Promotions view
+    ==============================
      */
 
-    // Notifications
+    @FXML
+    private TextField promotionFilterInput;
+
+
     @FXML
     private Label notification;
 
-    // Main app object
+
     private HoE hoe;
     private Show selectedShow;
 
@@ -614,7 +619,7 @@ public class MainViewController {
         }
     }
 
-    private void filterLocation(){
+    public void filterLocation(){
         String filter = locationFilterInput.getText();
         if (filter.equals("")){
             updateLocationsList();
@@ -625,8 +630,8 @@ public class MainViewController {
         }
     }
 
-    private void filterContact(){
-        String filter = contactPersonFilterInput.getText();
+    public void filterContact(){
+        String filter = contactFilterInput.getText();
         if (filter.equals("")){
             updateContactsList();
         } else {
@@ -636,7 +641,7 @@ public class MainViewController {
         }
     }
 
-    private void filterTicket(){
+    public void filterTicket(){
         String filter = ticketFilterInput.getText();
         if (filter.equals("")){
             updateTicketsList();
@@ -646,6 +651,17 @@ public class MainViewController {
             ticketTableView.setItems(filteredTicketData);
         }
     }
+
+/*    public void filterPromotion(){
+        String filter = promotionFilterInput.getText();
+        if (filter.equals("")){
+            updateTicketsList();
+        } else {
+            ArrayList<Ticket> filteredTicket = hoe.filterPromotion(filter);
+            ObservableList<Ticket> filteredTicketData = FXCollections.observableArrayList(filteredTicket);
+            ticketTableView.setItems(filteredTicketData);
+        }
+    }*/
 
 
 
