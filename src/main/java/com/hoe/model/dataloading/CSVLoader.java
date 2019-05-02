@@ -82,7 +82,7 @@ public class CSVLoader {
      */
     private void showCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a location object that already exists
-        if(data.length == 9) {
+        if(data.length == 10) {
             int counter = 0;
             Show show = new Show(data[counter], data[++counter]);
             show.setShowType(data[++counter]);
@@ -92,6 +92,7 @@ public class CSVLoader {
             show.setTicketPrice(data[++counter]);
             show.setAvailableTickets(Integer.parseInt(data[++counter]));
             show.setProgram(data[++counter]);
+            show.setContactPerson(database.findContactPerson(data[++counter]));
             show.setLocation(database.findLocation(show.getLocationID()));
             database.addShow(show);
         } else {

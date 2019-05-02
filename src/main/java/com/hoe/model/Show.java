@@ -16,6 +16,7 @@ public class Show implements Serializable {
     private Location location;
     private String ticketPrice;
     private int availableTickets;
+    private ContactPerson contactPerson;
 
     /**
      * Standard constructor for the Show class.
@@ -83,8 +84,12 @@ public class Show implements Serializable {
     public String toCSVString(){
         return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
                 getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())  + "|" +
-                String.valueOf(getSoldTickets().size());
+                String.valueOf(getSoldTickets().size()) + "|" + getContactPersonID();
 }
+
+    private String getContactPersonID() {
+        return contactPerson.getContactID();
+    }
 
     public String getLocationID() {
         if(locationID != null){
@@ -133,5 +138,13 @@ public class Show implements Serializable {
 
     public int getAvailableTickets() {
         return availableTickets;
+    }
+
+    public ContactPerson getContactPerson() {
+        return contactPerson;
+    }
+
+    public void setContactPerson(ContactPerson contactPerson) {
+        this.contactPerson = contactPerson;
     }
 }

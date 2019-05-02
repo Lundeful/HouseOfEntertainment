@@ -112,4 +112,13 @@ public class Database  implements Serializable {
         }
         return null;
     }
+
+    public ContactPerson findContactPerson(String s) {
+        for(ContactPerson contactPerson : contacts){
+            if(contactPerson.getContactID().equals(s)){
+                return contactPerson;
+            }
+        }
+        return null;
+    }
 }
