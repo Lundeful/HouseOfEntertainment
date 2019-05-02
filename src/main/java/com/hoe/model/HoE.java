@@ -8,21 +8,24 @@ import com.hoe.model.exceptions.CorruptFileException;
 import com.hoe.model.exceptions.InvalidFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class HoE {
-    private Database database;
     IDCreator id = new IDCreator();
-    Show s = new Show("","");
-    Location l = new Location("","");
+    Show s = new Show("", "");
+    Location l = new Location("", "");
+    private Database database;
 
     public HoE() {
         database = new Database();
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
-                        String ticketPrice, String program) {
+                           String ticketPrice, String program) {
         Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
@@ -35,7 +38,7 @@ public class HoE {
         return database.addShow(show);
     }
 
-    public void generateTestObjects() {
+   /* public void generateTestObjects() {
         Location l1 = new Location(id.randomKeyGen(l), "Big Hall");
         l1.setNumberOfSeats(578);
         l1.setTypeOfLocation("Theatre");
@@ -56,29 +59,27 @@ public class HoE {
         database.addLocation(l2);
         database.addLocation(l3);
         database.addLocation(l4);
-        /*addShow("Harry potter", "Movie", "28-10-2019", "", l4, "120", "");
+        addShow("Harry potter", "Movie", "28-10-2019", "", l4, "120", "");
         addShow("Cats", "Stage show", "", "Midnight", l2, "260", "");
         addShow("Bohemian Rhapsody", "Movie", "Mid-night", "", l4, "190", "");
-        addShow("AC/DC", "Concert", "", "", l1, "499", ""); */
+        addShow("AC/DC", "Concert", "", "", l1, "499", "");
         String[] randomWord = generateRandomWords(1000000);
         for(int i = 0; i < 1000; i++){
             int loc = i%4;
             addShow(randomWord[i],randomWord[i],randomWord[i],randomWord[i],database.getLocations().get(loc),"100",randomWord[i]);
         }
-       /* for (int i = 0; i < 1000; i++) {
+       for (int i = 0; i < 1000; i++) {
             addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
-        } */
-    }
+        }
+    } */
 
-    public String[] generateRandomWords(int numberOfWords){
+    public String[] generateRandomWords(int numberOfWords) {
         String[] randomStrings = new String[numberOfWords];
         Random random = new Random();
-        for(int i = 0; i < numberOfWords; i++)
-        {
-            char[] word = new char[random.nextInt(8)+3]; // words of length 3 through 10. (1 and 2 letter words are boring.)
-            for(int j = 0; j < word.length; j++)
-            {
-                word[j] = (char)('a' + random.nextInt(26));
+        for (int i = 0; i < numberOfWords; i++) {
+            char[] word = new char[random.nextInt(8) + 3]; // words of length 3 through 10. (1 and 2 letter words are boring.)
+            for (int j = 0; j < word.length; j++) {
+                word[j] = (char) ('a' + random.nextInt(26));
             }
             randomStrings[i] = new String(word);
         }
@@ -92,6 +93,7 @@ public class HoE {
     public boolean removeShow(Show s) {
         return database.removeShow(s);
     }
+
     public ArrayList<Show> getShows() {
         return database.getShows();
     }
@@ -99,27 +101,28 @@ public class HoE {
 
     /**
      * Method that
+     *
+     * @param path
      * @return returns true and saves the given file-type if it's successful,
      * returns false if there is any exceptions, leading the save to not being applied.
-     * @param path
      */
     public boolean save(String path) {
         try {
             JobjSaver jobj = new JobjSaver();
             CSVSaver csv = new CSVSaver();
-                if (path.endsWith(".csv")) {
-                    new Thread(() -> {
-                        csv.saveData(path, database);
-                        Thread.currentThread().interrupt();
-                    }).start();
-                } else if (path.endsWith(".ser")) {
-                    new Thread(() -> {
-                        jobj.saveData(path, database);
-                        Thread.currentThread().interrupt();
-                    }).start();
-                }
+            if (path.endsWith(".csv")) {
+                new Thread(() -> {
+                    csv.saveData(path, database);
+                    Thread.currentThread().interrupt();
+                }).start();
+            } else if (path.endsWith(".ser")) {
+                new Thread(() -> {
+                    jobj.saveData(path, database);
+                    Thread.currentThread().interrupt();
+                }).start();
+            }
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             Thread.currentThread().interrupt();
             return false;
         }
@@ -132,10 +135,11 @@ public class HoE {
             database = csv.readData(path);
         } else if (path.endsWith(".ser")) {
             database = jobj.loadData(path);
-        } else{
+        } else {
             throw new InvalidFileException("Wrong file type");
         }
     }
+
     public ArrayList<Location> getLocations() {
         return database.getLocations();
     }
@@ -151,6 +155,7 @@ public class HoE {
     public ArrayList<Promotion> getPromotions() {
         return database.getPromotions();
     }
+
     public boolean addLocation(String id, String name, String typeOfLocation, int numberOfSeats) {
         Location l = new Location(id, name);
         l.setTypeOfLocation(formatInput(typeOfLocation));
@@ -158,25 +163,81 @@ public class HoE {
         return database.addLocation(l);
     }
 
-    public ArrayList<Show> filterShow(String filter){
+    public ArrayList<Show> filterShow(String filter) {
         ArrayList<Show> filterList = new ArrayList<>();
-        for (Show show : database.getShows()){
-            if (show.getShowName().contains(filter) || show.getShowType().contains(filter) ||
-                    show.getDate().contains(filter) || show.getTime().contains(filter) ||
-                    show.getLocation().getName().contains(filter) || show.getTicketPrice().contains(filter) ||
-                    show.getContactPerson().getName().contains(filter) ||
-                    show.getContactPerson().getPhoneNumber().contains(filter)){
+        for (Show show : database.getShows()) {
+            if (show.getShowName().contains(filter)) {
                 filterList.add(show);
+            } else if (show.getShowType().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getDate().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getTime().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getLocation().getName().contains(filter)) {
+                filterList.add(show);
+            } else if (show.getTicketPrice().contains(filter)) {
+                filterList.add(show);
+            }
+            if (show.getContactPerson() != null) {
+                if (show.getContactPerson().getName().contains(filter)) {
+                    filterList.add(show);
+                } else if (show.getContactPerson().getPhoneNumber().contains(filter)) {
+                    filterList.add(show);
+                }
             }
         }
         return filterList;
     }
 
-   /* private ArrayList<Location> filterLocation(){
-        ArrayList<Location> filterList = new ArrayList<>();
 
-        if (show.get)
+    public ArrayList<Location> filterLocation(String filter) {
+        ArrayList<Location> filterList = new ArrayList<>();
+        for (Location location : database.getLocations()) {
+            if (location.getName().contains(filter)) {
+                filterList.add(location);
+            } else if (location.getTypeOfLocation().contains(filter)) {
+                filterList.add(location);
+            }
+        }
+        return filterList;
     }
-    */
-   
+
+    public ArrayList<ContactPerson> filterContactPerson(String filter) {
+        ArrayList<ContactPerson> filterList = new ArrayList<>();
+        for (ContactPerson person : database.getContacts()) {
+            if (person.getName().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getPhoneNumber().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getEmail().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getOther().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getAffiliation().contains(filter)) {
+                filterList.add(person);
+            } else if (person.getWebsite().contains(filter)) {
+                filterList.add(person);
+            }
+        }
+        return filterList;
+    }
+
+    public ArrayList<Ticket> filterTickets(String filter) {
+        ArrayList<Ticket> filterList = new ArrayList<>();
+        for (Ticket ticket : database.getTickets()) {
+            if (ticket.getDate().contains(filter)) {
+                filterList.add(ticket);
+            }
+            if (ticket.getShow() != null) {
+                if (ticket.getShow().getShowName().contains(filter)) {
+                    filterList.add(ticket);
+                }
+            }
+            if (ticket.getPhoneNumber().contains(filter)) {
+                filterList.add(ticket);
+            }
+        }
+        return filterList;
+    }
 }
