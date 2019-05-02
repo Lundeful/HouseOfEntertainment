@@ -11,14 +11,17 @@ import com.hoe.model.exceptions.WrongCSVFormatException;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class HoE {
     private Database database;
-    IDCreator id = new IDCreator();
-    Show s = new Show("","");
-    Location l = new Location("","");
+    private IDCreator id = new IDCreator();
+    private Show s = new Show("","");
+
 
     public HoE() {
         database = new Database();
+        TestDataBase test = new TestDataBase();
+        database = test.generateTestObjects();
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
@@ -35,54 +38,12 @@ public class HoE {
         return database.addShow(show);
     }
 
-    public void generateTestObjects() {
-        Location l1 = new Location(id.randomKeyGen(l), "Big Hall");
-        l1.setNumberOfSeats(578);
-        l1.setTypeOfLocation("Theatre");
-
-        Location l2 = new Location(id.randomKeyGen(l), "Small stage");
-        l2.setTypeOfLocation("Theatre");
-        l2.setNumberOfSeats(300);
-
-        Location l3 = new Location(id.randomKeyGen(l), "Supreme");
-        l2.setNumberOfSeats(258);
-        l2.setTypeOfLocation("Movie theatre");
-
-        Location l4 = new Location(id.randomKeyGen(l), "IMAX");
-        l4.setTypeOfLocation("Movie Theatre");
-        l4.setNumberOfSeats(420);
-
-        database.addLocation(l1);
-        database.addLocation(l2);
-        database.addLocation(l3);
-        database.addLocation(l4);
-        /*addShow("Harry potter", "Movie", "28-10-2019", "", l4, "120", "");
-        addShow("Cats", "Stage show", "", "Midnight", l2, "260", "");
-        addShow("Bohemian Rhapsody", "Movie", "Mid-night", "", l4, "190", "");
-        addShow("AC/DC", "Concert", "", "", l1, "499", ""); */
-        String[] randomWord = generateRandomWords(1000000);
-        for(int i = 0; i < 1000; i++){
-            int loc = i%4;
-            addShow(randomWord[i],randomWord[i],randomWord[i],randomWord[i],database.getLocations().get(loc),"100",randomWord[i]);
-        }
-       /* for (int i = 0; i < 1000; i++) {
-            addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
-        } */
+    public Database getDataBase(){
+        return this.database;
     }
 
-    public String[] generateRandomWords(int numberOfWords){
-        String[] randomStrings = new String[numberOfWords];
-        Random random = new Random();
-        for(int i = 0; i < numberOfWords; i++)
-        {
-            char[] word = new char[random.nextInt(8)+3]; // words of length 3 through 10. (1 and 2 letter words are boring.)
-            for(int j = 0; j < word.length; j++)
-            {
-                word[j] = (char)('a' + random.nextInt(26));
-            }
-            randomStrings[i] = new String(word);
-        }
-        return randomStrings;
+    public void setDatabase(Database data){
+        this.database = data;
     }
 
     private String formatInput(String s) {

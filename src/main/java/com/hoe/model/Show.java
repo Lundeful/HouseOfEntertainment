@@ -83,20 +83,18 @@ public class Show implements Serializable {
 
     public String toCSVString(){
         return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
-                getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())  + "|" +
-                String.valueOf(getSoldTickets().size()) + "|" + getContactPersonID();
+                getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())
+                + "|" + getProgram() + "|" + getContactPersonID();
 }
 
     private String getContactPersonID() {
+        if(this.contactPerson == null) return "";
         return contactPerson.getContactID();
     }
 
     public String getLocationID() {
-        if(locationID != null){
-            return locationID;
-        }else{
-            return location.getLocationID();
-        }
+        if(location == null) return "";
+        return location.getLocationID();
     }
 
     public String getTicketPrice() {
@@ -146,5 +144,10 @@ public class Show implements Serializable {
 
     public void setContactPerson(ContactPerson contactPerson) {
         this.contactPerson = contactPerson;
+    }
+
+    public void addTicket(Ticket t){
+        this.soldTickets.add(t);
+        availableTickets--;
     }
 }

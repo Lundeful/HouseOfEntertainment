@@ -176,10 +176,7 @@ public class MainViewController {
     public void initialize() {
         initializeVisibility();
         hoe = new HoE();
-        IDCreator id = new IDCreator();
-        Show s = new Show("","");
-        Location l = new Location("","");
-        hoe.generateTestObjects();
+
         // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
 
       /* hoe.addLocation(id.randomKeyGen(l), "Big Hall", "", 100);

@@ -65,10 +65,9 @@ public class CSVLoader {
      */
     private void locationCreator(String[] data, Database database) throws WrongCSVFormatException {
         if(data.length == 4) {
-            int counter = 0;
-            Location location = new Location(data[counter], data[++counter]);
-            location.setTypeOfLocation(data[++counter]);
-            location.setNumberOfSeats(Integer.parseInt(data[++counter]));
+            Location location = new Location(data[0], data[1]);
+            location.setTypeOfLocation(data[2]);
+            location.setNumberOfSeats(Integer.parseInt(data[3]));
             database.addLocation(location);
         } else {
             throw new WrongCSVFormatException("This is not the correct method to use to create this object");
@@ -83,16 +82,15 @@ public class CSVLoader {
     private void showCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a location object that already exists
         if(data.length == 10) {
-            int counter = 0;
-            Show show = new Show(data[counter], data[++counter]);
-            show.setShowType(data[++counter]);
-            show.setLocationID(data[++counter]);
-            show.setDate(data[++counter]);
-            show.setTime(data[++counter]);
-            show.setTicketPrice(data[++counter]);
-            show.setAvailableTickets(Integer.parseInt(data[++counter]));
-            show.setProgram(data[++counter]);
-            show.setContactPerson(database.findContactPerson(data[++counter]));
+            Show show = new Show(data[0], data[1]);
+            show.setShowType(data[2]);
+            show.setLocationID(data[3]);
+            show.setDate(data[4]);
+            show.setTime(data[5]);
+            show.setTicketPrice(data[6]);
+            show.setAvailableTickets(Integer.parseInt(data[7]));
+            show.setProgram(data[8]);
+            show.setContactPerson(database.findContactPerson(data[9]));
             show.setLocation(database.findLocation(show.getLocationID()));
             database.addShow(show);
         } else {
@@ -106,11 +104,10 @@ public class CSVLoader {
      */
     private void promotionCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a promotion object that already exists
-        int counter = 0;
         if(data.length == 4) {
-            Promotion promotion = new Promotion(data[counter], data[++counter]);
-            promotion.setFrom(data[++counter]);
-            promotion.setTo(data[++counter]);
+            Promotion promotion = new Promotion(data[0], data[1]);
+            promotion.setFrom(data[2]);
+            promotion.setTo(data[3]);
             database.addPromotion(promotion);
         } else {
             throw new WrongCSVFormatException("This is not the correct method to use to create this object");
@@ -122,15 +119,14 @@ public class CSVLoader {
      * @param data The String[] with the data.
      */
     private void contactPersonCreator(String[] data, Database database) throws WrongCSVFormatException {
-        int counter = 0;
         if(data.length == 7) {
-            ContactPerson contactPerson = new ContactPerson(data[counter]);
-            contactPerson.setName(data[++counter]);
-            contactPerson.setPhoneNumber(data[++counter]);
-            contactPerson.setEmail(data[++counter]);
-            contactPerson.setWebsite(data[++counter]);
-            contactPerson.setAffiliation(data[++counter]);
-            contactPerson.setOther(data[++counter]);
+            ContactPerson contactPerson = new ContactPerson(data[0]);
+            contactPerson.setName(data[1]);
+            contactPerson.setPhoneNumber(data[2]);
+            contactPerson.setEmail(data[3]);
+            contactPerson.setWebsite(data[4]);
+            contactPerson.setAffiliation(data[5]);
+            contactPerson.setOther(data[6]);
             database.addContact(contactPerson);
         } else {
             throw new WrongCSVFormatException("This is not the correct method to use to create this object");
@@ -140,7 +136,8 @@ public class CSVLoader {
     private void ticketCreator(String[] data, Database database) throws WrongCSVFormatException {
         int counter = 0;
         if(data.length == 4){
-            Ticket ticket = new Ticket(data[counter], database.findShow(data[++counter]), data[++counter]);
+            Ticket ticket = new Ticket(data[0], database.findShow(data[1]), data[2]);
+            ticket.setSeatNumber(data[3]);
             database.addTicket(ticket);
         } else {
             throw new WrongCSVFormatException("This is not the correct method to use to create this object");
