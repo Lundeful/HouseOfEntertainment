@@ -157,51 +157,36 @@ public class HoE {
 
 
     public ArrayList<Location> filterLocation(String filter) {
+        filter = filter.toLowerCase();
         ArrayList<Location> filterList = new ArrayList<>();
         for (Location location : database.getLocations()) {
-            if (location.getName().contains(filter)) {
-                filterList.add(location);
-            } else if (location.getTypeOfLocation().contains(filter)) {
-                filterList.add(location);
-            }
+            if (location.getName() != null && location.getName().toLowerCase().contains(filter)) filterList.add(location);
+            else if (location.getTypeOfLocation() != null && location.getTypeOfLocation().toLowerCase().contains(filter)) filterList.add(location);
         }
         return filterList;
     }
 
     public ArrayList<ContactPerson> filterContactPerson(String filter) {
+        filter = filter.toLowerCase();
         ArrayList<ContactPerson> filterList = new ArrayList<>();
         for (ContactPerson person : database.getContacts()) {
-            if (person.getName().contains(filter)) {
-                filterList.add(person);
-            } else if (person.getPhoneNumber().contains(filter)) {
-                filterList.add(person);
-            } else if (person.getEmail().contains(filter)) {
-                filterList.add(person);
-            } else if (person.getOther().contains(filter)) {
-                filterList.add(person);
-            } else if (person.getAffiliation().contains(filter)) {
-                filterList.add(person);
-            } else if (person.getWebsite().contains(filter)) {
-                filterList.add(person);
-            }
+            if (person.getName() != null && person.getName().toLowerCase().contains(filter)) filterList.add(person);
+            else if (person.getPhoneNumber() != null && person.getPhoneNumber().toLowerCase().contains(filter)) filterList.add(person);
+            else if (person.getEmail() != null  && person.getEmail().toLowerCase().contains(filter)) filterList.add(person);
+            else if (person.getOther() != null && person.getOther().toLowerCase().contains(filter)) filterList.add(person);
+            else if (person.getAffiliation() != null && person.getAffiliation().toLowerCase().contains(filter)) filterList.add(person);
+            else if (person.getWebsite() != null && person.getWebsite().toLowerCase().contains(filter)) filterList.add(person);
         }
         return filterList;
     }
 
     public ArrayList<Ticket> filterTickets(String filter) {
+        filter = filter.toLowerCase();
         ArrayList<Ticket> filterList = new ArrayList<>();
         for (Ticket ticket : database.getTickets()) {
-            if (ticket.getDate().contains(filter)) {
-                filterList.add(ticket);
-            }
-            if (ticket.getShow() != null) {
-                if (ticket.getShow().getShowName().contains(filter)) {
-                    filterList.add(ticket);
-                }
-            }
-            if (ticket.getPhoneNumber().contains(filter)) {
-                filterList.add(ticket);
-            }
+            if (ticket.getDate() != null && ticket.getDate().toLowerCase().contains(filter)) filterList.add(ticket);
+            else if (ticket.getShow() != null && ticket.getShow().getShowName().toLowerCase().contains(filter)) filterList.add(ticket);
+            else if (ticket.getPhoneNumber() != null && ticket.getPhoneNumber().toLowerCase().contains(filter)) filterList.add(ticket);
         }
         return filterList;
     }
