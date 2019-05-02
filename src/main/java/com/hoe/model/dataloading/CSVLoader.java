@@ -105,9 +105,9 @@ public class CSVLoader {
     private void promotionCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a promotion object that already exists
         if(data.length == 4) {
-            Promotion promotion = new Promotion(data[0], data[1]);
-            promotion.setFrom(data[2]);
-            promotion.setTo(data[3]);
+            Promotion promotion = new Promotion(data[0],database.findShow(data[1]));
+            promotion.setTo(data[2]);
+            promotion.setFrom(data[3]);
             database.addPromotion(promotion);
         } else {
             throw new WrongCSVFormatException("Corrupt CSV-file");

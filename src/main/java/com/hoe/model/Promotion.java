@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Promotion implements Serializable {
-    private final String LOCATION_ID;
-    private String showID;
+    private String promotionID;
+    private Show show;
     private String from;
     private String to;
 
-    public Promotion (String id, String s){
-        this.LOCATION_ID = id;
-        this.showID = s;
+    public Promotion(String promotionID,Show show){
+        this.promotionID = promotionID;
+        this.show = show;
     }
 
     public void setFrom(String from) {
@@ -22,13 +22,6 @@ public class Promotion implements Serializable {
         this.to = to;
     }
 
-    public String getLOCATION_ID() {
-        return LOCATION_ID;
-    }
-
-    public String getShowID() {
-        return showID;
-    }
 
     public String getFrom() {
         return from;
@@ -39,7 +32,19 @@ public class Promotion implements Serializable {
     }
 
     public String toCSVString(){
-        return getLOCATION_ID() + "|" + getShowID() + "|" + String.valueOf(getFrom() + "|" +
-                String.valueOf(getTo()));
+        return getPromotionID() + "|" + getShowID() + "|" + getFrom() + "|" + getTo();
+    }
+
+    private String getShowID() {
+        if(show == null) return "";
+        return show.getShowID();
+    }
+
+    public String getPromotionID() {
+        return promotionID;
+    }
+
+    public void setPromotionID(String promotionID) {
+        this.promotionID = promotionID;
     }
 }
