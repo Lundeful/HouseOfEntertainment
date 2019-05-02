@@ -21,8 +21,7 @@ public class MainViewController {
     // Main menu buttons
     @FXML
     private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, contactsButton,
-            promotionsButton,
-            saveDataButton, loadDataButton, helpButton;
+            promotionsButton, helpButton;
 
     // The different panes / views in this app
     @FXML
@@ -31,7 +30,7 @@ public class MainViewController {
 
     /*
     ==============================
-    Add shows menu
+    Shows menu
     ==============================
      */
     @FXML
@@ -45,6 +44,9 @@ public class MainViewController {
     private TextArea addShowFieldProgram;
     @FXML
     private ComboBox<Location> addShowChoiceBoxLocation;
+
+    @FXML
+    private ComboBox<ContactPerson> addShowChoiceBoxContact;
 
     // View with list of shows
     @FXML
@@ -89,7 +91,7 @@ public class MainViewController {
 
     /*
     ==============================
-    Add locations menu
+    Locations menu
     ==============================
      */
 
@@ -126,7 +128,7 @@ public class MainViewController {
 
     /*
     ==============================
-    Add tickets menu
+    Tickets menu
     ==============================
      */
 
@@ -172,7 +174,7 @@ public class MainViewController {
 
         /*
     ==============================
-    Add contacts menu
+    Contacts menu
     ==============================
      */
 
@@ -182,6 +184,17 @@ public class MainViewController {
     @FXML
     private VBox addContactView;
 
+    @FXML
+    private TextField addContactTextFieldName, addContactTextFieldPhone, addContactTextFieldMail,
+            addContactTextFieldWebsite, addContactTextFieldAffiliation, addContactTextFieldOther;
+
+    @FXML
+    private TableColumn<ContactPerson, String> tableColumnContactName, tableColumnContactPhone, tableColumnContactMail,
+            tableColumnContactWebsite, tableColumnContactAffiliation, tableColumnContactOther;
+    @FXML
+    private Label addContactErrorName, addContactErrorPhone, editContactErrorName, editContactErrorPhone;
+
+
     /*
     ==============================
     Edit contacts menu
@@ -190,33 +203,38 @@ public class MainViewController {
     @FXML
     private VBox editContactView;
 
-
+    @FXML
+    private TextField editContactFieldName, editContactFieldPhone, editContactFieldMail,
+            editContactFieldWebsite, editContactFieldAffiliation, editContactFieldOther;
 
     /*
     ==============================
      */
-    // Statusbar and notifications
+
+    // Notifications
     @FXML
-    private Label status, notification;
+    private Label notification;
 
     // Main app object
     private HoE hoe;
     private Show selectedShow;
-    private Location selectedLocation;
-
 
     public void initialize() {
+        // Initialize main system and database
         hoe = new HoE();
-        // hoe.loadPreviousState(); // TODO: Enable after continuous save/load is up and running
-
 
         initializeVisibility();
         addTextFormattingFilters();
         initializeLocations();
+        initializeContacts();
         initializeShows();
         initializeTickets();
+        initializePromotions();
     }
 
+    /**
+     * This method adds filters to textfields so that only numeric input is allowed
+     */
     private void addTextFormattingFilters() {
         UnaryOperator<TextFormatter.Change> intFilter = change -> {
             String newText = change.getControlNewText();
@@ -225,15 +243,19 @@ public class MainViewController {
             }
             return null;
         };
+
+        // TODO: Check duplicate code
         addShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
         editShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
         addLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
         editLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
         addTicketTextFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
         editTicketFieldPhoneNumber.setTextFormatter(new TextFormatter<String>(intFilter));
-        // TODO: Format phone number input
+        addContactTextFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
+        editContactFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
     }
 
+    // TODO Remove after setting correct visibility
     private void initializeVisibility() {
         overviewWindow.setVisible(false);
         showsWindow.setVisible(false);
@@ -287,7 +309,7 @@ public class MainViewController {
         showsTableView.setItems(showData);
         addTicketChoiceBoxShow.setItems(showData);
         editTicketChoiceBoxShow.setItems(showData);
-        updateTicketsList();
+        showsTableView.refresh();
     }
 
     private void initializeLocations() {
@@ -295,12 +317,6 @@ public class MainViewController {
         tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
         tableColumnLocationSeats.setCellValueFactory(new PropertyValueFactory<>("numberOfSeats"));
         updateLocationsList();
-
-        locationTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
-            if (s1 != null && s2 != null && !s2.equals(s1)) {
-                selectedLocation = s2;
-            }
-        });
     }
 
     private void updateLocationsList() {
@@ -327,6 +343,31 @@ public class MainViewController {
         ticketTableView.refresh();
     }
 
+    private void initializeContacts() {
+        tableColumnContactName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableColumnContactPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        tableColumnContactMail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tableColumnContactWebsite.setCellValueFactory(new PropertyValueFactory<>("website"));
+        tableColumnContactAffiliation.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
+        tableColumnContactOther.setCellValueFactory(new PropertyValueFactory<>("other"));
+        updateContactsList();
+    }
+
+    private void updateContactsList(){
+        ObservableList<ContactPerson> contactsData = FXCollections.observableArrayList(hoe.getContacts());
+        contactsTableView.setItems(contactsData);
+        contactsTableView.refresh();
+        addShowChoiceBoxContact.setItems(contactsData);
+        editShowChoiceBoxContactPerson.setItems(contactsData);
+    }
+
+    private void initializePromotions() {
+        updatePromotions();
+    }
+
+    private void updatePromotions() {
+
+    }
     public void overviewClicked() {
         menuClicked(overviewWindow, overviewButton);
     }
@@ -385,7 +426,7 @@ public class MainViewController {
     public void toggleEditShow() {
         if(!editShowsView.isVisible() && showsTableView.getSelectionModel().getSelectedItem() != null) {
             loadShowValues();
-            editShowsView.setVisible(true);loadShowValues();
+            editShowsView.setVisible(true);
             addShowsView.setVisible(false);
         } else {
             editShowsView.setVisible(false);
@@ -406,6 +447,7 @@ public class MainViewController {
         editShowFieldProgram.setText(selectedItem.getProgram());
     }
 
+    // Delete show and tickets for that show
     public void deleteShow() {
         if (addShowsView.isVisible() || editShowsView.isVisible()) {
             addShowsView.setVisible(false);
@@ -419,10 +461,12 @@ public class MainViewController {
             Show s = showsTableView.getSelectionModel().getSelectedItem();
             if (hoe.removeShow(s)) {
                 displayNotification("Show removed");
+                updateTicketsList();
+                updateShowsList();
             } else {
                 displayNotification("Error: Show not removed");
             }
-            updateShowsList();
+
         }
     }
 
@@ -449,7 +493,7 @@ public class MainViewController {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                     addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
-        // updateShowsList(); //TODO Remove?
+        updateShowsList();
         toggleAddShowMenu();
         displayNotification("Show added");
         }
@@ -479,17 +523,12 @@ public class MainViewController {
 
         } else {
             try {
-                show.setShowName(editShowTextFieldName.getText());
-                show.setShowType(editShowTextFieldType.getText());
-                show.setDate(editShowTextFieldDate.getText());
-                show.setTime(editShowTextFieldTime.getText());
-                show.setTicketPrice(editShowTextFieldTicketPrice.getText());
-                show.setLocation(editShowChoiceBoxLocation.getValue());
-                show.setContactPerson(editShowChoiceBoxContactPerson.getValue());
-                show.setProgram(editShowFieldProgram.getText());
+                hoe.updateShow(show, editShowTextFieldName.getText(), editShowTextFieldType.getText(),
+                        editShowTextFieldDate.getText(), editShowTextFieldTime.getText(),
+                        editShowTextFieldTicketPrice.getText(), editShowChoiceBoxLocation.getValue(),
+                        editShowChoiceBoxContactPerson.getValue(), editShowFieldProgram.getText());
 
-                // updateShowsList(); // TODO Remove?
-                updateTicketsList(); // Update tickets with the new information from shows
+                ticketTableView.refresh(); // TODO Update or refresh?
                 showsTableView.refresh();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
@@ -532,6 +571,7 @@ public class MainViewController {
         editLocationFieldSeats.setText(String.valueOf(location.getNumberOfSeats()));
     }
 
+    //TODO Fjern location fra shows etter sletting
     public void deleteLocation() {
         if (addLocationView.isVisible() || editLocationView.isVisible()) {
             addLocationView.setVisible(false);
@@ -561,7 +601,8 @@ public class MainViewController {
             hoe.addLocation(addLocationFieldName.getText(), addLocationFieldType.getText(),
                     Integer.parseInt(addLocationFieldSeats.getText()));
             updateLocationsList();
-            toggleAddLocationMenu();
+            showsTableView.refresh();
+            addLocationView.setVisible(false);
             displayNotification("Location added");
         }
     }
@@ -584,11 +625,12 @@ public class MainViewController {
             fadeTransition(editLocationSeatsError);
         } else {
             try {
-                location.setName(editLocationFieldName.getText());
-                location.setTypeOfLocation(editLocationFieldType.getText());
-                location.setNumberOfSeats(Integer.parseInt(editLocationFieldSeats.getText()));
+                hoe.updateLocation(location, editLocationFieldName.getText(), editLocationFieldType.getText(),
+                        Integer.parseInt(editLocationFieldSeats.getText()));
 
                 locationTableView.refresh();
+                ticketTableView.refresh();
+                showsTableView.refresh();
                 editLocationView.setVisible(false);
                 displayNotification("Location edited");
             } catch (NumberFormatException e) {
@@ -635,7 +677,9 @@ public class MainViewController {
             editTicketView.setVisible(false);
             addTicketView.setVisible(false);
             displayNotification("Choose ticket to remove");
-        }else {
+        } else if (ticketTableView.getSelectionModel().getSelectedItem() != null) {
+            displayNotification("No ticket selected");
+        } else {
             Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
             if (hoe.removeTicket(t)) {
                 displayNotification("Ticket removed");
@@ -680,11 +724,8 @@ public class MainViewController {
         } else {
             hoe.updateTicket(t, editTicketChoiceBoxShow.getValue(), editTicketFieldPhoneNumber.getText(),
                     editTicketFieldSeat.getText());
-            t.setShow(editTicketChoiceBoxShow.getValue());
-            t.setPhoneNumber(editTicketFieldPhoneNumber.getText());
-            t.setSeat(editTicketFieldSeat.getText());
 
-            updateTicketsList();
+            ticketTableView.refresh();
             editTicketView.setVisible(false);
             displayNotification("Ticket edited");
         }
@@ -705,24 +746,39 @@ public class MainViewController {
     }
 
     public void toggleEditContact() {
-        if(!editContactView.isVisible()) {
+        if(!editContactView.isVisible() && contactsTableView.getSelectionModel().getSelectedItem() != null) {
+            loadContactValues();
             editContactView.setVisible(true);
             addContactView.setVisible(false);
         } else {
             editContactView.setVisible(false);
             addContactView.setVisible(false);
+            discardEditContact();
         }
+    }
+
+    private void loadContactValues() {
+        ContactPerson c = contactsTableView.getSelectionModel().getSelectedItem();
+        editContactFieldName.setText(c.getName());
+        editContactFieldPhone.setText(c.getPhoneNumber());
+        editContactFieldMail.setText(c.getEmail());
+        editContactFieldAffiliation.setText(c.getAffiliation());
+        editContactFieldWebsite.setText(c.getWebsite());
+        editContactFieldOther.setText(c.getOther());
     }
 
     public void deleteContact() {
         if (editContactView.isVisible() || addContactView.isVisible()) {
             addContactView.setVisible(false);
             editContactView.setVisible(false);
+            displayNotification("Choose contact to remove");
         } else if (contactsTableView.getSelectionModel().isEmpty()){
             displayNotification("No contact selected");
         } else {
-            Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
-            if (hoe.removeTicket(t)) {
+            ContactPerson c = contactsTableView.getSelectionModel().getSelectedItem();
+            if (hoe.removeContact(c)) {
+                updateContactsList();
+                updateShowsList(); // Update shows also because they have contacts associated with them
                 displayNotification("Contact removed");
             } else {
                 displayNotification("Error: Contact not removed");
@@ -732,9 +788,27 @@ public class MainViewController {
     }
 
     public void submitContactForm() {
+        if (addContactTextFieldName.getText().equals("")) {
+            fadeTransition(addContactErrorName);
+        } else if (addContactTextFieldPhone.getText().equals("")) {
+            fadeTransition(addContactErrorPhone);
+        } else {
+            if (hoe.addContact(addContactTextFieldName.getText(), addContactTextFieldPhone.getText(),
+                    addContactTextFieldMail.getText(), addContactTextFieldWebsite.getText(),
+                    addContactTextFieldAffiliation.getText(), addContactTextFieldOther.getText())) {
+                displayNotification("Contact added");
+                updateContactsList();
+                addContactView.setVisible(false);
+            } else {
+                displayNotification("Error: Contact not added");
+            }
+        }
     }
 
     public void clearAddContactForm() {
+        addContactTextFieldName.clear();
+        addContactTextFieldPhone.clear();
+        addContactTextFieldMail.clear();
     }
 
     public void closeAddContactForm() {
@@ -742,8 +816,25 @@ public class MainViewController {
     }
 
     public void confirmEditContact() {
+        ContactPerson c = contactsTableView.getSelectionModel().getSelectedItem();
+
+        if (editContactFieldName.getText().equals("")) {
+            fadeTransition(editContactErrorName);
+        } else if (editContactFieldPhone.getText().equals("")) {
+            fadeTransition(editContactErrorPhone);
+        } else {
+            hoe.updateContact(c, editContactFieldName.getText(), editContactFieldPhone.getText(),
+                    editContactFieldMail.getText(), editContactFieldWebsite.getText(),
+                    editContactFieldAffiliation.getText(), editContactFieldOther.getText());
+
+            contactsTableView.refresh();
+            showsTableView.refresh();
+            editContactView.setVisible(false);
+            displayNotification("Contact edited");
+        }
     }
 
     public void discardEditContact() {
+        editContactView.setVisible(false);
     }
 }

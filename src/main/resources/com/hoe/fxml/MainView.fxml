@@ -127,7 +127,7 @@
                                     </Label>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
+                              <AnchorPane fx:id="showsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
                                     <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
@@ -234,7 +234,7 @@
                                                                   <TextArea fx:id="addShowFieldProgram" prefHeight="118.0" prefWidth="275.0" promptText="What's on the agenda?" styleClass="addShowInputArea" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="7" GridPane.vgrow="NEVER" />
                                                                   <ComboBox fx:id="addShowChoiceBoxLocation" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowFormQuestion" text="Contactperson" GridPane.rowIndex="6" />
-                                                                  <ComboBox fx:id="addShowChoiceBoxContactPerson" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select contact" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                                  <ComboBox fx:id="addShowChoiceBoxContact" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select contact" styleClass="addShowDropdown" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -348,7 +348,7 @@
                                     <Insets />
                                  </StackPane.margin>
                               </AnchorPane>
-                              <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
+                              <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
                                     <VBox>
                                        <children>
@@ -457,7 +457,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editLocationView" styleClass="addShowsView" visible="false">
+                                                <VBox fx:id="editLocationView" styleClass="addShowsView">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit location">
                                                          <VBox.margin>
@@ -486,7 +486,7 @@
                                                                   <TextField fx:id="editLocationFieldType" promptText="e.g. Movie Theatre" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="editLocationFieldSeats" promptText="e.g. 730" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                                   <Label fx:id="editLocationNameError" styleClass="addShowErrorMessage" text="Enter a name" visible="false" GridPane.columnIndex="2" />
-                                                                  <Label fx:id="editLocationSeatsError" styleClass="addShowErrorMessage" text="Enter number of seats" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="editLocationSeatsError" styleClass="addShowErrorMessage" text="Enter number of seats" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -520,7 +520,7 @@
                                     </VBox>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
+                              <AnchorPane fx:id="ticketsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                                  <children>
                                     <VBox>
                                        <children>
@@ -729,10 +729,10 @@
                                                       <TableView fx:id="contactsTableView" styleClass="showsTableView">
                                                          <columns>
                                                             <TableColumn fx:id="tableColumnContactName" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Name" />
-                                                            <TableColumn fx:id="tableColumnContactPhone" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Phonenumber" />
-                                                            <TableColumn fx:id="tableColumnContactMail" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Email" />
-                                                            <TableColumn fx:id="tableColumnContactWebsite" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Website" />
-                                                            <TableColumn fx:id="tableColumnContactAfilliation" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Affiliation" />
+                                                            <TableColumn fx:id="tableColumnContactPhone" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Phone" />
+                                                            <TableColumn fx:id="tableColumnContactMail" editable="false" maxWidth="-1.0" minWidth="230.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Email" />
+                                                            <TableColumn fx:id="tableColumnContactWebsite" editable="false" maxWidth="-1.0" minWidth="230.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Website" />
+                                                            <TableColumn fx:id="tableColumnContactAffiliation" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Affiliation" />
                                                             <TableColumn fx:id="tableColumnContactOther" editable="false" maxWidth="201.0" minWidth="0.0" prefWidth="201.0" resizable="false" styleClass="tableViewColumn" text="Other" />
                                                          </columns>
                                                          <columnResizePolicy>
@@ -753,10 +753,10 @@
                                                       </Label>
                                                       <HBox VBox.vgrow="ALWAYS">
                                                          <children>
-                                                            <GridPane fx:id="addContactInputGrid" hgap="15.0" prefHeight="306.0" prefWidth="648.0" vgap="20.0">
+                                                            <GridPane fx:id="addContactInputGrid" hgap="15.0" prefHeight="306.0" vgap="20.0">
                                                                <columnConstraints>
                                                                   <ColumnConstraints halignment="RIGHT" minWidth="200.0" />
-                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="297.0" minWidth="10.0" prefWidth="244.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="400.0" minWidth="10.0" prefWidth="350.0" />
                                                                   <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
                                                                </columnConstraints>
                                                                <rowConstraints>
@@ -774,13 +774,14 @@
                                                                   <TextField fx:id="addContactTextFieldName" promptText="e.g. John Doe" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                                                                   <TextField fx:id="addContactTextFieldPhone" promptText="e.g. 815 493 00" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="addContactTextFieldMail" promptText="e.g. JohnDoe420@gmail.com" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label fx:id="addLocationNameError1" prefHeight="31.0" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="addContactErrorName" prefHeight="31.0" styleClass="addShowErrorMessage" text="Enter a name" visible="false" GridPane.columnIndex="2" />
                                                                   <Label styleClass="addShowFormQuestion" text="Website" GridPane.rowIndex="3" />
                                                                   <Label styleClass="addShowFormQuestion" text="Affiliation" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowFormQuestion" text="Other" GridPane.rowIndex="5" />
                                                                   <TextField fx:id="addContactTextFieldWebsite" promptText="e.g. www.JohnDoe.com" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <TextField fx:id="addContactTextFieldAffiliation" promptText="e.g. Doe Solutions" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <TextField fx:id="addContactTextFieldOther" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                  <Label fx:id="addContactErrorPhone" prefHeight="31.0" styleClass="addShowErrorMessage" text="Enter a phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -814,7 +815,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editContactView" styleClass="addShowsView" visible="false">
+                                                <VBox fx:id="editContactView" styleClass="addShowsView">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit contact">
                                                          <VBox.margin>
@@ -823,10 +824,10 @@
                                                       </Label>
                                                       <HBox VBox.vgrow="ALWAYS">
                                                          <children>
-                                                            <GridPane fx:id="editContactInputGrid" hgap="15.0" prefHeight="306.0" prefWidth="648.0" vgap="20.0">
+                                                            <GridPane fx:id="editContactInputGrid" hgap="15.0" prefHeight="306.0" vgap="20.0">
                                                                <columnConstraints>
                                                                   <ColumnConstraints halignment="RIGHT" minWidth="200.0" />
-                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="297.0" minWidth="10.0" prefWidth="244.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="400.0" minWidth="10.0" prefWidth="350.0" />
                                                                   <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
                                                                </columnConstraints>
                                                                <rowConstraints>
@@ -844,13 +845,14 @@
                                                                   <TextField fx:id="editContactFieldName" promptText="e.g. John Doe" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
                                                                   <TextField fx:id="editContactFieldPhone" promptText="e.g. 815 493 00" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                                   <TextField fx:id="editContactFieldMail" promptText="e.g. JohnDoe420@gmail.com" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label fx:id="addLocationNameError11" prefHeight="31.0" styleClass="addShowErrorMessage" text="You must enter a name" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editContactErrorName" prefHeight="31.0" styleClass="addShowErrorMessage" text="Enter a name" visible="false" GridPane.columnIndex="2" />
                                                                   <Label styleClass="addShowFormQuestion" text="Website" GridPane.rowIndex="3" />
                                                                   <Label styleClass="addShowFormQuestion" text="Affiliation" GridPane.rowIndex="4" />
                                                                   <Label styleClass="addShowFormQuestion" text="Other" GridPane.rowIndex="5" />
                                                                   <TextField fx:id="editContactFieldWebsite" promptText="e.g. www.JohnDoe.com" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                                   <TextField fx:id="editContactFieldAffiliation" promptText="e.g. Doe Solutions" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                                   <TextField fx:id="editContactFieldOther" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                                  <Label fx:id="editContactErrorPhone" prefHeight="31.0" styleClass="addShowErrorMessage" text="Enter a phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />

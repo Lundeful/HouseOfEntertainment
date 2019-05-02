@@ -3,6 +3,7 @@ package com.hoe.model;
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HoE {
@@ -67,9 +68,20 @@ public class HoE {
         return s.trim();
     }
 
+    /**
+     * Removes a show and tickets for that show
+     * @param s Show to remove
+     * @return Returns true if shows and tickets are removed
+     */
     public boolean removeShow(Show s) {
-        return database.removeShow(s);
+        String id = s.getShowID();
+        boolean b = database.removeShow(s);
+        if (b) {
+            database.getTickets().removeIf(t -> t.getShow().getShowID().equals(id));
+        }
+        return b;
     }
+
     public ArrayList<Show> getShows() {
         return database.getShows();
     }
@@ -110,7 +122,51 @@ public class HoE {
         return database.addTicket(t);
     }
 
-    public void updateTicket(Ticket t, Show show, String phoneNumberText, String seatText) {
+    public void updateTicket(Ticket t, Show show, String phoneNumber, String seat) {
+        t.setShow(show);
+        t.setPhoneNumber(phoneNumber);
+        t.setSeat(seat);
+    }
 
+    public boolean removeContact(ContactPerson c) {
+        return database.removeContact(c);
+    }
+
+    public boolean addContact(String name, String phone, String mail, String website, String affiliation, String other){
+        ContactPerson c = new ContactPerson("TEMP-ID", name, phone);
+        c.setWebsite(website);
+        c.setAffiliation(affiliation);
+        c.setEmail(mail);
+        c.setOther(other);
+        return database.addContact(c);
+    }
+
+
+    public void updateContact(ContactPerson c, String nameText, String phoneText, String mailText, String websiteText,
+                              String affiliationText, String otherText) {
+        c.setName(nameText);
+        c.setPhoneNumber(phoneText);
+        c.setEmail(mailText);
+        c.setWebsite(websiteText);
+        c.setAffiliation(affiliationText);
+        c.setOther(otherText);
+    }
+
+    public void updateLocation(Location location, String name, String type, int seats) {
+        location.setName(name);
+        location.setTypeOfLocation(type);
+        location.setNumberOfSeats(seats);
+    }
+
+
+    public void updateShow(Show show, String name, String type, String date, String time, String ticketprice, Location location, ContactPerson cp, String program) throws NotEnoughSeatsException {
+        show.setShowName(name);
+        show.setShowType(type);
+        show.setDate(date);
+        show.setTicketPrice(ticketprice);
+        show.setTime(time);
+        show.setProgram(program);
+        show.setLocation(location);
+        show.setContactPerson(cp);
     }
 }
