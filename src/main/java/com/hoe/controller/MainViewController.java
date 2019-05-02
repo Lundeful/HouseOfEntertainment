@@ -628,11 +628,11 @@ public class MainViewController {
     private void filterContact(){
         String filter = contactPersonFilterInput.getText();
         if (filter.equals("")){
-            updateContactList();
+            updateContactsList();
         } else {
             ArrayList<ContactPerson> filteredContacts = hoe.filterContactPerson(filter);
             ObservableList<ContactPerson> filteredContactsData = FXCollections.observableArrayList(filteredContacts);
-            contactTableView.setItems(filteredContactsData);
+            contactsTableView.setItems(filteredContactsData);
         }
     }
 

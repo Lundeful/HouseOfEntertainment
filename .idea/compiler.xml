@@ -9,5 +9,8 @@
         <module name="HouseOfEntertainment" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="HouseOfEntertainment" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

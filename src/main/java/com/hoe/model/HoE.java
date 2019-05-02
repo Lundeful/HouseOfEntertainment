@@ -20,9 +20,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class HoE {
-    IDCreator id = new IDCreator();
-    Show s = new Show("", "");
-    Location l = new Location("", "");
     private Database database;
     private IDCreator id = new IDCreator();
     private Show s = new Show("","");
@@ -166,10 +163,10 @@ public class HoE {
             } else if (show.getTicketPrice().contains(filter)) {
                 filterList.add(show);
             }
-            if (show.getContactPerson() != null) {
-                if (show.getContactPerson().getName().contains(filter)) {
+            if (show.getContact() != null) {
+                if (show.getContact().getName().contains(filter)) {
                     filterList.add(show);
-                } else if (show.getContactPerson().getPhoneNumber().contains(filter)) {
+                } else if (show.getContact().getPhoneNumber().contains(filter)) {
                     filterList.add(show);
                 }
             }
