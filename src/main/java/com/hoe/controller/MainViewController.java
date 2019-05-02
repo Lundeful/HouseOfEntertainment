@@ -434,7 +434,7 @@ public class MainViewController {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select a file");
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Serializable file", "*.ser"),
+                new FileChooser.ExtensionFilter("Serializable file", "*.jobj"),
                 new FileChooser.ExtensionFilter("CSV file", "*.csv"));
         return chooser;
     }

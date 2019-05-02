@@ -3,7 +3,6 @@ package com.hoe.model;
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 import com.hoe.model.dataloading.CSVLoader;
 import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
@@ -11,13 +10,6 @@ import com.hoe.model.datasaving.JobjSaver;
 import com.hoe.model.exceptions.CorruptFileException;
 import com.hoe.model.exceptions.InvalidFileException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
-
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 
 public class HoE {
     private Database database;
@@ -99,7 +91,7 @@ public class HoE {
                     csv.saveData(path, database);
                     Thread.currentThread().interrupt();
                 }).start();
-            } else if (path.endsWith(".ser")) {
+            } else if (path.endsWith(".jobj")) {
                 new Thread(() -> {
                     jobj.saveData(path, database);
                     Thread.currentThread().interrupt();
@@ -117,7 +109,7 @@ public class HoE {
         CSVLoader csv = new CSVLoader();
         if (path.endsWith(".csv")) {
             database = csv.readData(path);
-        } else if (path.endsWith(".ser")) {
+        } else if (path.endsWith(".jobj")) {
             database = jobj.loadData(path);
         } else {
             throw new InvalidFileException("Wrong file type");
@@ -148,28 +140,17 @@ public class HoE {
     }
 
     public ArrayList<Show> filterShow(String filter) {
+        filter = filter.toLowerCase();
         ArrayList<Show> filterList = new ArrayList<>();
         for (Show show : database.getShows()) {
-            if (show.getShowName().contains(filter)) {
-                filterList.add(show);
-            } else if (show.getShowType().contains(filter)) {
-                filterList.add(show);
-            } else if (show.getDate().contains(filter)) {
-                filterList.add(show);
-            } else if (show.getTime().contains(filter)) {
-                filterList.add(show);
-            } else if (show.getLocation().getName().contains(filter)) {
-                filterList.add(show);
-            } else if (show.getTicketPrice().contains(filter)) {
-                filterList.add(show);
-            }
-            if (show.getContact() != null) {
-                if (show.getContact().getName().contains(filter)) {
-                    filterList.add(show);
-                } else if (show.getContact().getPhoneNumber().contains(filter)) {
-                    filterList.add(show);
-                }
-            }
+            if (show.getShowName() != null && show.getShowName().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getShowType() != null && show.getShowType().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getDate() != null && show.getDate().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getTime() != null && show.getTime().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getLocation() != null && show.getLocation().getName().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getTicketPrice() != null && show.getTicketPrice().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getContact() != null && show.getContact().getName().toLowerCase().contains(filter)) filterList.add(show);
+            else if (show.getContact() != null && show.getContact().getPhoneNumber().toLowerCase().contains(filter)) filterList.add(show);
         }
         return filterList;
     }

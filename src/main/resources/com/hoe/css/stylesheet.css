@@ -341,3 +341,19 @@ Add shows form
 .addShowMenuButton {
     -fx-min-width: 242px;
 }
+
+
+/*
+====================
+Shows view
+====================
+ */
+
+.searchField {
+    -fx-background-color: -primary-color;
+    -fx-font: 30px Calibri;
+    -fx-text-fill: -secondary-color;
+    -fx-prompt-text-fill: rgba(0,0,0,0.5);
+    -fx-border-width: 0 0 5px 0;
+    -fx-border-color: -secondary-color;
+}

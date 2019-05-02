@@ -22,7 +22,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ComboBox?>
 <StackPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1280.0">
@@ -134,14 +133,7 @@
                                        <children>
                                           <HBox spacing="50.0" styleClass="viewMenuBar">
                                              <children>
-                                                <Label alignment="CENTER" styleClass="viewMenuTitle" text="Shows" textFill="#81708c">
-                                                   <font>
-                                                      <Font size="23.0" />
-                                                   </font>
-                                                   <HBox.margin>
-                                                      <Insets />
-                                                   </HBox.margin>
-                                                </Label>
+                                                <TextField fx:id="showFilterInput" onAction="#filterShow" promptText="Search for shows..." styleClass="searchField" />
                                                 <Region HBox.hgrow="ALWAYS" />
                                                 <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#toggleAddShowMenu" styleClass="viewMenuButton" text="Add" textAlignment="CENTER" />
                                                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#toggleEditShow" styleClass="viewMenuButton" text="Edit" textAlignment="CENTER" />
@@ -160,15 +152,12 @@
                                              <children>
                                                 <HBox fx:id="showsView" styleClass="showsView" StackPane.alignment="TOP_LEFT">
                                                    <children>
-                                                      <TableView fx:id="showsTableView" editable="true" prefWidth="666.0" styleClass="showsTableView">
+                                                      <TableView fx:id="showsTableView" editable="true" styleClass="showsTableView">
                                                         <columns>
-                                                          <TableColumn fx:id="tableColumnShow" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Show" />
-                                                          <TableColumn fx:id="tableColumnDate" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Date" />
-                                                            <TableColumn fx:id="tableColumnLocation" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Location" />
+                                                          <TableColumn fx:id="tableColumnShow" editable="false" maxWidth="-1.0" minWidth="270.0" prefWidth="-1.0" styleClass="tableViewColumn" text="Show" />
+                                                          <TableColumn fx:id="tableColumnDate" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" styleClass="tableViewColumn" text="Date" />
+                                                            <TableColumn fx:id="tableColumnLocation" maxWidth="-1.0" minWidth="230.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Location" />
                                                         </columns>
-                                                         <columnResizePolicy>
-                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                                         </columnResizePolicy>
                                                       </TableView>
                                                       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="300.0" styleClass="showsCard">
                                                          <children>
@@ -349,7 +338,7 @@
                                     <Insets />
                                  </StackPane.margin>
                               </AnchorPane>
-                              <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
+                              <AnchorPane fx:id="locationsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                                  <children>
                                     <VBox>
                                        <children>
@@ -383,8 +372,8 @@
                                                    <children>
                                                       <TableView fx:id="locationTableView" styleClass="showsTableView">
                                                          <columns>
-                                                            <TableColumn fx:id="tableColumnLocationName" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Name" />
-                                                            <TableColumn fx:id="tableColumnLocationType" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Type" />
+                                                            <TableColumn fx:id="tableColumnLocationName" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Name" />
+                                                            <TableColumn fx:id="tableColumnLocationType" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Type" />
                                                             <TableColumn fx:id="tableColumnLocationSeats" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Seats" />
                                                          </columns>
                                                          <columnResizePolicy>
@@ -458,7 +447,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editLocationView" styleClass="addShowsView">
+                                                <VBox fx:id="editLocationView" styleClass="addShowsView" visible="false">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit location">
                                                          <VBox.margin>
@@ -729,10 +718,10 @@
                                                    <children>
                                                       <TableView fx:id="contactsTableView" styleClass="showsTableView">
                                                          <columns>
-                                                            <TableColumn fx:id="tableColumnContactName" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Name" />
+                                                            <TableColumn fx:id="tableColumnContactName" editable="false" maxWidth="-1.0" minWidth="220.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Name" />
                                                             <TableColumn fx:id="tableColumnContactPhone" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Phone" />
-                                                            <TableColumn fx:id="tableColumnContactMail" editable="false" maxWidth="-1.0" minWidth="230.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Email" />
-                                                            <TableColumn fx:id="tableColumnContactWebsite" editable="false" maxWidth="-1.0" minWidth="230.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Website" />
+                                                            <TableColumn fx:id="tableColumnContactMail" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Email" />
+                                                            <TableColumn fx:id="tableColumnContactWebsite" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Website" />
                                                             <TableColumn fx:id="tableColumnContactAffiliation" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Affiliation" />
                                                             <TableColumn fx:id="tableColumnContactOther" editable="false" maxWidth="201.0" minWidth="0.0" prefWidth="201.0" resizable="false" styleClass="tableViewColumn" text="Other" />
                                                          </columns>
@@ -816,7 +805,7 @@
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </padding>
                                                 </VBox>
-                                                <VBox fx:id="editContactView" styleClass="addShowsView">
+                                                <VBox fx:id="editContactView" styleClass="addShowsView" visible="false">
                                                    <children>
                                                       <Label styleClass="addShowFormTitle" text="Edit contact">
                                                          <VBox.margin>

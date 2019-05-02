@@ -44,7 +44,7 @@ public class CSVLoader {
                                 showCreator(readIn, database);
                                 break;
                             case 6:
-                                promotionCreator(readIn, database);
+                                //promotionCreator(readIn, database);
                                 break;
                             case 7:
                                 contactPersonCreator(readIn, database);
@@ -102,7 +102,7 @@ public class CSVLoader {
      * This method creates a Promotion object based on the input from the String[] with information.
      * @param data The String[] with the data.
      */
-    private void promotionCreator(String[] data, Database database) throws WrongCSVFormatException {
+/*    private void promotionCreator(String[] data, Database database) throws WrongCSVFormatException {
         //TODO: add a method that locates a promotion object that already exists
         if(data.length == 4) {
             Promotion promotion = new Promotion(data[0],database.findShow(data[1]));
@@ -112,7 +112,7 @@ public class CSVLoader {
         } else {
             throw new WrongCSVFormatException("Corrupt CSV-file");
         }
-    }
+    }*/
 
     /**
      * This method creates a ContactPerson object based on the input from the String[] with information.

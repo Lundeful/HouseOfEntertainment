@@ -1,7 +1,6 @@
 package com.hoe.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Promotion implements Serializable {
     private String promotionID;
@@ -21,7 +20,6 @@ public class Promotion implements Serializable {
     public void setTo(String to) {
         this.to = to;
     }
-
 
     public String getFrom() {
         return from;
