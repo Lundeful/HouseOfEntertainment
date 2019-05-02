@@ -2,7 +2,12 @@ package com.hoe.model;
 
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
+import java.time.Clock;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class TestDataBase {
     IDCreator id = new IDCreator();
@@ -103,8 +108,8 @@ public class TestDataBase {
             Show show = new Show(id.randomKeyGen(s),ord[showWord1] + " " + ord2[showWord2]);
             show.setLocation(database.getLocations().get(loc));
             show.setAvailableTickets(show.getLocation().getNumberOfSeats());
-            show.setTime(String.valueOf(randomInt(2) + ":" + randomInt(2)));
-            show.setDate(String.valueOf(randomInt(2)) + "-" + String.valueOf(randomInt(2)) + "-" + String.valueOf(randomInt(2)));
+            show.setTime(randomTime());
+            show.setDate(randomDate());
             show.setShowType(show.getLocation().getTypeOfLocation());
             show.setContactPerson(database.getContacts().get(per));
             for(int j = 0; j < show.getAvailableTickets()-10; j++ ){
@@ -121,4 +126,28 @@ public class TestDataBase {
         return m + new Random().nextInt(9 * m);
     }
 
+    private String randomDate(){
+        LocalDate today = LocalDate.now();
+        long start = today.toEpochDay();
+
+
+        LocalDate maxDate = LocalDate.of(2021,01,01);
+        long end = maxDate.toEpochDay();
+
+        long randomDay = ThreadLocalRandom.current().longs(start, end).findAny().getAsLong();
+        return LocalDate.ofEpochDay(randomDay).toString();
+
+    }
+
+    private String randomTime(){
+        LocalTime currentLocal = LocalTime.of(0,0);
+        long  starTime = currentLocal.toSecondOfDay();
+
+        LocalTime max = LocalTime.of(23,59);
+        long endTime = max.toSecondOfDay();
+
+        long  randomTime = ThreadLocalRandom.current().longs(starTime, endTime).findAny().getAsLong();
+        return LocalTime.ofSecondOfDay(randomTime).toString();
+
+    }
 }
