@@ -1,6 +1,8 @@
 package com.hoe.model;
 
-public class Ticket {
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
 
     private final String ticketID;
     private Show show;
@@ -14,8 +16,12 @@ public class Ticket {
         this.seat = seat;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    /**
+     * This method is meant to print out a string with a CSV format so that is it easier to save.
+     * @return Returns a String with complete information and in CSV-format.
+     */
+    public String toCSVString() {
+        return getTicketID() + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeatNumber();
     }
 
     public void setShow(Show show) {
@@ -24,30 +30,53 @@ public class Ticket {
 
     public void setSeat(String seat) {
         this.seat = seat;
-    }
-
-    public String getTicketID() {
-        return ticketID;
-    }
-
-    public Location getLocation() {
-        return show.getLocation();
+      }
+    public String getTime() {
+        return show.getTime();
     }
 
     public String getDate() {
         return show.getDate();
     }
 
-    public String getTime() {
-        return show.getTime();
-    }
-
     public String getPrice() {
         return show.getTicketPrice();
     }
 
+    public String getShowID() {
+        return show.getShowID();
+    }
+
+    public String getTicketID() {
+        return ticketID;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public String getSeatNumber() {
+        return seatNumber;
+    }
+
+    public Show getShow() {
+        return show;
+    }
+
+    public void setShow(Show show) {
+        this.show = show;
+    }
+
+    public void setDate(String s) {
+        show.setDate(s);
+    }
+
+    public void setPhoneNumber(String s) {
+        this.phoneNumber = s;
+    }
+
+    public void setSeatNumber(String s) {
+        this.seatNumber = s;
     }
 
     public String getShowName() {
@@ -56,7 +85,7 @@ public class Ticket {
 
     public Show getShow() {
         return show;
-    }
+      }
 
     public String getSeat() {
         return seat;

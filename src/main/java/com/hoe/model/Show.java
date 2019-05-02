@@ -2,21 +2,35 @@ package com.hoe.model;
 
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Show {
+public class Show implements Serializable {
 
     private final String showID;
     private String showName;
     private String showType;
     private String program;
-    private Location location;
-    private String time;
     private String date;
+    private String locationID;
+    private String time;
+    private ArrayList<Ticket> soldTickets = new ArrayList<>();
+    private Location location;
     private String ticketPrice;
-    private ArrayList<Ticket> soldTickets;
     private int availableTickets;
     private ContactPerson contactPerson;
+
+    /**
+     * Standard constructor for the Show class.
+     * @param showID A unique ID for the Show object.
+     * @param locationID The unique ID for a location object to connect to a show object.
+     * @param ticketPrice The price for a ticket.
+     */
+    public Show(String showID, String locationID, String ticketPrice){
+        this.showID = showID;       // TODO(1): Method that generates ID's
+        this.locationID = locationID;
+        this.ticketPrice = ticketPrice;
+    }
 
     public Show(String showID, String showName){
         this.showName = showName;
@@ -55,41 +69,74 @@ public class Show {
 
     public void setShowName(String showName) {
         this.showName = showName;
+      }
+    public String getShowID() {
+        return showID;
+    }
+
+    public void setSoldTickets(ArrayList<Ticket> ticket) {
+        this.soldTickets = ticket;
+    }
+
+    public void setDate(String s) {
+        this.date = s;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String toCSVString(){
+        return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
+                getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())
+                + "|" + getProgram() + "|" + getContactPersonID();
+}
+
+    private String getContactPersonID() {
+        if(this.contactPerson == null) return "";
+        return contactPerson.getContactID();
+    }
+
+    public String getLocationID() {
+        if(location == null) return "";
+        return location.getLocationID();
     }
 
     public String getTicketPrice() {
         return ticketPrice;
     }
 
-    public String getShowID() {
-        return showID;
-    }
-
-    public String getShowName() {
-        return showName;
-    }
-
     public String getShowType() {
         return showType;
-    }
-
-    public String getProgram() {
-        return program;
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     public String getTime() {
         return time;
     }
 
+    public String getProgram() {
+        return program;
+    }
+
+    public ArrayList<Ticket> getSoldTickets(){
+        return this.soldTickets;
+    }
+
+    public String getShowName() {
+        return showName;
+    }
+
     public String getDate() {
         return date;
     }
-    public ArrayList<Ticket> getSoldTickets() {
-        return soldTickets;
+
+    public Location getLocation() {
+        return location;
+    }
+
+    @Override
+    public String toString() {
+        return this.showName + " - " + this.date;
     }
 
     public int getAvailableTickets() {
@@ -110,13 +157,13 @@ public class Show {
         }
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setContactPerson(ContactPerson contactPerson) {
+        this.contactPerson = contactPerson;
     }
 
-    @Override
-    public String toString() {
-        return this.showName + " - " + this.date;
+    public void addTicket(Ticket t){
+        this.soldTickets.add(t);
+        availableTickets--;
     }
 
 }

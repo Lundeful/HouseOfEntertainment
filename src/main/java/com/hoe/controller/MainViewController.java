@@ -2,18 +2,26 @@ package com.hoe.controller;
 
 import com.hoe.model.*;
 import com.hoe.model.exceptions.NotEnoughSeatsException;
+import com.hoe.model.exceptions.CorruptFileException;
+import com.hoe.model.exceptions.InvalidFileException;
+import com.hoe.model.exceptions.WrongCSVFormatException;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.function.UnaryOperator;
+import java.io.File;
 
 
 public class MainViewController {
@@ -405,12 +413,40 @@ public class MainViewController {
         currentButton = b;
     }
 
+    public FileChooser getFileChooser() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select a file");
+        chooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Serializable file", "*.ser"),
+                new FileChooser.ExtensionFilter("CSV file", "*.csv"));
+        return chooser;
+    }
+
     public void loadData() {
-        // TODO
+        File selectedFile = getFileChooser().showOpenDialog(new Stage());
+        if (selectedFile == null) return;
+        String finalPath = selectedFile.toString();
+        new Thread(() -> {
+            try {
+                hoe.load(finalPath);
+                updateShowsList();
+                Thread.currentThread().interrupt();
+            } catch (InvalidFileException | WrongCSVFormatException | CorruptFileException e) {
+                e.printStackTrace();
+                Platform.runLater(
+                        () -> displayNotification(e.getMessage())
+                );
+                Thread.currentThread().interrupt();
+            }
+        }).start();
     }
 
     public void saveData() {
-        // TODO
+        File selectedFile = getFileChooser().showSaveDialog(new Stage());
+        if (selectedFile == null) return;
+        String finalPath = selectedFile.toString();
+        hoe.save(finalPath);
+        updateShowsList();
     }
 
     public void toggleAddShowMenu() {

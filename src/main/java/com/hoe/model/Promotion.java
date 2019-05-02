@@ -1,23 +1,24 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Promotion {
+public class Promotion implements Serializable {
     private final String LOCATION_ID;
-    private Show show;
-    private Date from;
-    private Date to;
+    private String showID;
+    private String from;
+    private String to;
 
-    public Promotion (String id, Show s){
-        LOCATION_ID = id;
-        show = s;
+    public Promotion (String id, String s){
+        this.LOCATION_ID = id;
+        this.showID = s;
     }
 
-    public void setFrom(Date from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public void setTo(Date to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
@@ -25,15 +26,20 @@ public class Promotion {
         return LOCATION_ID;
     }
 
-    public Show getShow() {
-        return show;
+    public String getShowID() {
+        return showID;
     }
 
-    public Date getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public Date getTo() {
+    public String getTo() {
         return to;
+    }
+
+    public String toCSVString(){
+        return getLOCATION_ID() + "|" + getShowID() + "|" + String.valueOf(getFrom() + "|" +
+                String.valueOf(getTo()));
     }
 }

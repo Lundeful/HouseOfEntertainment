@@ -1,0 +1,8 @@
+ID|Name|Type of Location|Number of Seats
+324132|DDE|Consert|9000|adfs
+ID|Show Type|Program|Location ID|Time|Price|Available Tickets|Sold Tickets
+329485|null|null|324132|null|299
+ID|Show Type|Program|Location ID|Time|Price|Available Tickets|Sold Tickets
+894753|329485|Thu Jan 01 01:00:00 CET 1970|Thu Jan 01 01:00:00 CET 1970
+ID|Name|Phone Number|Email|Website|Affiliation|Other
+123456|Ola|12343223|ola@nets.no|oslomet.no|Some|Hehe

@@ -4,50 +4,33 @@ import com.hoe.model.exceptions.NotEnoughSeatsException;
 
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
+import com.hoe.model.dataloading.CSVLoader;
+import com.hoe.model.dataloading.JobjLoader;
+import com.hoe.model.datasaving.CSVSaver;
+import com.hoe.model.datasaving.JobjSaver;
+import com.hoe.model.exceptions.CorruptFileException;
+import com.hoe.model.exceptions.InvalidFileException;
+import com.hoe.model.exceptions.WrongCSVFormatException;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 
 public class HoE {
     private Database database;
+    private IDCreator id = new IDCreator();
+    private Show s = new Show("","");
+
 
     public HoE() {
         database = new Database();
-        generateTestObjects();
-    }
-
-    // TODO: Remove this method before final delivery
-    private void generateTestObjects() {
-        Location l1 = new Location("Temp-ID", "Big Hall");
-        l1.setNumberOfSeats(578);
-        l1.setTypeOfLocation("Theatre");
-
-        Location l2 = new Location("Temp-ID", "Small stage");
-        l2.setTypeOfLocation("Theatre");
-        l2.setNumberOfSeats(300);
-
-        Location l3 = new Location("Temp-ID", "Supreme");
-        l2.setNumberOfSeats(258);
-        l2.setTypeOfLocation("Movie theatre");
-
-        Location l4 = new Location("Temp-iD", "IMAX");
-        l4.setTypeOfLocation("Movie Theatre");
-        l4.setNumberOfSeats(420);
-
-        database.addLocation(l1);
-        database.addLocation(l2);
-        database.addLocation(l3);
-        database.addLocation(l4);
-        addShow("Harry potter", "Movie", "28-10-2019", "", l4, "120", "");
-        addShow("Cats", "Stage show", "", "Midnight", l2, "260", "");
-        addShow("Bohemian Rhapsody", "Movie", "", "", l4, "190", "");
-        addShow("AC/DC", "Concert", "", "", l1, "499", "");
-
-        for (int i = 0; i < 2000; i++) {
-            addShow("Show " + i, "Type " + i, "Date " + i, "Time " + i, new Location("temp-id", "Location " + i%6), String.valueOf(ThreadLocalRandom.current().nextInt(100, 501)), "");
-        }
+        TestDataBase test = new TestDataBase();
+        database = test.generateTestObjects();
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
-                           String ticketPrice, String program) {
-        Show show = new Show("TEMP-ID", formatInput(name)); // TODO: Use ID-generator
+                        String ticketPrice, String program) {
+        Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
         show.setDate(formatInput(date));
@@ -61,6 +44,14 @@ public class HoE {
         show.setProgram(formatInput(program));
 
         return database.addShow(show);
+    }
+
+    public Database getDataBase(){
+        return this.database;
+    }
+
+    public void setDatabase(Database data){
+        this.database = data;
     }
 
     private String formatInput(String s) {
@@ -85,6 +76,46 @@ public class HoE {
         return database.getShows();
     }
 
+
+    /**
+     * Method that
+     * @return returns true and saves the given file-type if it's successful,
+     * returns false if there is any exceptions, leading the save to not being applied.
+     * @param path
+     */
+    public boolean save(String path) {
+        try {
+            JobjSaver jobj = new JobjSaver();
+            CSVSaver csv = new CSVSaver();
+                if (path.endsWith(".csv")) {
+                    new Thread(() -> {
+                        csv.saveData(path, database);
+                        Thread.currentThread().interrupt();
+                    }).start();
+                } else if (path.endsWith(".ser")) {
+                    new Thread(() -> {
+                        jobj.saveData(path, database);
+                        Thread.currentThread().interrupt();
+                    }).start();
+                }
+            return true;
+        } catch (Exception e){
+            Thread.currentThread().interrupt();
+            return false;
+        }
+    }
+
+    public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException {
+        JobjLoader jobj = new JobjLoader();
+        CSVLoader csv = new CSVLoader();
+        if (path.endsWith(".csv")) {
+            database = csv.readData(path);
+        } else if (path.endsWith(".ser")) {
+            database = jobj.loadData(path);
+        } else{
+            throw new InvalidFileException("Wrong file type");
+        }
+    }
     public ArrayList<Location> getLocations() {
         return database.getLocations();
     }

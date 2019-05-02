@@ -1,9 +1,10 @@
 package com.hoe.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 // TODO: JavaDoc
-public class Database {
+public class Database  implements Serializable {
     private ArrayList<Location> locations;
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
@@ -21,11 +22,12 @@ public class Database {
 
     // Database from existing sources
     public Database(ArrayList<Location> locations, ArrayList<Show> shows, ArrayList<Promotion> promotions,
-                    ArrayList<ContactPerson> contacts) {
+                    ArrayList<ContactPerson> contacts, ArrayList<Ticket> tickets) {
         this.locations = locations;
         this.shows = shows;
         this.promotions = promotions;
         this.contacts = contacts;
+        this.tickets = tickets;
     }
 
     public boolean addLocation(Location l) {
@@ -69,8 +71,14 @@ public class Database {
         return contacts.remove(c);
     }
 
-    public ArrayList<Location> getLocations() {
-        return locations;
+    public boolean removeTicket(Ticket t){
+        // TODO: Iterate through list and remove according to unique ID
+        // TODO: Exceptionhandling, confirmation-messages, logging etc
+        return true;
+    }
+
+    public ArrayList<Location> getLocations(){
+        return this.locations;
     }
 
     public ArrayList<Show> getShows() {
@@ -85,8 +93,34 @@ public class Database {
         return contacts;
     }
 
-    public ArrayList<Ticket> getTickets() {
-        return tickets;
+    public ArrayList<Ticket> getTickets(){
+        return this.tickets;
     }
 
+    public Location findLocation(String id){
+        for(Location location : locations){
+            if(location.getLocationID().equals(id)){
+                return location;
+            }
+        }
+        return null;
+    }
+
+    public Show findShow(String showID) {
+        for(Show s : shows){
+            if(s.getShowID().equals(showID)){
+                return s;
+            }
+        }
+        return null;
+    }
+
+    public ContactPerson findContactPerson(String s) {
+        for(ContactPerson contactPerson : contacts){
+            if(contactPerson.getContactID().equals(s)){
+                return contactPerson;
+            }
+        }
+        return null;
+    }
 }
