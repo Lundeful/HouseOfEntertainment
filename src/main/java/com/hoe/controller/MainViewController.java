@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class MainViewController {
@@ -42,6 +43,9 @@ public class MainViewController {
      */
     @FXML
     private VBox addShowsView;
+
+    @FXML
+    private TextField showFilterInput;
 
     // Add show input form view
     @FXML
@@ -432,6 +436,18 @@ public class MainViewController {
 
     public void discardEditShow(ActionEvent actionEvent) {
 
+    }
+
+    public void filterShow() {
+        String filter = showFilterInput.getText();
+        if (filter.equals("")) {
+            updateShowsList();
+        } else {
+            ArrayList<Show> filteredShows = hoe.filterShow(filter);
+
+            ObservableList<Show> filteredShowData = FXCollections.observableArrayList(filteredShows);
+            showsTableView.setItems(filteredShowData);
+        }
     }
 
     public void toggleAddLocationMenu(ActionEvent event) {

@@ -157,4 +157,26 @@ public class HoE {
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
     }
+
+    public ArrayList<Show> filterShow(String filter){
+        ArrayList<Show> filterList = new ArrayList<>();
+        for (Show show : database.getShows()){
+            if (show.getShowName().contains(filter) || show.getShowType().contains(filter) ||
+                    show.getDate().contains(filter) || show.getTime().contains(filter) ||
+                    show.getLocation().getName().contains(filter) || show.getTicketPrice().contains(filter) ||
+                    show.getContactPerson().getName().contains(filter) ||
+                    show.getContactPerson().getPhoneNumber().contains(filter)){
+                filterList.add(show);
+            }
+        }
+        return filterList;
+    }
+
+   /* private ArrayList<Location> filterLocation(){
+        ArrayList<Location> filterList = new ArrayList<>();
+
+        if (show.get)
+    }
+    */
+   
 }
