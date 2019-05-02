@@ -187,6 +187,8 @@ public class HoE {
             if (ticket.getDate() != null && ticket.getDate().toLowerCase().contains(filter)) filterList.add(ticket);
             else if (ticket.getShow() != null && ticket.getShow().getShowName().toLowerCase().contains(filter)) filterList.add(ticket);
             else if (ticket.getPhoneNumber() != null && ticket.getPhoneNumber().toLowerCase().contains(filter)) filterList.add(ticket);
+            else if (ticket.getLocation() != null && ticket.getLocation().getName().toLowerCase().contains(filter)) filterList.add(ticket);
+            else if (ticket.getSeat() != null && ticket.getSeat().toLowerCase().contains(filter)) filterList.add(ticket);
         }
         return filterList;
     }
