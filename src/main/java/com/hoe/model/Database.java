@@ -8,6 +8,7 @@ public class Database {
     private ArrayList<Show> shows;
     private ArrayList<Promotion> promotions;
     private ArrayList<ContactPerson> contacts;
+    private ArrayList<Ticket> tickets;
 
     // New fresh database without content
     public Database() {
@@ -15,6 +16,7 @@ public class Database {
         shows = new ArrayList<>();
         promotions = new ArrayList<>();
         contacts = new ArrayList<>();
+        tickets = new ArrayList<>();
     }
 
     // Database from existing sources
@@ -27,66 +29,64 @@ public class Database {
     }
 
     public boolean addLocation(Location l) {
-        locations.add(l);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+            return locations.add(l);
     }
 
     public boolean addShow(Show s) {
-        shows.add(s);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return shows.add(s);
+
     }
 
     public boolean addPromotion(Promotion p) {
-        promotions.add(p);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return promotions.add(p);
     }
 
     public boolean addContact(ContactPerson c) {
-        contacts.add(c);
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return contacts.add(c);
+    }
+
+    public boolean addTicket(Ticket t) {
+        return tickets.add(t);
     }
 
     public boolean removeLocation(Location l) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return locations.remove(l);
     }
 
     public boolean removeShow(Show s) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return shows.remove(s);
+    }
+
+    public boolean removeTicket(Ticket t) {
+        return tickets.remove(t);
     }
 
     public boolean removePromotion(Promotion p) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return promotions.remove(p);
     }
 
     public boolean removeContact(ContactPerson c) {
-        // TODO: Iterate through list and remove according to unique ID
-        // TODO: Exceptionhandling, confirmation-messages, logging etc
-        return true;
+        return contacts.remove(c);
     }
 
-    public ArrayList<Location> getLocations(){
-        return this.locations;
+    public ArrayList<Location> getLocations() {
+        return locations;
     }
 
-    public ArrayList<Show> getShows(){
-        return this.shows;
+    public ArrayList<Show> getShows() {
+        return shows;
     }
 
-    public ArrayList<Promotion> getPromotions(){
-        return this.promotions;
+    public ArrayList<Promotion> getPromotions() {
+        return promotions;
     }
 
-    public ArrayList<ContactPerson> getContacts(){
-        return this.contacts;
+    public ArrayList<ContactPerson> getContacts() {
+        return contacts;
     }
+
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
+    }
+
 }

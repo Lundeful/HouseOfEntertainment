@@ -1,6 +1,6 @@
 /*
  ====================
-This is the CSS stylesheet for styling the HoE app
+This is the CSS stylesheet for styling the House of Entertainment application
 ====================
 */
 
@@ -23,6 +23,9 @@ Global variables
     -secondary-color: #3d3542;
     -primary-accent: #d06d4f;
     -secondary-accent: #211d24;
+    -button-click: #121014;
+    -fx-font-size: 16px;
+    -fx-background-color: -secondary-color;
 }
 
 /*
@@ -30,13 +33,21 @@ Global variables
 The main menu
 ====================
  */
+
+.mainMenuVBox {
+    -fx-background-color: -secondary-color;
+    -fx-border-style:  solid;
+    -fx-border-width:  0 5 0 0;
+    -fx-border-color: -primary-color;
+}
+
 .mainMenuButton {
     -fx-text-fill: -primary-color;
     -fx-background-color:-secondary-color;
     -fx-font: 25px Calibri;
     -fx-font-size: 25px;
     -fx-font-weight: bold;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 220px;
     -fx-alignment: center-left;
     -fx-background-radius: 5 0 0 5;
 }
@@ -45,11 +56,46 @@ The main menu
     -fx-background-color: -secondary-accent;
 }
 
+.mainMenuButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
+}
+
 .mainMenuButtonHighlighted{
     -fx-background-color: -primary-color;
     -fx-text-fill: white;
 }
 
+/*
+====================
+Statusbar and notification
+====================
+ */
+
+.statusBar {
+    -fx-background-color: -primary-accent;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 0 10;
+    -fx-border-color: -secondary-color;
+    -fx-text-fill: -secondary-color;
+}
+
+.statusbarBG {
+    -fx-background-color: -primary-color;
+}
+
+.notification {
+    -fx-background-color: -secondary-color;
+    -fx-border-color: -secondary-accent;
+    -fx-border-radius: 5px;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 10, 0, 0, 5);
+    -fx-text-fill: white;
+    -fx-padding: 20px;
+    -fx-background-radius: 10px;
+    -fx-font: 25px Calibri;
+    -fx-font-weight: bold;
+}
 
 /*
 ====================
@@ -72,6 +118,11 @@ File-choose menu
     -fx-background-color: -secondary-accent;
 }
 
+.fileChooserButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
+}
+
 .fileChooserText {
     -fx-text-fill: -secondary-color;
     -fx-font: 30px Calibri;
@@ -90,4 +141,203 @@ File-choose menu
     -fx-font: 30px Calibri;
     -fx-font-weight: bold;
     -fx-background-color: -primary-color;
+}
+
+/*
+====================
+View menu
+====================
+ */
+
+.viewMenuAnchorPane {
+    -fx-background-color: -primary-color;
+}
+
+.viewMenuTitle {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 60px Calibri;
+    -fx-font-weight: bold;
+    -fx-pref-height: 60px;
+}
+
+.viewMenuButton {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: -primary-color;
+    -fx-font: 30px Calibri;
+    -fx-font-weight: bold;
+    -fx-padding: 15px;
+    -fx-min-width: 120px;
+}
+
+.viewMenuButton:hover {
+    -fx-background-color: -secondary-accent;
+}
+
+.viewMenuButton:pressed {
+    -fx-background-color: -button-click;
+    -fx-text-fill: -primary-accent;
+}
+
+/*
+====================
+Shows view
+====================
+ */
+
+
+.showsTableView  {
+    -fx-background-color: -primary-accent;
+    -fx-background-radius: 5px;
+    -fx-font: 20px Calibri;
+    -fx-font-weight: bold;
+    -fx-focus-color: red;
+}
+
+.showsTableView .column-header,
+.showsTableView .column-header-background,
+.column-header-background .filler{
+    -fx-background-color: -secondary-color;
+}
+
+.table-row-cell  {
+    -fx-faint-focus-color: red;
+    -fx-table-cell-border-color: transparent;
+}
+
+.tableViewColumn .column-header-background {
+    -fx-background-color: -secondary-color;
+}
+
+.showsTableView .column-header .label {
+    -fx-text-fill: -primary-color;
+    -fx-font: 25px Calibri;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+}
+
+.showsTableView .table-cell {
+    -fx-padding: 4px 8px 4px 8px;
+    -fx-text-alignment: center;
+}
+
+.table-row-cell{
+    -fx-background-color: -primary-accent;
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -primary-color;
+}
+
+.showsTableView:focused .table-row-cell:selected {
+    -fx-background-color: -secondary-color;
+    -fx-text-fill: white;
+}
+
+.scroll-bar{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal {
+
+}
+.scroll-bar .thumb {
+    -fx-background-color: -secondary-color;
+}
+
+.showsTableView .corner {
+    -fx-background-color: -primary-accent;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button,
+.scroll-bar .increment-arrow,
+.scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
+    visibility: hidden;
+}
+
+.showsCard {
+    -fx-background-color: -primary-accent;
+    -fx-background-radius: 5px;
+}
+
+.showsCardTitle {
+    -fx-background-color: -secondary-color;
+    -fx-font: 25px Calibri;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 10px;
+    -fx-max-height: 150px;
+    -fx-text-fill: -primary-color;
+}
+
+
+/*
+====================
+Add shows form
+====================
+ */
+
+.addShowsView {
+    -fx-background-color: -primary-color;
+}
+.addShowFormTitle {
+    -fx-font: 40px Calibri;
+    -fx-font-weight: bold;
+    -fx-tile-alignment: right;
+    -fx-text-fill: -secondary-color;
+    -fx-border-width: 0 0 5 0;
+    -fx-border-style: solid;
+    -fx-border-color: -secondary-color;
+}
+
+.addShowFormQuestion {
+    -fx-font: 27px Calibri;
+    -fx-font-weight: bold;
+    -fx-tile-alignment: right;
+    -fx-text-fill: -secondary-color;
+}
+
+.addShowInputField {
+    -fx-text-fill: -secondary-color;
+    -fx-prompt-text-fill: rgba(0,0,0,0.5);
+    -fx-background-color: -primary-accent;
+    -fx-font: 17px Calibri;
+    -fx-font-weight: bold;
+}
+
+.addShowInputArea  {
+    -fx-text-fill: -secondary-color;
+    -fx-prompt-text-fill: rgba(0,0,0,0.5);
+    -fx-background-color: -primary-accent;
+
+    -fx-font: 17px Calibri;
+    -fx-font-weight: bold;
+}
+
+.addShowInputArea .content {
+    -fx-background-color: -primary-accent;
+    -fx-border-style: none;
+    -fx-background-radius: 0px;
+
+}
+
+.addShowErrorMessage {
+    -fx-font: 17px Calibri;
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 5px;
+    -fx-background-radius: 3px 10px 10px 3px;
+    -fx-text-fill: red;
+}
+
+.addShowDropdown {
+    -fx-background-color: -primary-accent;
+    -fx-font: 15px Calibri;
+    -fx-font-weight: bold;
+}
+
+.addShowMenuButton {
+    -fx-min-width: 242px;
 }

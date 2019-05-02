@@ -10,7 +10,7 @@ public class ContactPerson {
     private String affiliation;
     private String other;
 
-    public ContactPerson(String contactID){
+    public ContactPerson(String id, String name, String contactID){
         this.contactID = contactID; // TODO(1): Method that generates ID's
     }
 
@@ -38,10 +38,6 @@ public class ContactPerson {
         this.other = other;
     }
 
-    public String getContactID() {
-        return contactID;
-    }
-
     public String getName() {
         return name;
     }
@@ -64,5 +60,10 @@ public class ContactPerson {
 
     public String getOther() {
         return other;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + phoneNumber;
     }
 }
