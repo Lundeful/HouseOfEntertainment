@@ -342,7 +342,7 @@ Add shows form
 
 /*
 ====================
-Search field and welcome text
+Search field, help, and welcome text
 ====================
  */
 
@@ -362,4 +362,13 @@ Search field and welcome text
     -fx-font-weight: bold;
     -fx-font: 26px Calibri;
 
+}
+
+.helpInfo {
+    -fx-font: 25px Calibri;
+    -fx-text-fill: -secondary-color;
+    -fx-fill: -primary-color;
+    -fx-border-width: 0 0 0 5px;
+    -fx-border-color: -secondary-color;
+    -fx-padding: 0 0 0 10px;
 }

@@ -1096,11 +1096,33 @@
                               </AnchorPane>
                               <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                                  <children>
-                                    <Label alignment="CENTER" text="Help" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="Segoe UI Bold" size="81.0" />
-                                       </font>
-                                    </Label>
+                                    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox spacing="50.0" styleClass="viewMenuBar">
+                                             <padding>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                             </padding>
+                                             <children>
+                                                <Label styleClass="viewMenuTitle" text="So you need help?" />
+                                             </children>
+                                          </HBox>
+                                          <Label maxWidth="800.0" styleClass="helpInfo" text="Use the main menu on the left to navigate through the different windows of the program." wrapText="true">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label maxWidth="800.0" styleClass="helpInfo" text="Saving and loading may take some time with a large database. Saving and loading can be done with either .csv or .jobj file formats. Linux users may need to explicitly write the file extensions when saving. " wrapText="true">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                          <Label maxWidth="800.0" styleClass="helpInfo" text="If you want to search just enter the text you want to find, then press enter. To clear the search just remove the text and press enter again." wrapText="true">
+                                             <VBox.margin>
+                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                             </VBox.margin>
+                                          </Label>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </AnchorPane>
                            </children>
