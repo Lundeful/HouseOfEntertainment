@@ -113,7 +113,6 @@ public class TestDataBase {
         LocalDate today = LocalDate.now();
         long start = today.toEpochDay();
 
-
         LocalDate maxDate = LocalDate.of(2021,01,01);
         long end = maxDate.toEpochDay();
 

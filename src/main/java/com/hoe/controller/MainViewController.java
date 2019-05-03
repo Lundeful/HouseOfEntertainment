@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.function.UnaryOperator;
 import java.io.File;
 import java.util.ArrayList;
@@ -40,6 +41,21 @@ public class MainViewController {
     @FXML
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
             contactsWindow, promotionsWindow, helpWindow;
+
+    /*
+    ==============================
+    Overview
+    ==============================
+    */
+
+    @FXML
+    private TableView<Show> todayShowsTable;
+
+    @FXML
+    private TableColumn<Show, String> todayShowsColumnShow, todayShowsColumnTime;
+
+    @FXML
+    private TableColumn<Show, Location> todayShowsColumnLocation;
 
     /*
     ==============================
@@ -258,7 +274,13 @@ public class MainViewController {
         tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
         tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        todayShowsColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        todayShowsColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        todayShowsColumnTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+
         updateShowsList();
+        updateTodaysShow();
 
         // Listen for selected show in table
         showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
@@ -335,6 +357,16 @@ public class MainViewController {
         editPromotionChoiceBoxShow.setItems(showData);
         showsTableView.refresh();
     }
+
+    private void updateTodaysShow() {
+        ObservableList<Show> showData = FXCollections.observableArrayList();
+        String todaysDate = LocalDate.now().toString();
+        for (Show s : hoe.getShows()) {
+            if (s.getDate().matches(todaysDate)) showData.add(s);
+        }
+        todayShowsTable.setItems(showData);
+    }
+
 
     /**
      * Updates the information card in the shows view with values given from user selection in the TableView
@@ -500,6 +532,7 @@ public class MainViewController {
             try {
                 hoe.load(finalPath);
                 updateShowsList();
+                updateTodaysShow();
                 updateContactsList();
                 updateLocationsList();
                 updatePromotionList();
@@ -541,7 +574,7 @@ public class MainViewController {
         displayNotification(s, 1);
     }
 
-    /**
+    /**LocalDate
      * Displays a notification for the user in the top left corner and then fades away
      * @param s The text to be displayed in the notification
      * @param d Duration in seconds of notification before fade-out
@@ -727,6 +760,7 @@ public class MainViewController {
                 displayNotification("Show removed");
                 updateTicketsList();
                 updateShowsList();
+                updateTodaysShow();
                 updatePromotionList();
             } else {
                 displayNotification("Error: Show not removed");
@@ -772,6 +806,7 @@ public class MainViewController {
                             addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
                             addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText())) {
                     updateShowsList();
+                    updateTodaysShow();
                     toggleAddShowMenu();
                     displayNotification("Show added");
                 } else {
@@ -803,6 +838,7 @@ public class MainViewController {
 
                 ticketTableView.refresh();
                 showsTableView.refresh();
+                updateTodaysShow();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
             } catch (IllegalLocationException e) {
@@ -902,6 +938,7 @@ public class MainViewController {
             clearAddLocationFields();
             updateLocationsList();
             showsTableView.refresh();
+            updateTodaysShow();
             addLocationView.setVisible(false);
             displayNotification("Location added");
         }
