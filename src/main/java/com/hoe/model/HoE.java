@@ -22,7 +22,7 @@ public class HoE {
         database = new Database();
 
         // TODO: Fjern testdatabase før levering
-        TestDataBase test = new TestDataBase();
+        databaseGenerator test = new databaseGenerator();
         database = test.generateTestObjects();
     }
 

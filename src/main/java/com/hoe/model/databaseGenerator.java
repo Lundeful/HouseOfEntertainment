@@ -7,7 +7,7 @@ import java.time.LocalTime;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class TestDataBase {
+public class databaseGenerator {
     IDCreator id = new IDCreator();
 
     public Database generateTestObjects() throws IllegalLocationException {
