@@ -3,7 +3,9 @@ package com.hoe.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-// TODO: JavaDoc
+/**
+ * This class is the database for storing objects in the program.
+ */
 public class Database  implements Serializable {
     private ArrayList<Location> locations;
     private ArrayList<Show> shows;

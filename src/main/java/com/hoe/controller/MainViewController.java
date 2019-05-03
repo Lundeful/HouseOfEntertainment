@@ -210,7 +210,7 @@ public class MainViewController {
         try {
             hoe = new HoE();
         } catch (IllegalLocationException e) {
-            e.printStackTrace(); //TODO FIX THIS, remove try/catch
+            e.printStackTrace(); // Try-Catch is used for the DatabaseGenerator
         }
 
         initializeVisibility();

@@ -18,12 +18,14 @@ public class HoE {
     private Database database;
     private IDCreator id = new IDCreator();
 
+    // IllegalLocationException is used by the DatabaseGenerator
     public HoE() throws IllegalLocationException {
         database = new Database();
 
-        // TODO: Fjern testdatabase før levering
+        /* If user wants a randomized test database, use these lines of code
+            Can be tweaked to a wanted number of objects.
         DatabaseGenerator test = new DatabaseGenerator();
-        database = test.generateTestObjects();
+        database = test.generateTestObjects(); */
     }
 
     /**
