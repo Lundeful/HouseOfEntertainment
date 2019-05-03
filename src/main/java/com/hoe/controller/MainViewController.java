@@ -374,6 +374,12 @@ public class MainViewController {
         currentButton = b;
     }
 
+    /**
+     * Method that makes it possible to select either a load file
+     * Or set a directory of a wanted save file
+     * Gives the user a choice of either of either a CSV file or Serializable file of either load or save
+     * @return returns the chooser on the given parameter of either load or save
+     */
     private FileChooser getFileChooser() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select a file");
@@ -383,6 +389,14 @@ public class MainViewController {
         return chooser;
     }
 
+    /**
+     * Method that utilizes the load method from the HoE class
+     * This method unlike the save method from the HoE class starts it's thread here
+     * This is because it has to handle exceptions outside the thread
+     * The class uses the file chooser to select the wanted load file
+     * Starts it's thread to make sure that the program does'nt freezes the program when loading huge files
+     * The method updates all the different views after the file is loaded
+     */
     public void loadData() {
         File selectedFile = getFileChooser().showOpenDialog(new Stage());
         if (selectedFile == null) return;
@@ -410,6 +424,10 @@ public class MainViewController {
         }).start();
     }
 
+    /**
+     * Method that utilizes the save method from the HoE class
+     * Gives the user the possibility to choose where to save the given file
+     */
     public void saveData() {
         File selectedFile = getFileChooser().showSaveDialog(new Stage());
         if (selectedFile == null) return;
@@ -442,6 +460,12 @@ public class MainViewController {
         ft.play();
     }
 
+    /**
+     * Method that utilizes the filterShow method from the HoE class
+     * If the search state is none existing the show list reverts to it's original loaded sate
+     * If the search field is valid, it updates the list by passing the arraylist over to a observable list
+     * so it's able to be shown easily on the view of show
+     */
     public void filterShow() {
         String filter = showFilterInput.getText();
         if (filter.equals("")) {
@@ -453,6 +477,12 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Method that utilizes the filterLocation method from the HoE class
+     * If the search state is none existing the show list reverts to it's original loaded sate
+     * If the search field is valid, it updates the list by passing the arraylist over to a observable list
+     * so it's able to be shown easily on the view of location
+     */
     public void filterLocation(){
         String filter = locationFilterInput.getText();
         if (filter.equals("")){
@@ -464,6 +494,12 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Method that utilizes the filterContact method from the HoE class
+     * If the search state is none existing the show list reverts to it's original loaded sate
+     * If the search field is valid, it updates the list by passing the arraylist over to a observable list
+     * so it's able to be shown easily on the view of contact
+     */
     public void filterContact(){
         String filter = contactFilterInput.getText();
         if (filter.equals("")){
@@ -475,6 +511,12 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Method that utilizes the filterTicket method from the HoE class
+     * If the search state is none existing the show list reverts to it's original loaded sate
+     * If the search field is valid, it updates the list by passing the arraylist over to a observable list
+     * so it's able to be shown easily on the view of ticket
+     */
     public void filterTicket(){
         String filter = ticketFilterInput.getText();
         if (filter.equals("")){
@@ -486,6 +528,12 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Method that utilizes the filterPromotion method from the HoE class
+     * If the search state is none existing the show list reverts to it's original loaded sate
+     * If the search field is valid, it updates the list by passing the arraylist over to a observable list
+     * so it's able to be shown easily on the view of promtion
+     */
     public void filterPromotion(){
         String filter = promotionFilterInput.getText();
         if (filter.equals("")){

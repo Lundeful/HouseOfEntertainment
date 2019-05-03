@@ -9,8 +9,6 @@ import java.util.Base64;
  * All the different objects has its own start value, to differ the them from each other
  * Utilizes Base64 to create unique
  */
-
-
 public class IDCreator {
     private final SecureRandom random = new SecureRandom();
     private final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
