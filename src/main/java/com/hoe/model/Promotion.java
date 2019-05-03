@@ -46,7 +46,15 @@ public class Promotion implements Serializable {
         return show;
     }
 
+    public String getShowName() {
+        return show.getShowName();
+    }
+
     public void setShow(Show s) {
         this.show = s;
+    }
+
+    public String getDate() {
+        return show.getDate();
     }
 }

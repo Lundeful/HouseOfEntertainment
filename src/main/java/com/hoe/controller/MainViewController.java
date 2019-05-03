@@ -162,10 +162,8 @@ public class MainViewController {
     private VBox addPromotionView, editPromotionView;
 
     @FXML
-    private TableColumn<Promotion, String> tableColumnPromotionFrom, tableColumnPromotionTo;
-
-    @FXML
-    private TableColumn<Promotion, Show>  tableColumnPromotionShow;
+    private TableColumn<Promotion, String> tableColumnPromotionFrom, tableColumnPromotionTo, tableColumnPromotionShow,
+            tableColumnPromotionDate;
 
     @FXML
     private TextField addPromotionFieldFrom, addPromotionFieldTo, editPromotionFieldFrom, editPromotionFieldTo,
@@ -279,7 +277,8 @@ public class MainViewController {
     }
 
     private void initializePromotions() {
-        tableColumnPromotionShow.setCellValueFactory(new PropertyValueFactory<>("show"));
+        tableColumnPromotionShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
+        tableColumnPromotionDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         tableColumnPromotionFrom.setCellValueFactory(new PropertyValueFactory<>("from"));
         tableColumnPromotionTo.setCellValueFactory(new PropertyValueFactory<>("to"));
         updatePromotionList();
