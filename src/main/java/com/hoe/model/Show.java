@@ -51,7 +51,9 @@ public class Show implements Serializable {
     }
 
     public void setLocation(Location location) throws NotEnoughSeatsException {
-        if (soldTickets.size() <= location.getNumberOfSeats()) {
+        if (location == null) {
+            this.location = null;
+        } else if (soldTickets.size() <= location.getNumberOfSeats()) {
             this.location = location;
             availableTickets = location.getNumberOfSeats();
         } else {
@@ -148,5 +150,4 @@ public class Show implements Serializable {
     public void setAvailableTickets(int availableTickets){
         this.availableTickets = availableTickets;
     }
-
 }

@@ -16,7 +16,6 @@ public class ContactPerson implements Serializable {
     private String affiliation;
     private String other;
 
-
     /**
      * Standard constructor for the ContactPerson class.
      * @param contactID Takes in a unique ID for the Contact Person.
@@ -79,6 +78,7 @@ public class ContactPerson implements Serializable {
     public String toString() {
         return name + " - " + phoneNumber;
     }
+
     /**
      * This method is meant to print out a string with a CSV format so that is it easier to save.
      * @return Returns a String with complete information and in CSV-format.

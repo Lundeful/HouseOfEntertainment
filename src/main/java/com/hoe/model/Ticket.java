@@ -21,7 +21,7 @@ public class Ticket implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString() {
-        return getTicketID() + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeat();
+        return ticketID + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeat();
     }
 
 
@@ -75,7 +75,6 @@ public class Ticket implements Serializable {
     public String getShowName() {
         return show.getShowName();
     }
-
 
     public String getSeat() {
         return seat;

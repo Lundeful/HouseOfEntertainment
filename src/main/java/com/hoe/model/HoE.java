@@ -18,61 +18,13 @@ public class HoE {
     public HoE() throws NotEnoughSeatsException {
         database = new Database();
 
+        // TODO: Fjern testdatabase før levering
         TestDataBase test = new TestDataBase();
         database = test.generateTestObjects();
     }
 
-    public boolean addShow(String name, String type, String date, String time, Location location,
-                           String ticketPrice, String program) {
-        Show show = new Show(id.generateID("show"), formatInput(name)); // TODO: Use ID-generator
-
-        show.setShowType(formatInput(type));
-        show.setDate(formatInput(date));
-        show.setTime(formatInput(time));
-        try {
-            show.setLocation(location);
-        } catch (NotEnoughSeatsException e) {
-            e.printStackTrace();
-        }
-        show.setTicketPrice(formatInput(ticketPrice));
-        show.setProgram(formatInput(program));
-
-        return database.addShow(show);
-    }
-
-    public Database getDataBase(){
-        return this.database;
-    }
-
-    public void setDatabase(Database data){
-        this.database = data;
-    }
-
-    private String formatInput(String s) {
-        return s.trim();
-    }
-
     /**
-     * Removes a show and tickets for that show
-     * @param s Show to remove
-     * @return Returns true if shows and tickets are removed
-     */
-    public boolean removeShow(Show s) {
-        String id = s.getShowID();
-        boolean b = database.removeShow(s);
-        if (b) {
-            database.getTickets().removeIf(t -> t.getShow().getShowID().equals(id));
-        }
-        return b;
-    }
-
-    public ArrayList<Show> getShows() {
-        return database.getShows();
-    }
-
-
-    /**
-     * Method that
+     *
      *
      * @param path
      * @return returns true and saves the given file-type if it's successful,
@@ -100,6 +52,7 @@ public class HoE {
         }
     }
 
+    // TODO: Error ved innlasting av show med tilhørende slettet location
     public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException, NotEnoughSeatsException {
         JobjLoader jobj = new JobjLoader();
         CSVLoader csv = new CSVLoader();
@@ -112,27 +65,127 @@ public class HoE {
         }
     }
 
-    public ArrayList<Location> getLocations() {
-        return database.getLocations();
+    public boolean addShow(String name, String type, String date, String time, Location location,
+                           String ticketPrice, String program) {
+        Show show = new Show(id.generateShowID(), name.trim());
+
+        show.setShowType(type.trim());
+        show.setDate(date.trim());
+        show.setTime(time.trim());
+        try {
+            show.setLocation(location);
+        } catch (NotEnoughSeatsException e) {
+            e.printStackTrace();
+        }
+        show.setTicketPrice(ticketPrice.trim());
+        show.setProgram(program.trim());
+
+        return database.addShow(show);
     }
 
-    public ArrayList<Ticket> getTickets() {
-        return database.getTickets();
+    /**
+     * Removes a show and all the tickets and promotions connected to it
+     * @param s Show to remove
+     * @return Returns true if shows and tickets are removed
+     */
+    public boolean removeShow(Show s) {
+        String id = s.getShowID();
+        boolean b = database.removeShow(s);
+        if (b) {
+            database.getTickets().removeIf(t -> t.getShow().getShowID().equals(id));
+            database.getPromotions().removeIf(p -> p.getShow().getShowID().equals(id));
+        }
+        return b;
     }
 
-    public ArrayList<ContactPerson> getContacts() {
-        return database.getContacts();
+    public void updateShow(Show show, String name, String type, String date, String time, String ticketprice, Location location, ContactPerson cp, String program) throws NotEnoughSeatsException {
+        show.setShowName(name);
+        show.setShowType(type);
+        show.setDate(date);
+        show.setTicketPrice(ticketprice);
+        show.setTime(time);
+        show.setProgram(program);
+        show.setLocation(location);
+        show.setContactPerson(cp);
     }
 
-    public ArrayList<Promotion> getPromotions() {
-        return database.getPromotions();
-    }
-
-    public boolean addLocation(String name, String typeOfLocation, int numberOfSeats) {
-        Location l = new Location(id.generateID("location"), name); // TODO: Bruk ID-generator
-        l.setTypeOfLocation(formatInput(typeOfLocation));
+    public void addLocation(String name, String typeOfLocation, int numberOfSeats) {
+        Location l = new Location(id.generateLocationID(), name);
+        l.setTypeOfLocation(typeOfLocation.trim());
         l.setNumberOfSeats(numberOfSeats);
-        return database.addLocation(l);
+        database.addLocation(l);
+    }
+
+    public boolean removeLocation(Location l) throws NotEnoughSeatsException {
+        String locationID = l.getLocationID();
+        boolean b = database.removeLocation(l);
+        if (b) {
+            for (Show s :  database.getShows()) {
+                if (s.getLocationID().equals(locationID)) s.setLocation(null);
+            }
+        }  // TODO: Behold eller ta bort fjerning av location?
+        return b;
+    }
+
+    public void updateLocation(Location location, String name, String type, int seats) {
+        location.setName(name);
+        location.setTypeOfLocation(type);
+        location.setNumberOfSeats(seats);
+    }
+
+    public void addTicket(Show show, String phonenumber, String seat) {
+        Ticket t = new Ticket(id.generateTicketID(), show, phonenumber,seat);
+        database.addTicket(t);
+    }
+
+    public boolean removeTicket(Ticket t) {
+        return database.removeTicket(t);
+    }
+
+    public void updateTicket(Ticket t, Show show, String phoneNumber, String seat) {
+        t.setShow(show);
+        t.setPhoneNumber(phoneNumber);
+        t.setSeat(seat);
+    }
+
+    public boolean addContact(String name, String phone, String mail, String website, String affiliation, String other){
+        ContactPerson c = new ContactPerson(id.generateContactID(), name, phone);
+        c.setWebsite(website);
+        c.setAffiliation(affiliation);
+        c.setEmail(mail);
+        c.setOther(other);
+        return database.addContact(c);
+    }
+
+    public boolean removeContact(ContactPerson c) {
+        return database.removeContact(c);
+    }
+
+    public void updateContact(ContactPerson c, String nameText, String phoneText, String mailText, String websiteText,
+                              String affiliationText, String otherText) {
+        c.setName(nameText);
+        c.setPhoneNumber(phoneText);
+        c.setEmail(mailText);
+        c.setWebsite(websiteText);
+        c.setAffiliation(affiliationText);
+        c.setOther(otherText);
+    }
+
+    public boolean addPromotion(Show s, String from, String to) {
+        Promotion p = new Promotion(id.generatePromotionID(), s);
+        p.setFrom(from);
+        p.setTo(to);
+        return database.addPromotion(p);
+    }
+
+    public boolean removePromotion(Promotion p) {
+        return database.removePromotion(p);
+    }
+
+    public void updatePromotion(Promotion p, Show s, String from, String to) {
+        p.setShow(s);
+        p.setFrom(from);
+        p.setTo(to);
     }
 
     public ArrayList<Show> filterShow(String filter) {
@@ -150,7 +203,6 @@ public class HoE {
         }
         return filterList;
     }
-
 
     public ArrayList<Location> filterLocation(String filter) {
         filter = filter.toLowerCase();
@@ -189,65 +241,34 @@ public class HoE {
         return filterList;
     }
 
-    public boolean removeLocation(Location l) {
-        return database.removeLocation(l);
+    public ArrayList<Promotion> filterPromotion(String filter) {
+        filter = filter.toLowerCase();
+        ArrayList<Promotion> filterList = new ArrayList<>();
+        for (Promotion p : database.getPromotions()) {
+            if (p.getShow() != null && p.getShow().getShowName().toLowerCase().contains(filter)) filterList.add(p);
+            else if (p.getFrom() != null && p.getFrom().toLowerCase().contains(filter)) filterList.add(p);
+            else if (p.getTo() != null && p.getTo().toLowerCase().contains(filter)) filterList.add(p);;
+        }
+        return filterList;
     }
 
-    public boolean removeTicket(Ticket t) {
-        return database.removeTicket(t);
+    public ArrayList<Show> getShows() {
+        return database.getShows();
     }
 
-    public boolean addTicket(Show show, String phonenumber, String seat) {
-        Ticket t = new Ticket(id.generateID("ticket"), show, phonenumber,seat); //TODO ID-generator
-        return database.addTicket(t);
+    public ArrayList<Location> getLocations() {
+        return database.getLocations();
     }
 
-    public void updateTicket(Ticket t, Show show, String phoneNumber, String seat) {
-        t.setShow(show);
-        t.setPhoneNumber(phoneNumber);
-        t.setSeat(seat);
+    public ArrayList<Ticket> getTickets() {
+        return database.getTickets();
     }
 
-    public boolean removeContact(ContactPerson c) {
-        return database.removeContact(c);
+    public ArrayList<ContactPerson> getContacts() {
+        return database.getContacts();
     }
 
-    public boolean addContact(String name, String phone, String mail, String website, String affiliation, String other){
-        ContactPerson c = new ContactPerson(id.generateID("contact"), name, phone);
-        c.setWebsite(website);
-        c.setAffiliation(affiliation);
-        c.setEmail(mail);
-        c.setOther(other);
-        return database.addContact(c);
+    public ArrayList<Promotion> getPromotions() {
+        return database.getPromotions();
     }
-
-
-    public void updateContact(ContactPerson c, String nameText, String phoneText, String mailText, String websiteText,
-                              String affiliationText, String otherText) {
-        c.setName(nameText);
-        c.setPhoneNumber(phoneText);
-        c.setEmail(mailText);
-        c.setWebsite(websiteText);
-        c.setAffiliation(affiliationText);
-        c.setOther(otherText);
-    }
-
-    public void updateLocation(Location location, String name, String type, int seats) {
-        location.setName(name);
-        location.setTypeOfLocation(type);
-        location.setNumberOfSeats(seats);
-    }
-
-
-    public void updateShow(Show show, String name, String type, String date, String time, String ticketprice, Location location, ContactPerson cp, String program) throws NotEnoughSeatsException {
-        show.setShowName(name);
-        show.setShowType(type);
-        show.setDate(date);
-        show.setTicketPrice(ticketprice);
-        show.setTime(time);
-        show.setProgram(program);
-        show.setLocation(location);
-        show.setContactPerson(cp);
-    }
-
 }

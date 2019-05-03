@@ -42,7 +42,11 @@ public class Promotion implements Serializable {
         return promotionID;
     }
 
-    public void setPromotionID(String promotionID) {
-        this.promotionID = promotionID;
+    public Show getShow() {
+        return show;
+    }
+
+    public void setShow(Show s) {
+        this.show = s;
     }
 }

@@ -25,37 +25,30 @@ import java.util.ArrayList;
 
 public class MainViewController {
 
-    // Main menu buttons
+    /*
+    ==============================
+    Main menu and panes for different views
+    ==============================
+     */
     @FXML
     private Button currentButton, overviewButton, showsButton, locationsButton, ticketsButton, contactsButton,
             promotionsButton, helpButton;
 
-    // The different panes / views in this app
     @FXML
     private AnchorPane currentView, selectMenuWindow, overviewWindow, showsWindow, locationsWindow, ticketsWindow,
             contactsWindow, promotionsWindow, helpWindow;
 
     /*
     ==============================
-    Shows menu
+    Shows view
     ==============================
      */
     @FXML
-    private VBox addShowsView;
-
-    @FXML
-    private TextField showFilterInput, addShowTextFieldName, addShowTextFieldType, addShowTextFieldDate, addShowTextFieldTime,
-            addShowTextFieldTicketPrice;
-    @FXML
-    private TextField addShowFieldProgram;
-    @FXML
-    private ComboBox<Location> addShowChoiceBoxLocation;
-
-    @FXML
-    private ComboBox<ContactPerson> addShowChoiceBoxContact;
+    private VBox addShowsView, editShowsView;
 
     @FXML
     private TableView<Show> showsTableView;
+
     @FXML
     private TableColumn<Show, String> tableColumnShow, tableColumnDate;
 
@@ -63,49 +56,34 @@ public class MainViewController {
     private TableColumn<Location, Location> tableColumnLocation;
 
     @FXML
+    private TextField showFilterInput, addShowTextFieldName, addShowTextFieldType, addShowTextFieldDate,
+            addShowTextFieldTime, addShowTextFieldTicketPrice, editShowTextFieldName, editShowTextFieldType,
+            editShowTextFieldDate, editShowTextFieldTime, editShowTextFieldTicketPrice, addShowFieldProgram,
+            editShowFieldProgram;
+
+    @FXML
+    private ComboBox<Location> addShowChoiceBoxLocation, editShowChoiceBoxLocation;
+
+    @FXML
+    private ComboBox<ContactPerson> addShowChoiceBoxContact, editShowChoiceBoxContactPerson;
+
+    @FXML
     private Label addShowFormNameError, addShowFormLocationError, showCardTitle,  showCardTime, showCardDate,
-            showCardType, showCardLocation, showCardPrice, showCardAvailableTickets, showCardProgram, showCardContact;
+            showCardType, showCardLocation, showCardPrice, showCardAvailableTickets, showCardProgram, showCardContact,
+            editShowFormNameError, editShowFormLocationError;
 
     /*
     ==============================
-    Edit shows menu
+    Locations view
     ==============================
      */
 
     @FXML
-    private VBox editShowsView;
+    private VBox addLocationView, editLocationView;
 
     @FXML
-    private TextField editShowTextFieldName, editShowTextFieldType, editShowTextFieldDate, editShowTextFieldTime,
-            editShowTextFieldTicketPrice;
-
-    @FXML
-    private TextField editShowFieldProgram;
-
-    @FXML
-    private ComboBox<Location> editShowChoiceBoxLocation;
-
-    @FXML
-    private ComboBox<ContactPerson> editShowChoiceBoxContactPerson;
-
-    @FXML
-    private Label editShowFormNameError, editShowFormLocationError;
-
-
-    /*
-    ==============================
-    Locations menu
-    ==============================
-     */
-
-    @FXML
-    private VBox addLocationView;
-
-    @FXML
-    private TextField locationFilterInput;
-
-    @FXML
-    private TextField addLocationFieldName, addLocationFieldType, addLocationFieldSeats;
+    private TextField locationFilterInput, addLocationFieldName, addLocationFieldType, addLocationFieldSeats,
+            editLocationFieldName, editLocationFieldType, editLocationFieldSeats;
 
     @FXML
     private TableView<Location> locationTableView;
@@ -114,36 +92,19 @@ public class MainViewController {
     private TableColumn<Location, String> tableColumnLocationName, tableColumnLocationType, tableColumnLocationSeats;
 
     @FXML
-    private Label addLocationNameError, addLocationSeatsError;
+    private Label addLocationNameError, addLocationSeatsError, editLocationNameError, editLocationSeatsError;
 
     /*
     ==============================
-    Edit locations menu
+    Tickets view
     ==============================
      */
 
     @FXML
-    private VBox editLocationView;
+    private VBox addTicketView, editTicketView;
 
     @FXML
-    private TextField editLocationFieldName, editLocationFieldType, editLocationFieldSeats;
-
-    @FXML
-    private Label editLocationNameError, editLocationSeatsError;
-
-
-    /*
-    ==============================
-    Tickets menu
-    ==============================
-     */
-
-    @FXML
-    private VBox addTicketView;
-
-
-    @FXML
-    private TextField ticketFilterInput;
+    private TableView<Ticket> ticketTableView;
 
     @FXML
     private TableColumn<Ticket, String> tableColumnTicketShow, tableColumnTicketPhone,
@@ -153,72 +114,40 @@ public class MainViewController {
     private TableColumn<Location, String> tableColumnTicketLocation;
 
     @FXML
-    private TableView<Ticket> ticketTableView;
+    private TextField ticketFilterInput, editTicketFieldSeat, editTicketFieldPhoneNumber, addTicketTextFieldPhone,
+            addTicketTextFieldSeat;
 
     @FXML
-    private TextField addTicketTextFieldPhone, addTicketTextFieldSeat;
+    private ComboBox<Show> addTicketChoiceBoxShow, editTicketChoiceBoxShow;
 
     @FXML
-    private ComboBox<Show> addTicketChoiceBoxShow;
-
-    @FXML
-    private Label addTicketErrorShow, addTicketErrorPhone;
+    private Label addTicketErrorShow, addTicketErrorPhone, editTicketErrorShow, editTicketErrorPhoneNumber;
 
     /*
     ==============================
-    Edit tickets menu
+    Contacts view
     ==============================
      */
-    @FXML
-    private VBox editTicketView;
 
     @FXML
-    private TextField editTicketFieldSeat, editTicketFieldPhoneNumber;
-
-    @FXML
-    private ComboBox<Show> editTicketChoiceBoxShow;
-
-    @FXML
-    private Label editTicketErrorShow, editTicketErrorPhoneNumber;
-
-
-        /*
-    ==============================
-    Contacts menu
-    ==============================
-     */
+    private VBox addContactView, editContactView;
 
     @FXML
     private TableView<ContactPerson> contactsTableView;
 
     @FXML
-    private TextField contactFilterInput;
+    private TableColumn<ContactPerson, String> tableColumnContactName, tableColumnContactPhone, tableColumnContactMail,
+            tableColumnContactWebsite, tableColumnContactAffiliation, tableColumnContactOther;
 
-    @FXML
-    private VBox addContactView;
 
     @FXML
     private TextField addContactTextFieldName, addContactTextFieldPhone, addContactTextFieldMail,
-            addContactTextFieldWebsite, addContactTextFieldAffiliation, addContactTextFieldOther;
+            addContactTextFieldWebsite, addContactTextFieldAffiliation, addContactTextFieldOther, contactFilterInput,
+            editContactFieldName, editContactFieldPhone, editContactFieldMail, editContactFieldWebsite,
+            editContactFieldAffiliation, editContactFieldOther;
 
-    @FXML
-    private TableColumn<ContactPerson, String> tableColumnContactName, tableColumnContactPhone, tableColumnContactMail,
-            tableColumnContactWebsite, tableColumnContactAffiliation, tableColumnContactOther;
     @FXML
     private Label addContactErrorName, addContactErrorPhone, editContactErrorName, editContactErrorPhone;
-
-
-    /*
-    ==============================
-    Edit contacts menu
-    ==============================
-     */
-    @FXML
-    private VBox editContactView;
-
-    @FXML
-    private TextField editContactFieldName, editContactFieldPhone, editContactFieldMail,
-            editContactFieldWebsite, editContactFieldAffiliation, editContactFieldOther;
 
     /*
     ==============================
@@ -227,8 +156,27 @@ public class MainViewController {
      */
 
     @FXML
-    private TextField promotionFilterInput;
+    private TableView<Promotion> promotionTableView;
 
+    @FXML
+    private VBox addPromotionView, editPromotionView;
+
+    @FXML
+    private TableColumn<Promotion, String> tableColumnPromotionFrom, tableColumnPromotionTo;
+
+    @FXML
+    private TableColumn<Promotion, Show>  tableColumnPromotionShow;
+
+    @FXML
+    private TextField addPromotionFieldFrom, addPromotionFieldTo, editPromotionFieldFrom, editPromotionFieldTo,
+            promotionFilterInput;
+
+    @FXML
+    private ComboBox<Show> addPromotionChoiceBoxShow, editPromotionChoiceBoxShow;
+
+    @FXML
+    private Label addPromotionErrorShow, addPromotionErrorFrom, addPromotionErrorTo, editPromotionErrorFrom,
+            editPromotionErrorShow, editPromotionErrorTo;
 
     @FXML
     private Label notification;
@@ -238,7 +186,6 @@ public class MainViewController {
     private Show selectedShow;
 
     public void initialize() {
-        // Initialize main system and database
         try {
             hoe = new HoE();
         } catch (NotEnoughSeatsException e) {
@@ -255,7 +202,7 @@ public class MainViewController {
     }
 
     /**
-     * This method adds filters to textfields so that only numeric input is allowed
+     * This method adds filters to text fields so that only numeric input are allowed
      */
     private void addNumberFormatFilter() {
         UnaryOperator<TextFormatter.Change> intFilter = change -> {
@@ -278,33 +225,9 @@ public class MainViewController {
 
     private void addTextFormatter(TextField tf, UnaryOperator<TextFormatter.Change> filter) {
         tf.setTextFormatter(new TextFormatter<String>(filter));
-
     }
 
-    // TODO Remove after setting correct visibility
     private void initializeVisibility() {
-/*
-        overviewWindow.setVisible(false);
-        showsWindow.setVisible(false);
-        locationsWindow.setVisible(false);
-        ticketsWindow.setVisible(false);
-        promotionsWindow.setVisible(false);
-        helpWindow.setVisible(false);
-
-        addShowsView.setVisible(false);
-        editShowsView.setVisible(false);
-
-        addLocationView.setVisible(false);
-        editLocationView.setVisible(false);
-
-        addTicketView.setVisible(false);
-        editTicketView.setVisible(false);
-
-        addContactView.setVisible(false);
-        editContactView.setVisible(false);
-*/
-
-
         currentView = selectMenuWindow;
         currentButton = overviewButton;
         currentView.setVisible(true);
@@ -328,39 +251,11 @@ public class MainViewController {
         });
     }
 
-    private void updateShowCardInfo() {
-        showCardTitle.setText(selectedShow.getShowName());
-        showCardType.setText(selectedShow.getShowType());
-        showCardDate.setText(selectedShow.getDate());
-        showCardTime.setText(selectedShow.getTime());
-        showCardContact.setText(selectedShow.getContact().toString());
-        showCardProgram.setText(selectedShow.getProgram());
-        showCardPrice.setText(selectedShow.getTicketPrice());
-        showCardLocation.setText(selectedShow.getLocation().getName());
-        showCardAvailableTickets.setText(String.valueOf(selectedShow.getAvailableTickets()));
-    }
-
-    private void updateShowsList() {
-        ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
-        showsTableView.setItems(showData);
-        addTicketChoiceBoxShow.setItems(showData);
-        editTicketChoiceBoxShow.setItems(showData);
-        showsTableView.refresh();
-    }
-
     private void initializeLocations() {
         tableColumnLocationName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
         tableColumnLocationSeats.setCellValueFactory(new PropertyValueFactory<>("numberOfSeats"));
         updateLocationsList();
-    }
-
-    private void updateLocationsList() {
-        ObservableList<Location> locationsData = FXCollections.observableArrayList(hoe.getLocations());
-        locationTableView.setItems(locationsData);
-        addShowChoiceBoxLocation.setItems(locationsData);
-        editShowChoiceBoxLocation.setItems(locationsData);
-        showsTableView.refresh();
     }
 
     private void initializeTickets() {
@@ -373,12 +268,6 @@ public class MainViewController {
         updateTicketsList();
     }
 
-    private void updateTicketsList() {
-        ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
-        ticketTableView.setItems(ticketsData);
-        ticketTableView.refresh();
-    }
-
     private void initializeContacts() {
         tableColumnContactName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnContactPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -389,6 +278,52 @@ public class MainViewController {
         updateContactsList();
     }
 
+    private void initializePromotions() {
+        tableColumnPromotionShow.setCellValueFactory(new PropertyValueFactory<>("show"));
+        tableColumnPromotionFrom.setCellValueFactory(new PropertyValueFactory<>("from"));
+        tableColumnPromotionTo.setCellValueFactory(new PropertyValueFactory<>("to"));
+        updatePromotionList();
+    }
+
+    private void updateShowsList() {
+        ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
+        showsTableView.setItems(showData);
+        addTicketChoiceBoxShow.setItems(showData);
+        editTicketChoiceBoxShow.setItems(showData);
+        addPromotionChoiceBoxShow.setItems(showData);
+        editPromotionChoiceBoxShow.setItems(showData);
+        showsTableView.refresh();
+    }
+
+    private void updateShowCardInfo() {
+        showCardTitle.setText(selectedShow.getShowName());
+        showCardType.setText(selectedShow.getShowType());
+        showCardDate.setText(selectedShow.getDate());
+        showCardTime.setText(selectedShow.getTime());
+        if (selectedShow.getContact() != null) showCardContact.setText(selectedShow.getContact().toString());
+        else showCardContact.setText("");
+        showCardProgram.setText(selectedShow.getProgram());
+        showCardPrice.setText(selectedShow.getTicketPrice());
+        if (selectedShow.getLocation() != null) showCardLocation.setText(selectedShow.getLocation().getName());
+        else showCardLocation.setText("");
+        showCardAvailableTickets.setText(String.valueOf(selectedShow.getAvailableTickets()));
+    }
+
+    private void updateLocationsList() {
+        ObservableList<Location> locationsData = FXCollections.observableArrayList(hoe.getLocations());
+        locationTableView.setItems(locationsData);
+        addShowChoiceBoxLocation.setItems(locationsData);
+        editShowChoiceBoxLocation.setItems(locationsData);
+        showsTableView.refresh();
+    }
+
+    private void updateTicketsList() {
+        ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
+        ticketTableView.setItems(ticketsData);
+        ticketTableView.refresh();
+    }
+
+
     private void updateContactsList(){
         ObservableList<ContactPerson> contactsData = FXCollections.observableArrayList(hoe.getContacts());
         contactsTableView.setItems(contactsData);
@@ -397,13 +332,12 @@ public class MainViewController {
         editShowChoiceBoxContactPerson.setItems(contactsData);
     }
 
-    private void initializePromotions() {
-        updatePromotions();
+    private void updatePromotionList() {
+        ObservableList<Promotion> promotionsData = FXCollections.observableArrayList(hoe.getPromotions());
+        promotionTableView.setItems(promotionsData);
+        promotionTableView.refresh();
     }
 
-    private void updatePromotions() {
-
-    }
     public void overviewClicked() {
         menuClicked(overviewWindow, overviewButton);
     }
@@ -441,12 +375,12 @@ public class MainViewController {
         currentButton = b;
     }
 
-    public FileChooser getFileChooser() {
+    private FileChooser getFileChooser() {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select a file");
         chooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Serializable file", "*.jobj"),
                 new FileChooser.ExtensionFilter("CSV file", "*.csv"));
+                new FileChooser.ExtensionFilter("Serializable file", "*.jobj");
         return chooser;
     }
 
@@ -461,13 +395,13 @@ public class MainViewController {
                 updateShowsList();
                 updateContactsList();
                 updateLocationsList();
-                updatePromotions();
+                updatePromotionList();
                 updateTicketsList();
                 Platform.runLater(
                         () -> displayNotification("Loading complete")
                 );
                 Thread.currentThread().interrupt();
-            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | CorruptFileException e) {
+            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | CorruptFileException e){
                 e.printStackTrace();
                 Platform.runLater(
                         () -> displayNotification(e.getMessage(), 3)
@@ -484,6 +418,84 @@ public class MainViewController {
         displayNotification("Saving data...");
         hoe.save(finalPath);
         displayNotification("Saving complete", 1);
+    }
+
+    private void displayNotification(String s) {
+        displayNotification(s, 0.5);
+    }
+
+    private void displayNotification(String s, double d) {
+        notification.setText(s);
+        fadeTransition(notification, d);
+    }
+
+    private void fadeTransition(Label label) {
+        fadeTransition(label, 0.5);
+    }
+
+    private void fadeTransition(Label label, double d) {
+        label.setVisible(true);
+        label.setOpacity(1);
+        FadeTransition ft = new FadeTransition(Duration.seconds(d), label);
+        ft.setFromValue(1);
+        ft.setToValue(0);
+        ft.setDelay(Duration.millis(1000));
+        ft.play();
+    }
+
+    public void filterShow() {
+        String filter = showFilterInput.getText();
+        if (filter.equals("")) {
+            updateShowsList();
+        } else {
+            ArrayList<Show> filteredShows = hoe.filterShow(filter);
+            ObservableList<Show> filteredShowData = FXCollections.observableArrayList(filteredShows);
+            showsTableView.setItems(filteredShowData);
+        }
+    }
+
+    public void filterLocation(){
+        String filter = locationFilterInput.getText();
+        if (filter.equals("")){
+            updateLocationsList();
+        } else {
+            ArrayList<Location> filteredLocation = hoe.filterLocation(filter);
+            ObservableList<Location> filteredLocationData = FXCollections.observableArrayList(filteredLocation);
+            locationTableView.setItems(filteredLocationData);
+        }
+    }
+
+    public void filterContact(){
+        String filter = contactFilterInput.getText();
+        if (filter.equals("")){
+            updateContactsList();
+        } else {
+            ArrayList<ContactPerson> filteredContacts = hoe.filterContactPerson(filter);
+            ObservableList<ContactPerson> filteredContactsData = FXCollections.observableArrayList(filteredContacts);
+            contactsTableView.setItems(filteredContactsData);
+        }
+    }
+
+    public void filterTicket(){
+        String filter = ticketFilterInput.getText();
+        if (filter.equals("")){
+            updateTicketsList();
+        } else {
+            ArrayList<Ticket> filteredTicket = hoe.filterTickets(filter);
+            ObservableList<Ticket> filteredTicketData = FXCollections.observableArrayList(filteredTicket);
+            ticketTableView.setItems(filteredTicketData);
+        }
+    }
+
+    public void filterPromotion(){
+        String filter = promotionFilterInput.getText();
+        if (filter.equals("")){
+            updatePromotionList();
+        } else {
+            ArrayList<Promotion> filteredPromotion = hoe.filterPromotion(filter);
+            ObservableList<Promotion> filteredPromotionData = FXCollections.observableArrayList(filteredPromotion);
+            promotionTableView.setItems(filteredPromotionData);
+        }
     }
 
     public void toggleAddShowMenu() {
@@ -536,6 +548,7 @@ public class MainViewController {
                 displayNotification("Show removed");
                 updateTicketsList();
                 updateShowsList();
+                updatePromotionList();
             } else {
                 displayNotification("Error: Show not removed");
             }
@@ -572,30 +585,6 @@ public class MainViewController {
         }
     }
 
-    private void displayNotification(String s) {
-        displayNotification(s, 0.5);
-    }
-
-    private void displayNotification(String s, double d) {
-        notification.setText(s);
-        fadeTransition(notification, d);
-    }
-
-    private void fadeTransition(Label label) {
-        fadeTransition(label, 0.5);
-    }
-
-    private void fadeTransition(Label label, double d) {
-        label.setVisible(true);
-        label.setOpacity(1);
-        FadeTransition ft = new FadeTransition(Duration.seconds(d), label);
-        ft.setFromValue(1);
-        ft.setToValue(0);
-        ft.setDelay(Duration.millis(1000));
-        ft.play();
-    }
-
-
     public void confirmEditShow() {
         Show show = showsTableView.getSelectionModel().getSelectedItem();
         if (editShowTextFieldName.getText().trim().equals("")) { // If name field is empty
@@ -625,63 +614,6 @@ public class MainViewController {
         editShowsView.setVisible(false);
     }
 
-    public void filterShow() {
-        String filter = showFilterInput.getText();
-        if (filter.equals("")) {
-            updateShowsList();
-        } else {
-            ArrayList<Show> filteredShows = hoe.filterShow(filter);
-            ObservableList<Show> filteredShowData = FXCollections.observableArrayList(filteredShows);
-            showsTableView.setItems(filteredShowData);
-        }
-    }
-
-    public void filterLocation(){
-        String filter = locationFilterInput.getText();
-        if (filter.equals("")){
-            updateLocationsList();
-        } else {
-            ArrayList<Location> filteredLocation = hoe.filterLocation(filter);
-            ObservableList<Location> filteredLocationData = FXCollections.observableArrayList(filteredLocation);
-            locationTableView.setItems(filteredLocationData);
-        }
-    }
-
-    public void filterContact(){
-        String filter = contactFilterInput.getText();
-        if (filter.equals("")){
-            updateContactsList();
-        } else {
-            ArrayList<ContactPerson> filteredContacts = hoe.filterContactPerson(filter);
-            ObservableList<ContactPerson> filteredContactsData = FXCollections.observableArrayList(filteredContacts);
-            contactsTableView.setItems(filteredContactsData);
-        }
-    }
-
-    public void filterTicket(){
-        String filter = ticketFilterInput.getText();
-        if (filter.equals("")){
-            updateTicketsList();
-        } else {
-            ArrayList<Ticket> filteredTicket = hoe.filterTickets(filter);
-            ObservableList<Ticket> filteredTicketData = FXCollections.observableArrayList(filteredTicket);
-            ticketTableView.setItems(filteredTicketData);
-        }
-    }
-
-/*    public void filterPromotion(){
-        String filter = promotionFilterInput.getText();
-        if (filter.equals("")){
-            updateTicketsList();
-        } else {
-            ArrayList<Ticket> filteredTicket = hoe.filterPromotion(filter);
-            ObservableList<Ticket> filteredTicketData = FXCollections.observableArrayList(filteredTicket);
-            ticketTableView.setItems(filteredTicketData);
-        }
-    }*/
-
-
-
     public void toggleAddLocationMenu() {
         if(!addLocationView.isVisible()) {
             addLocationView.setVisible(true);
@@ -710,7 +642,6 @@ public class MainViewController {
         editLocationFieldSeats.setText(String.valueOf(location.getNumberOfSeats()));
     }
 
-    //TODO Fjern location fra shows etter sletting
     public void deleteLocation() {
         if (addLocationView.isVisible() || editLocationView.isVisible()) {
             addLocationView.setVisible(false);
@@ -722,17 +653,21 @@ public class MainViewController {
                 return;
             }
             Location l = locationTableView.getSelectionModel().getSelectedItem();
-            if (hoe.removeLocation(l)) {
-                displayNotification("Location removed");
-            } else {
-                displayNotification("Error: Location not removed");
+            try {
+                if (hoe.removeLocation(l)) {
+                    displayNotification("Location removed");
+                } else {
+                    displayNotification("Error: Location not removed");
+                }
+            } catch (NotEnoughSeatsException e) {
+                e.printStackTrace();
             }
             updateLocationsList();
         }
     }
 
     public void submitLocationForm() {
-        if (addLocationFieldName.getText().trim().equals("")) { // If name field is empty
+        if (addLocationFieldName.getText().trim().equals("")) {
             fadeTransition(addLocationNameError);
         } else if (addLocationFieldSeats.getText().equals("")) {
             fadeTransition(addLocationSeatsError);
@@ -758,7 +693,7 @@ public class MainViewController {
 
     public void confirmEditLocation() {
         Location location = locationTableView.getSelectionModel().getSelectedItem();
-        if (editLocationFieldName.getText().trim().equals("")) { // If name field is empty
+        if (editLocationFieldName.getText().trim().equals("")) {
             fadeTransition(editLocationNameError);
         } else if (editLocationFieldSeats.getText().equals("")) {
             fadeTransition(editLocationSeatsError);
@@ -937,6 +872,7 @@ public class MainViewController {
                     addContactTextFieldMail.getText(), addContactTextFieldWebsite.getText(),
                     addContactTextFieldAffiliation.getText(), addContactTextFieldOther.getText())) {
                 displayNotification("Contact added");
+                clearAddContactForm();
                 updateContactsList();
                 addContactView.setVisible(false);
             } else {
@@ -976,5 +912,99 @@ public class MainViewController {
 
     public void discardEditContact() {
         editContactView.setVisible(false);
+    }
+
+    public void toggleAddPromotion() {
+        if(!addPromotionView.isVisible()) {
+            addPromotionView.setVisible(true);
+            editPromotionView.setVisible(false);
+        } else {
+            addPromotionView.setVisible(false);
+            editPromotionView.setVisible(false);
+        }
+    }
+
+    public void toggleEditPromotion() {
+        if(!editPromotionView.isVisible() && promotionTableView.getSelectionModel().getSelectedItem() != null) {
+            loadPromotionValues();
+            editPromotionView.setVisible(true);
+            addPromotionView.setVisible(false);
+        } else {
+            addPromotionView.setVisible(false);
+            editPromotionView.setVisible(false);
+        }
+    }
+
+    private void loadPromotionValues() {
+        Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
+        editPromotionChoiceBoxShow.setValue(p.getShow());
+        editPromotionFieldFrom.setText(p.getFrom());
+        editPromotionFieldTo.setText(p.getTo());
+    }
+
+    public void deletePromotion() {
+        Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
+        if (addPromotionView.isVisible() || editPromotionView.isVisible()) {
+            addPromotionView.setVisible(false);
+            editPromotionView.setVisible(false);
+            displayNotification("Choose promotion to remove");
+        } else if (promotionTableView.getSelectionModel().getSelectedItem() == null) {
+            displayNotification("No promotion selected");
+        } else if (hoe.removePromotion(p)) {
+            displayNotification("Promotion deleted");
+            updatePromotionList();
+        } else {
+            displayNotification("Error: Promotion not removed");
+        }
+    }
+
+    public void submitPromotionForm() {
+        if (addPromotionChoiceBoxShow.getValue() == null) {
+            fadeTransition(addPromotionErrorShow);
+        } else if (addPromotionFieldFrom.getText().equals("")) {
+            fadeTransition(addPromotionErrorFrom);
+        } else if (addPromotionFieldTo.getText().equals("")) {
+            fadeTransition(addPromotionErrorTo);
+        } else {
+            if (hoe.addPromotion(addPromotionChoiceBoxShow.getValue(), addPromotionFieldFrom.getText(),
+                    addPromotionFieldTo.getText())) {
+                updatePromotionList();
+                displayNotification("Promotion added");
+                clearAddPromotionForm();
+                addPromotionView.setVisible(false);
+            }
+        }
+    }
+
+    public void clearAddPromotionForm() {
+        addPromotionChoiceBoxShow.setValue(null);
+        addPromotionFieldFrom.clear();
+        addPromotionFieldTo.clear();
+    }
+
+    public void closeAddPromotionForm() {
+        addPromotionView.setVisible(false);
+    }
+
+    public void confirmEditPromotion() {
+        Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
+        if (editPromotionChoiceBoxShow.getValue() == null) {
+            fadeTransition(editPromotionErrorShow);
+        } else if (editPromotionFieldFrom.equals("")) {
+            fadeTransition(editPromotionErrorFrom);
+        } else if (editPromotionFieldTo.equals("")) {
+            fadeTransition(editPromotionErrorTo);
+        } else {
+            hoe.updatePromotion(p, editPromotionChoiceBoxShow.getValue(), editPromotionFieldFrom.getText(),
+                    editPromotionFieldTo.getText());
+
+            promotionTableView.refresh();
+            editPromotionView.setVisible(false);
+            displayNotification("Promotion edited");
+        }
+    }
+
+    public void discardEditPromotion() {
+        editPromotionView.setVisible(false);
     }
 }

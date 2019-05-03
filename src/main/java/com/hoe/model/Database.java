@@ -20,6 +20,7 @@ public class Database  implements Serializable {
         tickets = new ArrayList<>();
     }
 
+    // TODO FJERN?
     // Database from existing sources
     public Database(ArrayList<Location> locations, ArrayList<Show> shows, ArrayList<Promotion> promotions,
                     ArrayList<ContactPerson> contacts, ArrayList<Ticket> tickets) {
@@ -70,7 +71,6 @@ public class Database  implements Serializable {
     public boolean removeContact(ContactPerson c) {
         return contacts.remove(c);
     }
-
 
     public ArrayList<Location> getLocations(){
         return this.locations;

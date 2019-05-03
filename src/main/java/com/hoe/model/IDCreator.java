@@ -1,6 +1,5 @@
 package com.hoe.model;
 
-import java.io.FileWriter;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -13,52 +12,42 @@ import java.util.Base64;
 
 
 public class IDCreator {
-    private final String SHOW_ID = "5";
-    private final String CONTACT_ID = "7";
-    private final String TICKET_ID = "3";
-    private final String LOCATION_ID = "4";
-    private final String PROMOTION_ID = "6";
     private final SecureRandom random = new SecureRandom();
     private final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-
-    public String generateID(String s) {
-        if (s.equals("show")) return generateShowID();
-        if (s.equals("location")) return generateLocationID();
-        if (s.equals("ticket")) return generateTicketID();
-        if (s.equals("contact")) return generateContactID();
-        if (s.equals("promotion")) return generatePromotionID();
-        return "";
-    }
-
 
     public String generateLocationID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
-        return LOCATION_ID + encoder.encodeToString(id);
+        String locationID = "4";
+        return locationID + encoder.encodeToString(id);
     }
 
     public String generateContactID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
-        return CONTACT_ID + encoder.encodeToString(id);
+        String contactID = "7";
+        return contactID + encoder.encodeToString(id);
     }
 
     public String generateShowID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
-        return SHOW_ID + encoder.encodeToString(id);
+        String showId = "5";
+        return showId + encoder.encodeToString(id);
     }
 
     public String generatePromotionID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
-        return PROMOTION_ID + encoder.encodeToString(id);
+        String promotionID = "6";
+        return promotionID + encoder.encodeToString(id);
     }
 
     public String generateTicketID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
-        return TICKET_ID + encoder.encodeToString(id);
+        String ticketID = "3";
+        return ticketID + encoder.encodeToString(id);
     }
 
     public int getObject(String ID){

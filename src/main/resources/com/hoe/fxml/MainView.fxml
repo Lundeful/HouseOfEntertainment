@@ -22,7 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
+<StackPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../css/stylesheet.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hoe.controller.MainViewController">
    <children>
       <VBox prefHeight="720.0" prefWidth="1280.0">
          <children>
@@ -102,17 +102,25 @@
                            <children>
                               <AnchorPane fx:id="selectMenuWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane">
                                  <children>
-                                    <VBox alignment="TOP_CENTER" spacing="50.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="100.0">
+                                    <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="100.0">
                                        <children>
                                           <Label alignment="CENTER" text="House of Entertainment" textAlignment="CENTER" textFill="#3d3542" wrapText="true">
                                              <font>
-                                                <Font name="System Bold" size="76.0" />
+                                                <Font name="System Bold" size="96.0" />
                                              </font>
                                           </Label>
                                           <Label alignment="CENTER" text="The ultimate solution for administrating cultural events" textAlignment="CENTER" textFill="#3d3542" wrapText="true">
                                              <font>
                                                 <Font size="35.0" />
                                              </font>
+                                          </Label>
+                                          <Label alignment="CENTER" maxWidth="550.0" styleClass="welcomeInfo" text="Use the main menu to get started. See the Help section for more information" textAlignment="CENTER" textFill="#3d3542" wrapText="true">
+                                             <font>
+                                                <Font size="26.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets top="100.0" />
+                                             </VBox.margin>
                                           </Label>
                                        </children>
                                     </VBox>
@@ -666,8 +674,8 @@
                                                                   <Label focusTraversable="false" styleClass="addShowFormQuestion" text="Seat" GridPane.rowIndex="2" />
                                                                   <ComboBox fx:id="editTicketChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select show" styleClass="addShowDropdown" GridPane.columnIndex="1" />
                                                                   <TextField fx:id="editTicketFieldSeat" promptText="e.g. 15A or Standing" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                                  <Label fx:id="editTicketShowError" focusTraversable="false" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
-                                                                  <Label fx:id="editTicketPhoneError" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="editTicketErrorShow" focusTraversable="false" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editTicketErrorPhoneNumber" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                                </children>
                                                             </GridPane>
                                                             <Region HBox.hgrow="ALWAYS" />
@@ -888,11 +896,171 @@
                               </AnchorPane>
                               <AnchorPane fx:id="promotionsWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
                                  <children>
-                                    <Label alignment="CENTER" text="Promotions" textFill="#3d3542" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <font>
-                                          <Font name="Segoe UI Bold" size="81.0" />
-                                       </font>
-                                    </Label>
+                                    <VBox>
+                                       <children>
+                                          <HBox spacing="50.0" styleClass="viewMenuBar">
+                                             <children>
+                                                <TextField fx:id="promotionFilterInput" onAction="#filterPromotion" promptText="Search for promotions..." styleClass="searchField" />
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#toggleAddPromotion" styleClass="viewMenuButton" text="Add" textAlignment="CENTER" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#toggleEditPromotion" styleClass="viewMenuButton" text="Edit" textAlignment="CENTER" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#deletePromotion" styleClass="viewMenuButton" text="Del" textAlignment="CENTER">
+                                                   <HBox.margin>
+                                                      <Insets right="50.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                             </padding>
+                                          </HBox>
+                                          <StackPane VBox.vgrow="ALWAYS">
+                                             <children>
+                                                <HBox fx:id="locationsView11" styleClass="showsView" StackPane.alignment="TOP_LEFT">
+                                                   <children>
+                                                      <TableView fx:id="promotionTableView" prefWidth="1330.0" styleClass="showsTableView">
+                                                         <columns>
+                                                            <TableColumn fx:id="tableColumnPromotionShow" editable="false" maxWidth="-1.0" minWidth="300.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Show" />
+                                                            <TableColumn fx:id="tableColumnPromotionDate" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Show date" />
+                                                            <TableColumn fx:id="tableColumnPromotionFrom" editable="false" maxWidth="-1.0" minWidth="180.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="Start" />
+                                                            <TableColumn fx:id="tableColumnPromotionTo" editable="false" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" resizable="false" styleClass="tableViewColumn" text="End" />
+                                                         </columns>
+                                                         <columnResizePolicy>
+                                                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                                         </columnResizePolicy>
+                                                      </TableView>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="15.0" right="20.0" top="20.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <VBox fx:id="addPromotionView" prefHeight="200.0" prefWidth="100.0" styleClass="addShowsView" visible="false">
+                                                   <children>
+                                                      <Label focusTraversable="false" styleClass="addShowFormTitle" text="Promote a show">
+                                                         <VBox.margin>
+                                                            <Insets bottom="40.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox VBox.vgrow="ALWAYS">
+                                                         <children>
+                                                            <GridPane fx:id="addTicketInputGrid1" hgap="15.0" vgap="20.0">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints halignment="RIGHT" minWidth="200.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label alignment="CENTER" contentDisplay="CENTER" styleClass="addShowFormQuestion" text="Show" />
+                                                                  <Label styleClass="addShowFormQuestion" text="Start date" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="addPromotionFieldFrom" promptText="e.g. 2019-10-05" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="addTicketErrorShow1" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <ComboBox fx:id="addPromotionChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select show" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <Label fx:id="addTicketErrorPhone1" styleClass="addShowErrorMessage" text="Enter phone number" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label styleClass="addShowFormQuestion" text="End date" GridPane.rowIndex="2" />
+                                                                  <TextField fx:id="addPromotionFieldTo" promptText="e.g. 2019-11-22" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Label fx:id="addPromotionErrorShow" focusTraversable="false" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="addPromotionErrorFrom" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter start date" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="addPromotionErrorTo" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter end date" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                               </children>
+                                                            </GridPane>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" spacing="30.0">
+                                                               <children>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#submitPromotionForm" text="Submit form" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#clearAddPromotionForm" text="Clear form" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#closeAddPromotionForm" text="Close form" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                               </children>
+                                                            </VBox>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox fx:id="editPromotionView" styleClass="addShowsView" visible="false">
+                                                   <children>
+                                                      <Label styleClass="addShowFormTitle" text="Edit promotion">
+                                                         <VBox.margin>
+                                                            <Insets bottom="40.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <HBox VBox.vgrow="ALWAYS">
+                                                         <children>
+                                                            <GridPane fx:id="editTicketInputGrid1" hgap="15.0" vgap="20.0">
+                                                               <columnConstraints>
+                                                                  <ColumnConstraints halignment="RIGHT" minWidth="200.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                                  <ColumnConstraints halignment="LEFT" hgrow="NEVER" minWidth="10.0" />
+                                                               </columnConstraints>
+                                                               <rowConstraints>
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="NEVER" />
+                                                                  <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                                               </rowConstraints>
+                                                               <children>
+                                                                  <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="addShowFormQuestion" text="Show" />
+                                                                  <Label focusTraversable="false" styleClass="addShowFormQuestion" text="Start date" GridPane.rowIndex="1" />
+                                                                  <TextField fx:id="editPromotionFieldFrom" promptText="e.g. 2019-10-05" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                                  <Label focusTraversable="false" styleClass="addShowFormQuestion" text="End date" GridPane.rowIndex="2" />
+                                                                  <ComboBox fx:id="editPromotionChoiceBoxShow" accessibleText="Where is the event?" prefHeight="35.0" prefWidth="275.0" promptText="Select show" styleClass="addShowDropdown" GridPane.columnIndex="1" />
+                                                                  <TextField fx:id="editPromotionFieldTo" promptText="e.g. 2019-11-22" styleClass="addShowInputField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                                  <Label fx:id="editPromotionErrorShow" focusTraversable="false" styleClass="addShowErrorMessage" text="Select a show" visible="false" GridPane.columnIndex="2" />
+                                                                  <Label fx:id="editPromotionErrorFrom" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter start date" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                                  <Label fx:id="editPromotionErrorTo" focusTraversable="false" styleClass="addShowErrorMessage" text="Enter end date" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                                               </children>
+                                                            </GridPane>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <VBox fillWidth="false" nodeOrientation="LEFT_TO_RIGHT" spacing="30.0">
+                                                               <children>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#confirmEditPromotion" text="Confirm" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                                  <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#discardEditPromotion" text="Discard" textAlignment="CENTER">
+                                                                     <styleClass>
+                                                                        <String fx:value="viewMenuButton" />
+                                                                        <String fx:value="addShowMenuButton" />
+                                                                     </styleClass>
+                                                                  </Button>
+                                                               </children>
+                                                            </VBox>
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                   </padding>
+                                                </VBox>
+                                             </children>
+                                          </StackPane>
+                                       </children>
+                                    </VBox>
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="helpWindow" prefHeight="200.0" prefWidth="200.0" styleClass="viewMenuAnchorPane" visible="false">
