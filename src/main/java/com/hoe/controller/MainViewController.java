@@ -20,7 +20,12 @@ import java.util.function.UnaryOperator;
 import java.io.File;
 import java.util.ArrayList;
 
-
+/**
+ * The MainViewController class is the controller for all the GUI elements, handles input and is the bridge
+ * between the FXML and and model (Hoe) class in an MVC pattern.
+ *
+ * @author 681
+ */
 public class MainViewController {
 
     /*
@@ -177,14 +182,18 @@ public class MainViewController {
     @FXML
     private Label notification;
 
-
     private HoE hoe;
     private Show selectedShow;
 
+
+    /**
+     * Initializes the application before use
+     * @auth 681
+     */
     public void initialize() {
         try {
             hoe = new HoE();
-        } catch (NotEnoughSeatsException | IllegalLocationException e) {
+        } catch (IllegalLocationException e) {
             e.printStackTrace(); //TODO FIX THIS, remove try/catch
         }
 
@@ -199,6 +208,7 @@ public class MainViewController {
 
     /**
      * This method adds filters to text fields so that only numeric input are allowed
+     * @auth 681
      */
     private void addNumberFormatFilter() {
         UnaryOperator<TextFormatter.Change> intFilter = change -> {
@@ -219,19 +229,31 @@ public class MainViewController {
         addTextFormatter(editContactFieldPhone, intFilter);
     }
 
+    /**
+     * Helper method for addNumberFormatFilter() method
+     * @param tf TextField that is to be added a filter
+     * @param filter The number filter
+     * @auth 681
+     */
     private void addTextFormatter(TextField tf, UnaryOperator<TextFormatter.Change> filter) {
         tf.setTextFormatter(new TextFormatter<String>(filter));
     }
 
+    /**
+     * Sets the visibility of panes for program start-up
+     * @auth 681
+     */
     private void initializeVisibility() {
         currentView = selectMenuWindow;
         currentButton = overviewButton;
         currentView.setVisible(true);
-
-        notification.setText("");
-        notification.setVisible(false);
     }
 
+    /**
+     * This method initializes the shows view, connecting the TableView columns with the database lists.
+     * It also adds a listener for TableView selection used to the display show information.
+     * @auth 681
+     */
     private void initializeShows() {
         tableColumnShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
         tableColumnDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -248,6 +270,10 @@ public class MainViewController {
         });
     }
 
+    /**
+     * Initializes locations tableview
+     * @auth 681
+     */
     private void initializeLocations() {
         tableColumnLocationName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnLocationType.setCellValueFactory(new PropertyValueFactory<>("typeOfLocation"));
@@ -255,6 +281,10 @@ public class MainViewController {
         updateLocationsList();
     }
 
+    /**
+     * Initializes tickets tableview
+     * @auth 681
+     */
     private void initializeTickets() {
         tableColumnTicketShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
         tableColumnTicketDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -265,6 +295,10 @@ public class MainViewController {
         updateTicketsList();
     }
 
+    /**
+     * Initializes locations tableview
+     * @auth 681
+     */
     private void initializeContacts() {
         tableColumnContactName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnContactPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -275,6 +309,10 @@ public class MainViewController {
         updateContactsList();
     }
 
+    /**
+     * Initializes promotions tableview
+     * @auth 681
+     */
     private void initializePromotions() {
         tableColumnPromotionShow.setCellValueFactory(new PropertyValueFactory<>("showName"));
         tableColumnPromotionDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -283,6 +321,11 @@ public class MainViewController {
         updatePromotionList();
     }
 
+    /**
+     * Updates the GUI with the database shows list. It updates the tableview and drop-down boxes with the correct
+     * shows
+     * @auth 681
+     */
     private void updateShowsList() {
         ObservableList<Show> showData = FXCollections.observableArrayList(hoe.getShows());
         showsTableView.setItems(showData);
@@ -293,6 +336,10 @@ public class MainViewController {
         showsTableView.refresh();
     }
 
+    /**
+     * Updates the information card in the shows view with values given from user selection in the TableView
+     * @auth 681
+     */
     private void updateShowCardInfo() {
         showCardTitle.setText(selectedShow.getShowName());
         showCardType.setText(selectedShow.getShowType());
@@ -307,6 +354,10 @@ public class MainViewController {
         showCardAvailableTickets.setText(String.valueOf(selectedShow.getAvailableTickets()));
     }
 
+    /**
+     * Updates the observable lists with the new and updated data from the database. Also updates drop-down boxes
+     * @auth 681
+     */
     private void updateLocationsList() {
         ObservableList<Location> locationsData = FXCollections.observableArrayList(hoe.getLocations());
         locationTableView.setItems(locationsData);
@@ -315,13 +366,20 @@ public class MainViewController {
         showsTableView.refresh();
     }
 
+    /**
+     * Updates the tableviews with the new and updated data from the database
+     * @auth 681
+     */
     private void updateTicketsList() {
         ObservableList<Ticket> ticketsData = FXCollections.observableArrayList(hoe.getTickets());
         ticketTableView.setItems(ticketsData);
         ticketTableView.refresh();
     }
 
-
+    /**
+     * Updates the tableviews and drop-down boxes with the new and updated data from the database
+     * @auth 681
+     */
     private void updateContactsList(){
         ObservableList<ContactPerson> contactsData = FXCollections.observableArrayList(hoe.getContacts());
         contactsTableView.setItems(contactsData);
@@ -330,40 +388,77 @@ public class MainViewController {
         editShowChoiceBoxContactPerson.setItems(contactsData);
     }
 
+    /**
+     * Updates the tableviews with the new and updated data from the database
+     * @auth 681
+     */
     private void updatePromotionList() {
         ObservableList<Promotion> promotionsData = FXCollections.observableArrayList(hoe.getPromotions());
         promotionTableView.setItems(promotionsData);
         promotionTableView.refresh();
     }
 
+    /**
+     * Called when user clicks on overview-button
+     * @auth 681
+     */
     public void overviewClicked() {
         menuClicked(overviewWindow, overviewButton);
     }
 
+    /**
+     * Called when user clicks on shows-button
+     * @auth 681
+     */
     public void showsClicked() {
         menuClicked(showsWindow, showsButton);
     }
 
+    /**
+     * Called when user clicks on locations-button
+     * @auth 681
+     */
     public void locationsClicked() {
         menuClicked(locationsWindow, locationsButton);
     }
 
+    /**
+     * Called when user clicks on tickets-button
+     * @auth 681
+     */
     public void ticketsClicked() {
         menuClicked(ticketsWindow, ticketsButton);
     }
 
+    /**
+     * Called when user clicks on contacts-button
+     * @auth 681
+     */
     public void contactsClicked() {
         menuClicked(contactsWindow, contactsButton);
     }
 
+    /**
+     * Called when user clicks on promotions-button
+     * @auth 681
+     */
     public void promotionsClicked() {
         menuClicked(promotionsWindow, promotionsButton);
     }
 
+    /**
+     * Called when user clicks on help-button
+     * @auth 681
+     */
     public void helpClicked() {
         menuClicked(helpWindow, helpButton);
     }
 
+    /**
+     * Method that switches views to the corresponding menu-click by the user, and adds styling of selected view button
+     * @param ap The view the user wants to see
+     * @param b The button the user clicked
+     */
     private void menuClicked(AnchorPane ap, Button b) {
         currentView.setVisible(false);
         currentButton.getStyleClass().remove("mainMenuButtonHighlighted");
@@ -413,7 +508,7 @@ public class MainViewController {
                         () -> displayNotification("Loading complete")
                 );
                 Thread.currentThread().interrupt();
-            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | IOException |
+            } catch (InvalidFileException | WrongCSVFormatException | IOException |
                     IllegalLocationException | CorruptFileException e){
                 e.printStackTrace();
                 Platform.runLater(
@@ -437,26 +532,48 @@ public class MainViewController {
         displayNotification("Saving complete", 1);
     }
 
+    /**
+     * Overloaded nofitication method
+     * @param s
+     * @auth 681
+     */
     private void displayNotification(String s) {
-        displayNotification(s, 0.5);
+        displayNotification(s, 1);
     }
 
+    /**
+     * Displays a notification for the user in the top left corner and then fades away
+     * @param s The text to be displayed in the notification
+     * @param d Duration in seconds of notification before fade-out
+     * @auth 681
+     */
     private void displayNotification(String s, double d) {
+        d = d*1000;
         notification.setText(s);
         fadeTransition(notification, d);
     }
 
+    /**
+     * Overloaded fader-method
+     * @auth 681
+     */
     private void fadeTransition(Label label) {
-        fadeTransition(label, 0.5);
+        fadeTransition(label, 1);
     }
 
+    /**
+     * Method that creates a fade-out transition on a label for a set amount of time
+     * @param label Label to be faded
+     * @param d Amount of time for notification to be up before fade start
+     * @auth 681
+     */
     private void fadeTransition(Label label, double d) {
         label.setVisible(true);
         label.setOpacity(1);
-        FadeTransition ft = new FadeTransition(Duration.seconds(d), label);
+        FadeTransition ft = new FadeTransition(Duration.seconds(1), label);
         ft.setFromValue(1);
         ft.setToValue(0);
-        ft.setDelay(Duration.millis(1000));
+        ft.setDelay(Duration.millis(d));
         ft.play();
     }
 
@@ -545,6 +662,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles the add show view
+     * @auth 681
+     */
     public void toggleAddShowMenu() {
         if(!addShowsView.isVisible()) {
             addShowsView.setVisible(true);
@@ -555,6 +676,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles the edit show view if row in tableview is selected
+     * @auth 681
+     */
     public void toggleEditShow() {
         if(!editShowsView.isVisible() && showsTableView.getSelectionModel().getSelectedItem() != null) {
             loadShowValues();
@@ -567,6 +692,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Loads the values of the selected show into the edit show fields
+     * @auth 681
+     */
     private void loadShowValues() {
         Show selectedItem = showsTableView.getSelectionModel().getSelectedItem();
         editShowTextFieldName.setText(selectedItem.getShowName());
@@ -579,7 +708,10 @@ public class MainViewController {
         editShowFieldProgram.setText(selectedItem.getProgram());
     }
 
-    // Delete show and tickets for that show
+    /**
+     * Takes the selection by the user and calls the delete methods in the HoE class and removes show
+     * @auth 681
+     */
     public void deleteShow() {
         if (addShowsView.isVisible() || editShowsView.isVisible()) {
             addShowsView.setVisible(false);
@@ -603,6 +735,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Clears the input fields in the add show view
+     * @auth 681
+     */
     public void clearAddShowFields() {
         addShowTextFieldName.clear();
         addShowTextFieldType.clear();
@@ -613,10 +749,18 @@ public class MainViewController {
         addShowFieldProgram.clear();
     }
 
+    /**
+     * Closes the add show view
+     */
     public void closeAddShowMenu() {
         addShowsView.setVisible(false);
     }
 
+    /**
+     * Called when hitting submit on the add show form. Checks if user has entered the minimum amount of fields and
+     * then passes the info to the addShow() method
+     * in the HoE class for creating
+     */
     public void submitShowForm() {
         if (addShowTextFieldName.getText().trim().equals("")) {
             fadeTransition(addShowFormNameError, 1);
@@ -639,6 +783,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Takes the user input and passes to the HoE class for updating show object
+     * @auth 681
+     */
     public void confirmEditShow() {
         Show show = showsTableView.getSelectionModel().getSelectedItem();
         if (editShowTextFieldName.getText().trim().equals("")) { // If name field is empty
@@ -657,16 +805,24 @@ public class MainViewController {
                 showsTableView.refresh();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
-            } catch (NotEnoughSeatsException | IllegalLocationException e) {
+            } catch (IllegalLocationException e) {
                 displayNotification(e.getMessage(), 2);
             }
         }
     }
 
+    /**
+     * Closes edit show view
+     * @auth 681
+     */
     public void discardEditShow() {
         editShowsView.setVisible(false);
     }
 
+    /**
+     * Toggles add location view
+     * @auth 681
+     */
     public void toggleAddLocationMenu() {
         if(!addLocationView.isVisible()) {
             addLocationView.setVisible(true);
@@ -677,6 +833,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles edit location view
+     * @auth 681
+     */
     public void toggleEditLocation() {
         if(!editLocationView.isVisible() && locationTableView.getSelectionModel().getSelectedItem() != null) {
             loadLocationValues();
@@ -688,6 +848,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Loads values for user-selected location for updating location object
+     * @auth 681
+     */
     private void loadLocationValues() {
         Location location = locationTableView.getSelectionModel().getSelectedItem();
         editLocationFieldName.setText(location.getName());
@@ -695,6 +859,10 @@ public class MainViewController {
         editLocationFieldSeats.setText(String.valueOf(location.getNumberOfSeats()));
     }
 
+    /**
+     * Takes user selection and calls HoE for deletion of location
+     * @auth 681
+     */
     public void deleteLocation() {
         if (addLocationView.isVisible() || editLocationView.isVisible()) {
             addLocationView.setVisible(false);
@@ -719,6 +887,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Submits add location fields for creation of new location object and displays notification when done
+     * @auth 681
+     */
     public void submitLocationForm() {
         if (addLocationFieldName.getText().trim().equals("")) {
             fadeTransition(addLocationNameError);
@@ -727,6 +899,7 @@ public class MainViewController {
         } else {
             hoe.addLocation(addLocationFieldName.getText(), addLocationFieldType.getText(),
                     Integer.parseInt(addLocationFieldSeats.getText()));
+            clearAddLocationFields();
             updateLocationsList();
             showsTableView.refresh();
             addLocationView.setVisible(false);
@@ -734,16 +907,29 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Clears add location text-fields
+     * @auth 681
+     */
     public void clearAddLocationFields() {
         addLocationFieldName.clear();
         addLocationFieldSeats.clear();
         addLocationFieldType.clear();
     }
 
+    /**
+     * Closes add location view
+     * @auth 681
+     */
     public void closeAddLocationMenu() {
         addLocationView.setVisible(false);
     }
 
+    /**
+     * Valides input-fields and passes vales to HoE-class for updating location object. Displays notification for
+     * validation and errors
+     * @auth 681
+     */
     public void confirmEditLocation() {
         Location location = locationTableView.getSelectionModel().getSelectedItem();
         if (editLocationFieldName.getText().trim().equals("")) {
@@ -767,10 +953,17 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Closes edit location view
+     */
     public void discardEditLocation() {
         editLocationView.setVisible(false);
     }
 
+    /**
+     * Toggles the add ticket view
+     * @auth 681
+     */
     public void toggleAddTicket() {
         if(!addTicketView.isVisible()) {
             addTicketView.setVisible(true);
@@ -781,6 +974,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles the edit ticket view given user has selected row in the tableview
+     * @auth 681
+     */
     public void toggleEditTicket() {
         if(!editTicketView.isVisible() && ticketTableView.getSelectionModel().getSelectedItem() != null) {
             loadTicketValues();
@@ -792,6 +989,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Loads values for selected ticket for editing of ticket
+     * @auth 681
+     */
     private void loadTicketValues() {
         Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
         editTicketFieldPhoneNumber.setText(t.getPhoneNumber());
@@ -799,6 +1000,10 @@ public class MainViewController {
         editTicketFieldSeat.setText(t.getSeat());
     }
 
+    /**
+     * Takes user-selected ticket and calls for removal of ticket. Displays notification of removal success
+     * @auth 681
+     */
     public void deleteTicket() {
         if (editTicketView.isVisible() || addTicketView.isVisible()){
             editTicketView.setVisible(false);
@@ -818,6 +1023,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Validates and submits user input for updating ticket
+     * @auth 681
+     */
     public void submitTicketForm() {
         if (addTicketChoiceBoxShow.getValue() == null) {
             fadeTransition(addTicketErrorShow);
@@ -833,16 +1042,28 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Clears add ticket fields
+     * @auth 681
+     */
     public void clearAddTicketForm() {
         addTicketChoiceBoxShow.setValue(null);
         addTicketTextFieldPhone.clear();
         addTicketTextFieldSeat.clear();
     }
 
+    /**
+     * Close add ticket view
+     * @auth 681
+     */
     public void closeAddTicketMenu() {
         addTicketView.setVisible(false);
     }
 
+    /**
+     * Valides input passes into Hoe for editing of ticket object
+     * @auth 681
+     */
     public void confirmEditTicket() {
         Ticket t = ticketTableView.getSelectionModel().getSelectedItem();
         if (editTicketChoiceBoxShow.getValue() == null) {
@@ -859,10 +1080,18 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Close edit ticket view
+     * @auth 681
+     */
     public void discardEditTicket() {
         editTicketView.setVisible(false);
     }
 
+    /**
+     * Toggles add contact view
+     * @auth 681
+     */
     public void toggleAddContactsMenu() {
         if(!addContactView.isVisible()) {
             addContactView.setVisible(true);
@@ -873,6 +1102,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles edit contact view
+     * @auth 681
+     */
     public void toggleEditContact() {
         if(!editContactView.isVisible() && contactsTableView.getSelectionModel().getSelectedItem() != null) {
             loadContactValues();
@@ -885,6 +1118,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Loads selected contact values to input fields for editing of contact object
+     * @auth 681
+     */
     private void loadContactValues() {
         ContactPerson c = contactsTableView.getSelectionModel().getSelectedItem();
         editContactFieldName.setText(c.getName());
@@ -895,6 +1132,10 @@ public class MainViewController {
         editContactFieldOther.setText(c.getOther());
     }
 
+    /**
+     * Passes contact selection for deletion from database and displays result to user
+     * @auth 681
+     */
     public void deleteContact() {
         if (editContactView.isVisible() || addContactView.isVisible()) {
             addContactView.setVisible(false);
@@ -915,6 +1156,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Validates and passes user input for editing of contact
+     * @auth 681
+     */
     public void submitContactForm() {
         if (addContactTextFieldName.getText().equals("")) {
             fadeTransition(addContactErrorName);
@@ -934,16 +1179,28 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Clears input fields on add contact view
+     * @auth 681
+     */
     public void clearAddContactForm() {
         addContactTextFieldName.clear();
         addContactTextFieldPhone.clear();
         addContactTextFieldMail.clear();
     }
 
+    /**
+     * Close add contact form
+     * @auth 681
+     */
     public void closeAddContactForm() {
         addContactView.setVisible(false);
     }
 
+    /**
+     * Validate and pass on values for editing contact. Display result to user
+     * @auth 681
+     */
     public void confirmEditContact() {
         ContactPerson c = contactsTableView.getSelectionModel().getSelectedItem();
 
@@ -963,10 +1220,18 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Close edit contact view
+     * @auth 681
+     */
     public void discardEditContact() {
         editContactView.setVisible(false);
     }
 
+    /**
+     * Toggles att promotion view
+     * @auth 681
+     */
     public void toggleAddPromotion() {
         if(!addPromotionView.isVisible()) {
             addPromotionView.setVisible(true);
@@ -977,6 +1242,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Toggles edit promotion view
+     * @auth 681
+     */
     public void toggleEditPromotion() {
         if(!editPromotionView.isVisible() && promotionTableView.getSelectionModel().getSelectedItem() != null) {
             loadPromotionValues();
@@ -988,6 +1257,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Loads values for selected promotion to text fields for editing
+     * @auth 681
+     */
     private void loadPromotionValues() {
         Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
         editPromotionChoiceBoxShow.setValue(p.getShow());
@@ -995,6 +1268,10 @@ public class MainViewController {
         editPromotionFieldTo.setText(p.getTo());
     }
 
+    /**
+     * Takes user selected promotion and calls for deletion in the database. Displays result to user
+     * @auth 681
+     */
     public void deletePromotion() {
         Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
         if (addPromotionView.isVisible() || editPromotionView.isVisible()) {
@@ -1011,6 +1288,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Validates and submits input fields for adding promotion object. Displays notification ot user
+     * @auth 681
+     */
     public void submitPromotionForm() {
         if (addPromotionChoiceBoxShow.getValue() == null) {
             fadeTransition(addPromotionErrorShow);
@@ -1029,16 +1310,28 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Clears add promotion fields
+     * @auth 681
+     */
     public void clearAddPromotionForm() {
         addPromotionChoiceBoxShow.setValue(null);
         addPromotionFieldFrom.clear();
         addPromotionFieldTo.clear();
     }
 
+    /**
+     * Closes add promotion view
+     * @auth 681
+     */
     public void closeAddPromotionForm() {
         addPromotionView.setVisible(false);
     }
 
+    /**
+     * Validates and submits values for editing promotion
+     * @auth 681
+     */
     public void confirmEditPromotion() {
         Promotion p = promotionTableView.getSelectionModel().getSelectedItem();
         if (editPromotionChoiceBoxShow.getValue() == null) {
@@ -1057,6 +1350,10 @@ public class MainViewController {
         }
     }
 
+    /**
+     * Closes edit promotion view when user clicks discard
+     * @auth 681
+     */
     public void discardEditPromotion() {
         editPromotionView.setVisible(false);
     }

@@ -2,13 +2,11 @@ package com.hoe.model.dataloading;
 
 import com.hoe.model.*;
 import com.hoe.model.exceptions.IllegalLocationException;
-import com.hoe.model.exceptions.NotEnoughSeatsException;
 import com.hoe.model.exceptions.WrongCSVFormatException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * This is the CSVLoader class. This class reads a CSV file and uses the unique ID to determine what object it is
@@ -25,7 +23,7 @@ public class CSVLoader {
      *
      * @param filename The filepath to the CSV-file.
      */
-    public Database readData(String filename) throws WrongCSVFormatException, NotEnoughSeatsException, IOException, IllegalLocationException {
+    public Database readData(String filename) throws WrongCSVFormatException, IOException, IllegalLocationException {
         Database database = new Database();
 
         BufferedReader fileReader = new BufferedReader(new FileReader(filename));
@@ -55,7 +53,6 @@ public class CSVLoader {
                 }
             }
         }
-        addTicketsToShow(database);
         return database;
     }
 
@@ -80,7 +77,7 @@ public class CSVLoader {
      *
      * @param data The String[] with the data.
      */
-    private void showCreator(String[] data, Database database) throws WrongCSVFormatException, NotEnoughSeatsException,
+    private void showCreator(String[] data, Database database) throws WrongCSVFormatException,
             IllegalLocationException {
         if (data.length == 10) {
             Show show = new Show(data[0], data[1]);
@@ -137,18 +134,6 @@ public class CSVLoader {
             database.addTicket(ticket);
         } else {
             throw new WrongCSVFormatException("Corrupt CSV-file");
-        }
-    }
-
-    private void addTicketsToShow(Database data) {
-        for (Show s : data.getShows()) {
-            ArrayList<Ticket> ticket = new ArrayList<>();
-            for (Ticket t : data.getTickets()) {
-                if (t.getShowID().equals(s.getShowID())) {
-                    ticket.add(t);
-                }
-            }
-            s.setSoldTickets(ticket);
         }
     }
 }

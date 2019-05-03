@@ -79,17 +79,12 @@ public class CSVSaver extends DataSaver {
 
         //Adding promotions to the string
         String header_promotion = "ID|Show ID|Time From|Time To";
-        line.append(header_Show);
+        line.append(header_promotion);
         line.append(NEW_LINE);
 
         for(Promotion promotion : promotions){
             line.append(promotion.toCSVString());
             line.append(NEW_LINE);
-        }
-
-        //Getting all the tickets from every show
-        for(Show show : shows){
-            tickets.addAll(show.getSoldTickets());
         }
 
         //Adding tickets to the string

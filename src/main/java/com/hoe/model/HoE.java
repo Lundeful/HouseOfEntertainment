@@ -9,11 +9,16 @@ import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.JobjSaver;
 
+/**
+ * The HoE class is the main model class in this application. It is used to control the rest of the system and classes
+ * and is connected to the main controller.
+ * @auth 681
+ */
 public class HoE {
     private Database database;
     private IDCreator id = new IDCreator();
 
-    public HoE() throws NotEnoughSeatsException, IllegalLocationException {
+    public HoE() throws IllegalLocationException {
         database = new Database();
 
         // TODO: Fjern testdatabase før levering
@@ -51,17 +56,18 @@ public class HoE {
         }
     }
 
-    
+
     /**
      * Method used to load either a csv or jobj file on the users own choice
      * @param path is the given path of the users saved file
      * @throws WrongCSVFormatException throws an exception if the csv file is wrongly formatted
      * @throws InvalidFileException throws an exception if the file that is attempted to load is not within csv or jobj
      * @throws CorruptFileException throws an exception if the attempted load file is corrupted
-     * @throws NotEnoughSeatsException throws an exception if the given seat number of the csv file is wrongly formatted
+     * @throws IOException throws and exception if the reader can't read from the file
+     * @throws IllegalLocationException throws and exception if trying to set null location object in show
      */
     public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException,
-            NotEnoughSeatsException, IOException, IllegalLocationException {
+            IOException, IllegalLocationException {
         JobjLoader jobj = new JobjLoader();
         CSVLoader csv = new CSVLoader();
         if (path.endsWith(".csv")) {
@@ -73,6 +79,11 @@ public class HoE {
         }
     }
 
+    /**
+     * Creates a new show with user input values and adds to database
+     * @return Returns true if successful addition to database
+     * @throws IllegalLocationException
+     */
     public boolean addShow(String name, String type, String date, String time, Location location,
                            String ticketPrice, String program) throws IllegalLocationException {
         Show show = new Show(id.generateShowID(), name.trim());
@@ -80,11 +91,7 @@ public class HoE {
         show.setShowType(type.trim());
         show.setDate(date.trim());
         show.setTime(time.trim());
-        try {
-            show.setLocation(location);
-        } catch (NotEnoughSeatsException e) {
-            e.printStackTrace();
-        }
+        show.setLocation(location);
         show.setTicketPrice(ticketPrice.trim());
         show.setProgram(program.trim());
 
@@ -106,9 +113,13 @@ public class HoE {
         return b;
     }
 
+    /**
+     * Updates the show object with new values given by the user in the text-fields
+     * @throws IllegalLocationException Thrown if the location is a null object
+     * @auth 681
+     */
     public void updateShow(Show show, String name, String type, String date, String time, String ticketprice,
-                           Location location, ContactPerson cp, String program) throws NotEnoughSeatsException,
-            IllegalLocationException {
+                           Location location, ContactPerson cp, String program) throws IllegalLocationException {
         show.setShowName(name);
         show.setShowType(type);
         show.setDate(date);
@@ -119,6 +130,13 @@ public class HoE {
         show.setContactPerson(cp);
     }
 
+    /**
+     * Adds new location to the database with input given from the user
+     * @param name Name of location
+     * @param typeOfLocation What type of location
+     * @param numberOfSeats How many seats the location has
+     * @auth 681
+     */
     public void addLocation(String name, String typeOfLocation, int numberOfSeats) {
         Location l = new Location(id.generateLocationID(), name);
         l.setTypeOfLocation(typeOfLocation.trim());
@@ -126,6 +144,14 @@ public class HoE {
         database.addLocation(l);
     }
 
+    /**
+     * Method that removes location selected by the user. A show needs a location, so user is not permitted to delete
+     * locations with existing shows attached.
+     * @param l The location to be removed
+     * @return Returns true if successful removal
+     * @throws IllegalLocationException Thrown if the location has shows at that location
+     * @auth 681
+     */
     public boolean removeLocation(Location l) throws IllegalLocationException {
         String locationID = l.getLocationID();
         for (Show s :  database.getShows()) {
@@ -135,27 +161,50 @@ public class HoE {
         return database.removeLocation(l);
     }
 
+    /**
+     * Updates location with input given by user
+     * @auth 681
+     */
     public void updateLocation(Location location, String name, String type, int seats) {
         location.setName(name);
         location.setTypeOfLocation(type);
         location.setNumberOfSeats(seats);
     }
 
+    /**
+     * Adds new ticket to the database with values given by user
+     * @auth 681
+     */
     public void addTicket(Show show, String phonenumber, String seat) {
         Ticket t = new Ticket(id.generateTicketID(), show, phonenumber,seat);
         database.addTicket(t);
     }
 
+    /**
+     * Removes Ticket from database
+     * @param t the ticket to be removed
+     * @return Returns true if successful removal
+     * @auth 681
+     */
     public boolean removeTicket(Ticket t) {
         return database.removeTicket(t);
     }
 
+    /**
+     * Updates ticket with new values given by user
+     * @auth 681
+     */
     public void updateTicket(Ticket t, Show show, String phoneNumber, String seat) {
         t.setShow(show);
         t.setPhoneNumber(phoneNumber);
         t.setSeat(seat);
     }
 
+    /**
+     * Adds new contact to database with values given by user
+     * @return Returns true if successful creation of contact
+     * @auth 681
+     */
     public boolean addContact(String name, String phone, String mail, String website, String affiliation, String other){
         ContactPerson c = new ContactPerson(id.generateContactID(), name, phone);
         c.setWebsite(website);
@@ -165,10 +214,19 @@ public class HoE {
         return database.addContact(c);
     }
 
+    /**
+     * Removes contact
+     * @return Returns true if successful removal
+     * @auth 681
+     */
     public boolean removeContact(ContactPerson c) {
         return database.removeContact(c);
     }
 
+    /**
+     * Updates contact with values given by user
+     * @auth 681
+     */
     public void updateContact(ContactPerson c, String nameText, String phoneText, String mailText, String websiteText,
                               String affiliationText, String otherText) {
         c.setName(nameText);
@@ -179,6 +237,11 @@ public class HoE {
         c.setOther(otherText);
     }
 
+    /**
+     * Adds new promotion object to database
+     * @return Returns true if successful creation
+     * @auth 681
+     */
     public boolean addPromotion(Show s, String from, String to) {
         Promotion p = new Promotion(id.generatePromotionID(), s);
         p.setFrom(from);
@@ -186,10 +249,19 @@ public class HoE {
         return database.addPromotion(p);
     }
 
+    /**
+     * Removes promotion from database
+     * @return Returns true if successful removal
+     * @auth 681
+     */
     public boolean removePromotion(Promotion p) {
         return database.removePromotion(p);
     }
 
+    /**
+     * Updates promotion with values given by user
+     * @auth 681
+     */
     public void updatePromotion(Promotion p, Show s, String from, String to) {
         p.setShow(s);
         p.setFrom(from);
