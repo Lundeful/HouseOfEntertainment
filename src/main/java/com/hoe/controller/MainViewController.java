@@ -1,10 +1,7 @@
 package com.hoe.controller;
 
 import com.hoe.model.*;
-import com.hoe.model.exceptions.NotEnoughSeatsException;
-import com.hoe.model.exceptions.CorruptFileException;
-import com.hoe.model.exceptions.InvalidFileException;
-import com.hoe.model.exceptions.WrongCSVFormatException;
+import com.hoe.model.exceptions.*;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -18,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.util.function.UnaryOperator;
 import java.io.File;
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ public class MainViewController {
     ==============================
      */
     @FXML
-    private VBox addShowsView, editShowsView;
+    private VBox addShowsView, editShowsView, showCard;
 
     @FXML
     private TableView<Show> showsTableView;
@@ -186,7 +184,7 @@ public class MainViewController {
     public void initialize() {
         try {
             hoe = new HoE();
-        } catch (NotEnoughSeatsException e) {
+        } catch (NotEnoughSeatsException | IllegalLocationException e) {
             e.printStackTrace(); //TODO FIX THIS, remove try/catch
         }
 
@@ -244,6 +242,7 @@ public class MainViewController {
         showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
             if (s1 != null && s2 != null && !s2.equals(s1)) {
                 selectedShow = s2;
+                showCard.setVisible(true);
                 updateShowCardInfo();
             }
         });
@@ -400,7 +399,8 @@ public class MainViewController {
                         () -> displayNotification("Loading complete")
                 );
                 Thread.currentThread().interrupt();
-            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | CorruptFileException e){
+            } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | IOException |
+                    IllegalLocationException | CorruptFileException e){
                 e.printStackTrace();
                 Platform.runLater(
                         () -> displayNotification(e.getMessage(), 3)
@@ -570,17 +570,24 @@ public class MainViewController {
     }
 
     public void submitShowForm() {
-        if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
+        if (addShowTextFieldName.getText().trim().equals("")) {
             fadeTransition(addShowFormNameError, 1);
         } else if (addShowChoiceBoxLocation.getValue() == null) {
             fadeTransition(addShowFormLocationError, 1);
         } else {
-        hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
-                    addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
-                    addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText());
-        updateShowsList();
-        toggleAddShowMenu();
-        displayNotification("Show added");
+            try {
+                if (hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
+                            addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
+                            addShowTextFieldTicketPrice.getText(), addShowFieldProgram.getText())) {
+                    updateShowsList();
+                    toggleAddShowMenu();
+                    displayNotification("Show added");
+                } else {
+                    displayNotification("Error: Show not added");
+                }
+            } catch (IllegalLocationException e) {
+                displayNotification(e.getMessage(), 2);
+            }
         }
     }
 
@@ -598,13 +605,12 @@ public class MainViewController {
                         editShowTextFieldTicketPrice.getText(), editShowChoiceBoxLocation.getValue(),
                         editShowChoiceBoxContactPerson.getValue(), editShowFieldProgram.getText());
 
-                ticketTableView.refresh(); // TODO Update or refresh?
+                ticketTableView.refresh();
                 showsTableView.refresh();
                 editShowsView.setVisible(false);
                 displayNotification("Show edited");
-            } catch (NotEnoughSeatsException e) {
-                displayNotification("Error: " + e.getMessage());
-                System.err.println(e.getMessage());
+            } catch (NotEnoughSeatsException | IllegalLocationException e) {
+                displayNotification(e.getMessage(), 2);
             }
         }
     }
@@ -658,8 +664,8 @@ public class MainViewController {
                 } else {
                     displayNotification("Error: Location not removed");
                 }
-            } catch (NotEnoughSeatsException e) {
-                e.printStackTrace();
+            } catch (IllegalLocationException e) {
+                displayNotification(e.getMessage(), 2);
             }
             updateLocationsList();
         }

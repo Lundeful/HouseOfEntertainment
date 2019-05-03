@@ -10,7 +10,6 @@ import java.util.Base64;
  * Utilizes Base64 to create unique
  */
 
-
 public class IDCreator {
     private final SecureRandom random = new SecureRandom();
     private final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();

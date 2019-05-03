@@ -84,8 +84,8 @@ public class ContactPerson implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString(){
-        return getContactID() + "|" + getName() + "|" + getPhoneNumber() + "|" + getEmail() + "|" +
-                getWebsite() + "|" + getAffiliation() + "|" + getOther();
+        return contactID + "|" + name + "|" + phoneNumber + "|" + email + "|" + website + "|" + affiliation + "|"
+                + other;
     }
 
     public String getContactID() {

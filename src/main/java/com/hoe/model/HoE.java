@@ -1,21 +1,19 @@
 package com.hoe.model;
 
-import com.hoe.model.exceptions.NotEnoughSeatsException;
+import com.hoe.model.exceptions.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import com.hoe.model.dataloading.CSVLoader;
 import com.hoe.model.dataloading.JobjLoader;
 import com.hoe.model.datasaving.CSVSaver;
 import com.hoe.model.datasaving.JobjSaver;
-import com.hoe.model.exceptions.CorruptFileException;
-import com.hoe.model.exceptions.InvalidFileException;
-import com.hoe.model.exceptions.WrongCSVFormatException;
 
 public class HoE {
     private Database database;
     private IDCreator id = new IDCreator();
 
-    public HoE() throws NotEnoughSeatsException {
+    public HoE() throws NotEnoughSeatsException, IllegalLocationException {
         database = new Database();
 
         // TODO: Fjern testdatabase før levering
@@ -52,8 +50,8 @@ public class HoE {
         }
     }
 
-    // TODO: Error ved innlasting av show med tilhørende slettet location
-    public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException, NotEnoughSeatsException {
+    public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException,
+            NotEnoughSeatsException, IOException, IllegalLocationException {
         JobjLoader jobj = new JobjLoader();
         CSVLoader csv = new CSVLoader();
         if (path.endsWith(".csv")) {
@@ -66,7 +64,7 @@ public class HoE {
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
-                           String ticketPrice, String program) {
+                           String ticketPrice, String program) throws IllegalLocationException {
         Show show = new Show(id.generateShowID(), name.trim());
 
         show.setShowType(type.trim());
@@ -98,7 +96,9 @@ public class HoE {
         return b;
     }
 
-    public void updateShow(Show show, String name, String type, String date, String time, String ticketprice, Location location, ContactPerson cp, String program) throws NotEnoughSeatsException {
+    public void updateShow(Show show, String name, String type, String date, String time, String ticketprice,
+                           Location location, ContactPerson cp, String program) throws NotEnoughSeatsException,
+            IllegalLocationException {
         show.setShowName(name);
         show.setShowType(type);
         show.setDate(date);
@@ -116,15 +116,13 @@ public class HoE {
         database.addLocation(l);
     }
 
-    public boolean removeLocation(Location l) throws NotEnoughSeatsException {
+    public boolean removeLocation(Location l) throws IllegalLocationException {
         String locationID = l.getLocationID();
-        boolean b = database.removeLocation(l);
-        if (b) {
-            for (Show s :  database.getShows()) {
-                if (s.getLocationID().equals(locationID)) s.setLocation(null);
-            }
-        }  // TODO: Behold eller ta bort fjerning av location?
-        return b;
+        for (Show s :  database.getShows()) {
+            if (s.getLocationID().equals(locationID)) throw new IllegalLocationException("Error: Can't remove location " +
+                    "that still has shows");
+        }
+        return database.removeLocation(l);
     }
 
     public void updateLocation(Location location, String name, String type, int seats) {

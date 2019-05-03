@@ -1,5 +1,6 @@
 package com.hoe.model;
 
+import com.hoe.model.exceptions.IllegalLocationException;
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
 import java.io.Serializable;
@@ -27,7 +28,7 @@ public class Show implements Serializable {
      * @param ticketPrice The price for a ticket.
      */
     public Show(String showID, String locationID, String ticketPrice){
-        this.showID = showID;       // TODO(1): Method that generates ID's
+        this.showID = showID;
         this.locationID = locationID;
         this.ticketPrice = ticketPrice;
     }
@@ -50,9 +51,9 @@ public class Show implements Serializable {
         this.program = program;
     }
 
-    public void setLocation(Location location) throws NotEnoughSeatsException {
+    public void setLocation(Location location) throws NotEnoughSeatsException, IllegalLocationException {
         if (location == null) {
-            this.location = null;
+            throw new IllegalLocationException("Show must have a location");
         } else if (soldTickets.size() <= location.getNumberOfSeats()) {
             this.location = location;
             availableTickets = location.getNumberOfSeats();
@@ -84,9 +85,9 @@ public class Show implements Serializable {
 
     public String toCSVString(){
         return getShowID() + "|" + getShowName() + "|" + getShowType() + "|" + getLocationID() + "|" + getDate() + "|" +
-                getTime() + "|" + getTicketPrice() + "|" + String.valueOf(getAvailableTickets())
-                + "|" + getProgram() + "|" + getContactPersonID();
-}
+                getTime() + "|" + getTicketPrice() + "|" + getAvailableTickets() + "|" + getProgram() + "|"
+                + getContactPersonID();
+    }
 
     private String getContactPersonID() {
         if(this.contactPerson == null) return "";
@@ -94,7 +95,7 @@ public class Show implements Serializable {
     }
 
     public String getLocationID() {
-        if(location == null) return ""; // TODO: Sjekk at alle getID gjør dette der det må gjøres
+        if(location == null) return "";
         return location.getLocationID();
     }
 

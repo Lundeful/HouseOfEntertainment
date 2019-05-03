@@ -30,7 +30,7 @@ public class Promotion implements Serializable {
     }
 
     public String toCSVString(){
-        return getPromotionID() + "|" + getShowID() + "|" + getFrom() + "|" + getTo();
+        return promotionID + "|" + getShowID() + "|" + from + "|" + to;
     }
 
     private String getShowID() {
@@ -38,23 +38,21 @@ public class Promotion implements Serializable {
         return show.getShowID();
     }
 
-    public String getPromotionID() {
-        return promotionID;
-    }
-
     public Show getShow() {
         return show;
-    }
-
-    public String getShowName() {
-        return show.getShowName();
     }
 
     public void setShow(Show s) {
         this.show = s;
     }
 
+    // Getters used for TableView columns
+    public String getShowName() {
+        return show.getShowName();
+    }
+
     public String getDate() {
         return show.getDate();
     }
+
 }

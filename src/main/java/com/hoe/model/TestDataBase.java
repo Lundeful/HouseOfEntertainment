@@ -1,5 +1,6 @@
 package com.hoe.model;
 
+import com.hoe.model.exceptions.IllegalLocationException;
 import com.hoe.model.exceptions.NotEnoughSeatsException;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class TestDataBase {
     IDCreator id = new IDCreator();
 
-    public Database generateTestObjects() throws NotEnoughSeatsException {
+    public Database generateTestObjects() throws NotEnoughSeatsException, IllegalLocationException {
         Database database = new Database();
         Location l1 = new Location(id.generateLocationID(), "Big Hall");
         l1.setNumberOfSeats(578);

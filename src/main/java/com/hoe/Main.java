@@ -13,7 +13,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/com/hoe/fxml/MainView.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("/com/hoe/css/stylesheet.css").toExternalForm());
-        // TODO Icon?
         stage.setTitle("House of Entertainment");
         stage.setScene(scene);
         stage.show();

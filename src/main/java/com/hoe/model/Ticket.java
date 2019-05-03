@@ -21,31 +21,21 @@ public class Ticket implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString() {
-        return ticketID + "|" + getShowID() + "|" + getPhoneNumber() + "|" + getSeat();
+        return ticketID + "|" + getShowID() + "|" + phoneNumber + "|" + seat;
     }
 
 
     public void setSeat(String seat) {
         this.seat = seat;
       }
-    public String getTime() {
-        return show.getTime();
-    }
 
     public String getDate() {
         return show.getDate();
     }
 
-    public String getPrice() {
-        return show.getTicketPrice();
-    }
-
     public String getShowID() {
+        if (this.show == null) return "";
         return show.getShowID();
-    }
-
-    public String getTicketID() {
-        return ticketID;
     }
 
     public String getPhoneNumber() {
@@ -64,23 +54,20 @@ public class Ticket implements Serializable {
         this.show = show;
     }
 
-    public void setDate(String s) {
-        show.setDate(s);
-    }
-
     public void setPhoneNumber(String s) {
         this.phoneNumber = s;
-    }
-
-    public String getShowName() {
-        return show.getShowName();
     }
 
     public String getSeat() {
         return seat;
     }
 
+    // Getters used for tableview columns
+    public String getTime() {
+        return show.getTime();
+    }
 
-
-
+    public String getShowName() {
+        return show.getShowName();
+    }
 }

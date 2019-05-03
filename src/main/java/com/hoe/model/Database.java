@@ -20,24 +20,12 @@ public class Database  implements Serializable {
         tickets = new ArrayList<>();
     }
 
-    // TODO FJERN?
-    // Database from existing sources
-    public Database(ArrayList<Location> locations, ArrayList<Show> shows, ArrayList<Promotion> promotions,
-                    ArrayList<ContactPerson> contacts, ArrayList<Ticket> tickets) {
-        this.locations = locations;
-        this.shows = shows;
-        this.promotions = promotions;
-        this.contacts = contacts;
-        this.tickets = tickets;
-    }
-
     public boolean addLocation(Location l) {
             return locations.add(l);
     }
 
     public boolean addShow(Show s) {
         return shows.add(s);
-
     }
 
     public boolean addPromotion(Promotion p) {

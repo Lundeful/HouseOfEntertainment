@@ -6,7 +6,7 @@ public class Location implements Serializable {
 
     private final String locationID;
     private String name;
-    private String typeOfLocation; // TODO: Enums instead of strings?
+    private String typeOfLocation;
     private int numberOfSeats;
 
     /**
@@ -57,6 +57,6 @@ public class Location implements Serializable {
      * @return Returns a String with complete information and in CSV-format.
      */
     public String toCSVString(){
-        return getLocationID() + "|" + getName() + "|" + getTypeOfLocation() + "|" + String.valueOf(getNumberOfSeats());
+        return locationID + "|" + name + "|" + typeOfLocation + "|" + numberOfSeats;
     }
 }
