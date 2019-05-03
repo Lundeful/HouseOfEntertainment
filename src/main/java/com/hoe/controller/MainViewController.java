@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -455,7 +454,7 @@ public class MainViewController {
         File selectedFile = getFileChooser().showOpenDialog(new Stage());
         if (selectedFile == null) return;
         String finalPath = selectedFile.toString();
-        displayNotification("Loading data...");
+        displayNotification("Loading data...", 2);
         new Thread(() -> {
             try {
                 hoe.load(finalPath);
@@ -471,7 +470,7 @@ public class MainViewController {
             } catch (InvalidFileException | WrongCSVFormatException | NotEnoughSeatsException | CorruptFileException e) {
                 e.printStackTrace();
                 Platform.runLater(
-                        () -> displayNotification(e.getMessage())
+                        () -> displayNotification(e.getMessage(), 3)
                 );
                 Thread.currentThread().interrupt();
             }
@@ -484,7 +483,7 @@ public class MainViewController {
         String finalPath = selectedFile.toString();
         displayNotification("Saving data...");
         hoe.save(finalPath);
-        displayNotification("Saving complete");
+        displayNotification("Saving complete", 1);
     }
 
     public void toggleAddShowMenu() {
@@ -560,9 +559,9 @@ public class MainViewController {
 
     public void submitShowForm() {
         if (addShowTextFieldName.getText().trim().equals("")) { // If name field is empty
-            fadeTransition(addShowFormNameError);
+            fadeTransition(addShowFormNameError, 1);
         } else if (addShowChoiceBoxLocation.getValue() == null) {
-            fadeTransition(addShowFormLocationError);
+            fadeTransition(addShowFormLocationError, 1);
         } else {
         hoe.addShow(addShowTextFieldName.getText(), addShowTextFieldType.getText(), addShowTextFieldDate.getText(),
                     addShowTextFieldTime.getText(), addShowChoiceBoxLocation.getValue(),
@@ -574,19 +573,28 @@ public class MainViewController {
     }
 
     private void displayNotification(String s) {
+        displayNotification(s, 0.5);
+    }
+
+    private void displayNotification(String s, double d) {
         notification.setText(s);
-        fadeTransition(notification);
+        fadeTransition(notification, d);
     }
 
     private void fadeTransition(Label label) {
+        fadeTransition(label, 0.5);
+    }
+
+    private void fadeTransition(Label label, double d) {
         label.setVisible(true);
         label.setOpacity(1);
-        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), label);
+        FadeTransition ft = new FadeTransition(Duration.seconds(d), label);
         ft.setFromValue(1);
         ft.setToValue(0);
         ft.setDelay(Duration.millis(1000));
         ft.play();
     }
+
 
     public void confirmEditShow() {
         Show show = showsTableView.getSelectionModel().getSelectedItem();

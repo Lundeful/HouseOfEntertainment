@@ -132,7 +132,6 @@ public class CSVLoader {
     }
 
     private void ticketCreator(String[] data, Database database) throws WrongCSVFormatException {
-        int counter = 0;
         if(data.length == 4){
             Ticket ticket = new Ticket(data[0], database.findShow(data[1]), data[2],data[3]);
             database.addTicket(ticket);

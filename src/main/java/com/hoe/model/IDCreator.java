@@ -21,32 +21,41 @@ public class IDCreator {
     private final SecureRandom random = new SecureRandom();
     private final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
 
+    public String generateID(String s) {
+        if (s.equals("show")) return generateShowID();
+        if (s.equals("location")) return generateLocationID();
+        if (s.equals("ticket")) return generateTicketID();
+        if (s.equals("contact")) return generateContactID();
+        if (s.equals("promotion")) return generatePromotionID();
+        return "";
+    }
 
-    public String randomKeyGen(Location location) {
+
+    public String generateLocationID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
         return LOCATION_ID + encoder.encodeToString(id);
     }
 
-    public String randomKeyGen(ContactPerson contactPerson) {
+    public String generateContactID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
         return CONTACT_ID + encoder.encodeToString(id);
     }
 
-    public String randomKeyGen(Show show) {
+    public String generateShowID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
         return SHOW_ID + encoder.encodeToString(id);
     }
 
-    public String randomKeyGen(Promotion promotion) {
+    public String generatePromotionID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
         return PROMOTION_ID + encoder.encodeToString(id);
     }
 
-    public String randomKeyGen(Ticket ticket) {
+    public String generateTicketID() {
         byte[] id = new byte[10];
         random.nextBytes(id);
         return TICKET_ID + encoder.encodeToString(id);

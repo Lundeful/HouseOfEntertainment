@@ -14,21 +14,17 @@ import com.hoe.model.exceptions.WrongCSVFormatException;
 public class HoE {
     private Database database;
     private IDCreator id = new IDCreator();
-    private Show s = new Show("","");
-    private ContactPerson contact = new ContactPerson("","","");
-    private Ticket ticket = new Ticket("",s,"","");
-    private Location loc = new Location("","");
-
 
     public HoE() throws NotEnoughSeatsException {
         database = new Database();
+
         TestDataBase test = new TestDataBase();
         database = test.generateTestObjects();
     }
 
     public boolean addShow(String name, String type, String date, String time, Location location,
                            String ticketPrice, String program) {
-        Show show = new Show(id.randomKeyGen(s), formatInput(name)); // TODO: Use ID-generator
+        Show show = new Show(id.generateID("show"), formatInput(name)); // TODO: Use ID-generator
 
         show.setShowType(formatInput(type));
         show.setDate(formatInput(date));
@@ -133,7 +129,7 @@ public class HoE {
     }
 
     public boolean addLocation(String name, String typeOfLocation, int numberOfSeats) {
-        Location l = new Location(id.randomKeyGen(loc), name); // TODO: Bruk ID-generator
+        Location l = new Location(id.generateID("location"), name); // TODO: Bruk ID-generator
         l.setTypeOfLocation(formatInput(typeOfLocation));
         l.setNumberOfSeats(numberOfSeats);
         return database.addLocation(l);
@@ -202,7 +198,7 @@ public class HoE {
     }
 
     public boolean addTicket(Show show, String phonenumber, String seat) {
-        Ticket t = new Ticket(id.randomKeyGen(ticket), show, phonenumber,seat); //TODO ID-generator
+        Ticket t = new Ticket(id.generateID("ticket"), show, phonenumber,seat); //TODO ID-generator
         return database.addTicket(t);
     }
 
@@ -217,7 +213,7 @@ public class HoE {
     }
 
     public boolean addContact(String name, String phone, String mail, String website, String affiliation, String other){
-        ContactPerson c = new ContactPerson(id.randomKeyGen(contact), name, phone);
+        ContactPerson c = new ContactPerson(id.generateID("contact"), name, phone);
         c.setWebsite(website);
         c.setAffiliation(affiliation);
         c.setEmail(mail);
