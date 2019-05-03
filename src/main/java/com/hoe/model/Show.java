@@ -92,7 +92,7 @@ public class Show implements Serializable {
     }
 
     public String getLocationID() {
-        if(location == null) return "";
+        if(location == null) return ""; // TODO: Sjekk at alle getID gjør dette der det må gjøres
         return location.getLocationID();
     }
 
@@ -139,16 +139,6 @@ public class Show implements Serializable {
 
     public ContactPerson getContact() {
         return this.contactPerson;
-    }
-
-    public boolean addSoldTicket(Ticket t) {
-        if (availableTickets > 0) {
-            soldTickets.add(t);
-            availableTickets--;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void setContactPerson(ContactPerson contactPerson) {

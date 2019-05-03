@@ -45,23 +45,15 @@ public class MainViewController {
     private VBox addShowsView;
 
     @FXML
-    private TextField showFilterInput;
-
-    // Add show input form view
-    @FXML
-    private TextField addShowTextFieldName, addShowTextFieldType, addShowTextFieldDate, addShowTextFieldTime,
+    private TextField showFilterInput, addShowTextFieldName, addShowTextFieldType, addShowTextFieldDate, addShowTextFieldTime,
             addShowTextFieldTicketPrice;
     @FXML
-    private TextArea addShowFieldProgram;
+    private TextField addShowFieldProgram;
     @FXML
     private ComboBox<Location> addShowChoiceBoxLocation;
 
     @FXML
     private ComboBox<ContactPerson> addShowChoiceBoxContact;
-
-    // View with list of shows
-    @FXML
-    private HBox showsView;
 
     @FXML
     private TableView<Show> showsTableView;
@@ -72,7 +64,8 @@ public class MainViewController {
     private TableColumn<Location, Location> tableColumnLocation;
 
     @FXML
-    private Label addShowFormNameError, addShowFormLocationError;
+    private Label addShowFormNameError, addShowFormLocationError, showCardTitle,  showCardTime, showCardDate,
+            showCardType, showCardLocation, showCardPrice, showCardAvailableTickets, showCardProgram, showCardContact;
 
     /*
     ==============================
@@ -88,7 +81,7 @@ public class MainViewController {
             editShowTextFieldTicketPrice;
 
     @FXML
-    private TextArea editShowFieldProgram;
+    private TextField editShowFieldProgram;
 
     @FXML
     private ComboBox<Location> editShowChoiceBoxLocation;
@@ -254,7 +247,7 @@ public class MainViewController {
         }
 
         initializeVisibility();
-        addTextFormattingFilters();
+        addNumberFormatFilter();
         initializeLocations();
         initializeContacts();
         initializeShows();
@@ -265,7 +258,7 @@ public class MainViewController {
     /**
      * This method adds filters to textfields so that only numeric input is allowed
      */
-    private void addTextFormattingFilters() {
+    private void addNumberFormatFilter() {
         UnaryOperator<TextFormatter.Change> intFilter = change -> {
             String newText = change.getControlNewText();
             if (newText.matches("-?([1-9][0-9]*)?")) {
@@ -274,19 +267,24 @@ public class MainViewController {
             return null;
         };
 
-        // TODO: Check duplicate code
-        addShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
-        editShowTextFieldTicketPrice.setTextFormatter(new TextFormatter<String>(intFilter));
-        addLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
-        editLocationFieldSeats.setTextFormatter(new TextFormatter<String>(intFilter));
-        addTicketTextFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
-        editTicketFieldPhoneNumber.setTextFormatter(new TextFormatter<String>(intFilter));
-        addContactTextFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
-        editContactFieldPhone.setTextFormatter(new TextFormatter<String>(intFilter));
+        addTextFormatter(addShowTextFieldTicketPrice, intFilter);
+        addTextFormatter(editShowTextFieldTicketPrice, intFilter);
+        addTextFormatter(addLocationFieldSeats, intFilter);
+        addTextFormatter(editLocationFieldSeats, intFilter);
+        addTextFormatter(addTicketTextFieldPhone, intFilter);
+        addTextFormatter(editTicketFieldPhoneNumber, intFilter);
+        addTextFormatter(addContactTextFieldPhone, intFilter);
+        addTextFormatter(editContactFieldPhone, intFilter);
+    }
+
+    private void addTextFormatter(TextField tf, UnaryOperator<TextFormatter.Change> filter) {
+        tf.setTextFormatter(new TextFormatter<String>(filter));
+
     }
 
     // TODO Remove after setting correct visibility
     private void initializeVisibility() {
+/*
         overviewWindow.setVisible(false);
         showsWindow.setVisible(false);
         locationsWindow.setVisible(false);
@@ -305,6 +303,7 @@ public class MainViewController {
 
         addContactView.setVisible(false);
         editContactView.setVisible(false);
+*/
 
 
         currentView = selectMenuWindow;
@@ -321,17 +320,25 @@ public class MainViewController {
         tableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
         updateShowsList();
 
-/*        // Listen for selected show in table
+        // Listen for selected show in table
         showsTableView.getSelectionModel().selectedItemProperty().addListener((observableValue, s1, s2) -> {
             if (s1 != null && s2 != null && !s2.equals(s1)) {
                 selectedShow = s2;
                 updateShowCardInfo();
             }
-        });*/
+        });
     }
 
     private void updateShowCardInfo() {
-        // TODO Fill out
+        showCardTitle.setText(selectedShow.getShowName());
+        showCardType.setText(selectedShow.getShowType());
+        showCardDate.setText(selectedShow.getDate());
+        showCardTime.setText(selectedShow.getTime());
+        showCardContact.setText(selectedShow.getContact().toString());
+        showCardProgram.setText(selectedShow.getProgram());
+        showCardPrice.setText(selectedShow.getTicketPrice());
+        showCardLocation.setText(selectedShow.getLocation().getName());
+        showCardAvailableTickets.setText(String.valueOf(selectedShow.getAvailableTickets()));
     }
 
     private void updateShowsList() {
@@ -448,6 +455,7 @@ public class MainViewController {
         File selectedFile = getFileChooser().showOpenDialog(new Stage());
         if (selectedFile == null) return;
         String finalPath = selectedFile.toString();
+        displayNotification("Loading data...");
         new Thread(() -> {
             try {
                 hoe.load(finalPath);
@@ -474,6 +482,7 @@ public class MainViewController {
         File selectedFile = getFileChooser().showSaveDialog(new Stage());
         if (selectedFile == null) return;
         String finalPath = selectedFile.toString();
+        displayNotification("Saving data...");
         hoe.save(finalPath);
         displayNotification("Saving complete");
     }

@@ -68,21 +68,9 @@ The main menu
 
 /*
 ====================
-Statusbar and notification
+Notification
 ====================
  */
-
-.statusBar {
-    -fx-background-color: -primary-accent;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 0 10;
-    -fx-border-color: -secondary-color;
-    -fx-text-fill: -secondary-color;
-}
-
-.statusbarBG {
-    -fx-background-color: -primary-color;
-}
 
 .notification {
     -fx-background-color: -secondary-color;
@@ -102,9 +90,6 @@ Statusbar and notification
 File-choose menu
 ====================
  */
-
-.fileChooserMenu {
-}
 
 .fileChooserButton {
     -fx-text-fill: -primary-color;
@@ -273,7 +258,28 @@ Shows view
     -fx-text-fill: -primary-color;
 }
 
+.showCardLabel {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 30px Segoe-UI;
+    -fx-font-weight: bold;
+    -fx-border-width: 0 0 3 0;
+    -fx-border-style: solid;
+    -fx-border-color: -secondary-color;
+}
 
+.showCardInfo {
+    -fx-text-fill: -secondary-color;
+    -fx-font: 22px Segoe-UI;
+    -fx-font-weight: bold;
+}
+
+.showCardScrollPane {
+    -fx-background-color: -primary-accent;
+}
+
+.scroll-pane {
+    -fx-background-color:transparent;
+}
 /*
 ====================
 Add shows form
@@ -312,7 +318,6 @@ Add shows form
     -fx-text-fill: -secondary-color;
     -fx-prompt-text-fill: rgba(0,0,0,0.5);
     -fx-background-color: -primary-accent;
-
     -fx-font: 17px Calibri;
     -fx-font-weight: bold;
 }
@@ -345,7 +350,7 @@ Add shows form
 
 /*
 ====================
-Shows view
+Search field
 ====================
  */
 
