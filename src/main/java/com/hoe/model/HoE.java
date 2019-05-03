@@ -22,11 +22,12 @@ public class HoE {
     }
 
     /**
-     *
-     *
-     * @param path
+     * Method used to save either a csv or jobj file on the given choice of the user
+     * The method starts its own threads on either csv or jobj file, this is to make sure that the program it self
+     * does'nt freeze when saving the program files
+     * @param path is the given path that the user wants to save the given file.
      * @return returns true and saves the given file-type if it's successful,
-     * returns false if there is any exceptions, leading the save to not being applied.
+     * returns false if there is any exceptions, leading to that the save is not applied.
      */
     public boolean save(String path) {
         try {
@@ -50,6 +51,15 @@ public class HoE {
         }
     }
 
+    
+    /**
+     * Method used to load either a csv or jobj file on the users own choice
+     * @param path is the given path of the users saved file
+     * @throws WrongCSVFormatException throws an exception if the csv file is wrongly formatted
+     * @throws InvalidFileException throws an exception if the file that is attempted to load is not within csv or jobj
+     * @throws CorruptFileException throws an exception if the attempted load file is corrupted
+     * @throws NotEnoughSeatsException throws an exception if the given seat number of the csv file is wrongly formatted
+     */
     public void load(String path) throws WrongCSVFormatException, InvalidFileException, CorruptFileException,
             NotEnoughSeatsException, IOException, IllegalLocationException {
         JobjLoader jobj = new JobjLoader();
@@ -186,6 +196,13 @@ public class HoE {
         p.setTo(to);
     }
 
+    /**
+     * Method that filters shows on the given search criteria of the user on the given possible fields that is shown
+     * in the show view
+     * @param filter passes in the search word of the user as a string
+     * @return returns a array list with the given search to override the database array list temporarily to just show
+     * the given search criteria
+     */
     public ArrayList<Show> filterShow(String filter) {
         filter = filter.toLowerCase();
         ArrayList<Show> filterList = new ArrayList<>();
@@ -202,6 +219,13 @@ public class HoE {
         return filterList;
     }
 
+    /**
+     * Method that filters location on the given search criteria of the user on the given possible fields that is shown
+     * in the location view
+     * @param filter passes in the search word of the user as a string
+     * @return returns a array list with the given search to override the database array list temporarily to just show
+     * the given search criteria
+     */
     public ArrayList<Location> filterLocation(String filter) {
         filter = filter.toLowerCase();
         ArrayList<Location> filterList = new ArrayList<>();
@@ -212,6 +236,13 @@ public class HoE {
         return filterList;
     }
 
+    /**
+     * Method that filters contact person on the given search criteria of the user on the given possible fields that is shown
+     * in the contact person view
+     * @param filter passes in the search word of the user as a string
+     * @return returns a array list with the given search to override the database array list temporarily to just show
+     * the given search criteria
+     */
     public ArrayList<ContactPerson> filterContactPerson(String filter) {
         filter = filter.toLowerCase();
         ArrayList<ContactPerson> filterList = new ArrayList<>();
@@ -226,6 +257,13 @@ public class HoE {
         return filterList;
     }
 
+    /**
+     * Method that filters ticket on the given search criteria of the user on the given possible fields that is shown
+     * in the ticket view
+     * @param filter passes in the search word of the user as a string
+     * @return returns a array list with the given search to override the database array list temporarily to just show
+     * the given search criteria
+     */
     public ArrayList<Ticket> filterTickets(String filter) {
         filter = filter.toLowerCase();
         ArrayList<Ticket> filterList = new ArrayList<>();
@@ -239,6 +277,13 @@ public class HoE {
         return filterList;
     }
 
+    /**
+     * Method that filters promotion on the given search criteria of the user on the given possible fields that is shown
+     * in the promotion view
+     * @param filter passes in the search word of the user as a string
+     * @return returns a array list with the given search to override the database array list temporarily to just show
+     * the given search criteria
+     */
     public ArrayList<Promotion> filterPromotion(String filter) {
         filter = filter.toLowerCase();
         ArrayList<Promotion> filterList = new ArrayList<>();

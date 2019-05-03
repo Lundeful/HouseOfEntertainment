@@ -104,6 +104,12 @@ public class TestDataBase {
         return m + new Random().nextInt(9 * m);
     }
 
+    /**
+     * Method that makes a random date based on the date of today
+     * To the date of 2021.01.01
+     * The format is the date structure used in America
+     * @return returns the given randomized date
+     */
     private String randomDate(){
         LocalDate today = LocalDate.now();
         long start = today.toEpochDay();
@@ -117,6 +123,11 @@ public class TestDataBase {
 
     }
 
+    /**
+     * Method that makes a randomized time from 00:00 to 23:59
+     * The method is used in a randomized data class.
+     * @return returns the given random time on the format explained above
+     */
     private String randomTime(){
         LocalTime currentLocal = LocalTime.of(0,0);
         long  starTime = currentLocal.toSecondOfDay();
