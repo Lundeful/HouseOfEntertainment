@@ -68,7 +68,7 @@ public class DatabaseGenerator {
 
         String[] ord = {"Little", "Curse", "Captain", "Harry", "Amazing", "Missing", "Dragon", "Hotel", "Red", "Five",
                 "High", "Best", "Family", "White", "Black", "Movie", "Man", "Woman", "True", "False", "The", "Hacker",
-                "Mighty", "Dancing", "Huge", "Single", "Big", "Schindler's", "Angry", "Lord of the", "Unusual",
+                "Mighty", "Dancing", "Huge", "Single", "Big", "Angry", "Lord of the", "Unusual",
         "Terminator 5:", "American"};
         String[] ord2 = {"Dead", "Walking", "Game", "Weapon", "Lord", "Kill", "Amazing", "Suit", "Machine", "Jesus",
         "Store", "Fight", "Killing", "Computer", "Shining", "Fantastic", "Flight", "Airplane", "Train", "Bond",
